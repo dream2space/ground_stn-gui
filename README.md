@@ -1,1 +1,3 @@
-# ground_stn-gui
+# GUI Ground Station
+
+The commandline ground station is [here](https://github.com/huiminlim/ground_stn), so it's time for the GUI ground station to be built.
