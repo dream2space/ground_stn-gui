@@ -4,7 +4,7 @@ The commandline ground station is [here](https://github.com/huiminlim/ground_stn
 
 ## Getting Started
 
-## Features and Walkthrough
+## Features
 
 ## Requirements Gathering
 
