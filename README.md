@@ -21,3 +21,5 @@ With Electron JS and Python, the advantages include:
 ## UI/UX Design and Mockup
 
 ## Development Process
+
+My [self-exploration](exploration.md) of Electron JS on Python is done here.
