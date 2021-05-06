@@ -12,6 +12,6 @@ The [command line ground station](https://github.com/huiminlim/ground_stn) was b
 
 The beacons screen were added first.
 
-![Beacons](image/beacon.png)
+![Beacons](image/beacons.png)
 
 ## Development Process
