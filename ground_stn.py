@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    MainApplication(root, pipe_gui)
+    GroundStationPage(root, pipe_gui)
 
     # Thread to read data
     data_thread = threading.Thread(

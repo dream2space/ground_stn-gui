@@ -1,6 +1,7 @@
 import tkinter as tk
 
-class MainApplication(): # (tk.Frame):
+
+class GroundStationPage():  # (tk.Frame):
     def __init__(self, parent, pipe):
         # tk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
