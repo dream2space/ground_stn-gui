@@ -8,27 +8,33 @@ class MainApplication(tk.Frame):
         self.parent.minsize(450, 80)
 
         # Create a section/labelframe for beacon data
-        self.beacon_frame = tk.LabelFrame(root, text="Beacon Data")
-        self.beacon_frame.pack(padx=10, pady=10)
+        self.beacon_frame = BeaconFrame(self.parent, text="Beacon Data")
+
+
+class BeaconFrame(tk.LabelFrame):
+    def __init__(self, parent, *args, **kwargs):
+        tk.LabelFrame.__init__(self, parent, *args, **kwargs)
+        self.parent = parent
+        self.pack(padx=10, pady=10)
 
         # Create label for beacon data header
         self.temperature_label = tk.Label(
-            self.beacon_frame, width=6, text="Temp", borderwidth=1, relief="groove")
+            self, width=6, text="Temp", borderwidth=1, relief="groove")
         self.gx_label = tk.Label(
-            self.beacon_frame, width=6, text="GX", borderwidth=1, relief="groove")
+            self, width=6, text="GX", borderwidth=1, relief="groove")
         self.gy_label = tk.Label(
-            self.beacon_frame, width=6, text="GY", borderwidth=1, relief="groove")
+            self, width=6, text="GY", borderwidth=1, relief="groove")
         self.gz_label = tk.Label(
-            self.beacon_frame, width=6, text="GZ", borderwidth=1, relief="groove")
+            self, width=6, text="GZ", borderwidth=1, relief="groove")
 
         # Create label to store beacon data
         self.temp_text = tk.Label(
-            self.beacon_frame, width=6, text="ddddd", bg="white", borderwidth=1, relief="groove")
-        self.gx_text = tk.Label(self.beacon_frame, width=6, text="ddddd",
+            self, width=6, text="ddddd", bg="white", borderwidth=1, relief="groove")
+        self.gx_text = tk.Label(self, width=6, text="ddddd",
                                 bg="white", borderwidth=1, relief="groove")
-        self.gy_text = tk.Label(self.beacon_frame, width=6, text="ddddd",
+        self.gy_text = tk.Label(self, width=6, text="ddddd",
                                 bg="white", borderwidth=1, relief="groove")
-        self.gz_text = tk.Label(self.beacon_frame, width=6, text="ddddd",
+        self.gz_text = tk.Label(self, width=6, text="ddddd",
                                 bg="white", borderwidth=1, relief="groove")
 
         # Put the labels in grids with row/col
