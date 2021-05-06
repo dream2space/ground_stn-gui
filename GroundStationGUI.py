@@ -1,18 +1,58 @@
 import tkinter as tk
 
 
-class GroundStationPage(tk.Frame):
+class MainApp(tk.Frame):
     def __init__(self, parent, pipe):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.minsize(450, 80)
         self.parent.title("Ground Station")
 
-        self.beacon_pipe = pipe
+        self.container = tk.Frame(self.parent)
+        self.container.grid()
+
+        # Create and display select port
+        l1 = tk.Label(self.container, text="Select TT&C COM port")
+        l1.grid(row=0, column=1)
+
+        ports = ["COM12", "COM13", "COM15"]
+        value_inside1 = tk.StringVar()
+        value_inside1.set(ports[0])
+        option_menu1 = tk.OptionMenu(self.container, value_inside1, *ports)
+        option_menu1.grid(row=1, column=1)
+
+        space1 = tk.Label(self.container, text="                 ")
+        space1.grid(row=0, column=0)
+        space2 = tk.Label(self.container, text="                 ")
+        space2.grid(row=0, column=2)
+
+        l2 = tk.Label(self.container, text="Select Payload COM port")
+        l2.grid(row=0, column=3)
+
+        ports = ["COM12", "COM13", "COM15"]
+        value_inside2 = tk.StringVar()
+        value_inside2.set(ports[0])
+        option_menu2 = tk.OptionMenu(self.container, value_inside2, *ports)
+        option_menu2.grid(row=1, column=3)
+
+        # Button to confirm
+        b = tk.Button(self.container, text="Start", command=self.btn_action)
+        b.grid(row=2)
+
+    def btn_action(self):
+        self.container.grid_forget()
+
+
+class GroundStationPage(tk.Frame):
+    def __init__(self, parent, pipe):
+        tk.Frame.__init__(self, parent)
+        self.parent = parent
+        # self.parent.minsize(450, 80)
+        # self.parent.title("Ground Station")
 
         # Create a section/labelframe for beacon data
+        self.beacon_pipe = pipe
         self.beacon_frame = BeaconFrame(self.parent, text="Beacon Data")
-
         self.parent.after(1000, self.update_beacon_values)
 
     def update_beacon_values(self):

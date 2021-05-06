@@ -1,4 +1,4 @@
-from GroundStationGUI import GroundStationPage
+from GroundStationGUI import GroundStationPage, MainApp
 from multiprocessing import Pipe
 import tkinter as tk
 import threading
@@ -26,7 +26,8 @@ if __name__ == "__main__":
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    GroundStationPage(root, pipe_gui)
+    MainApp(root, pipe_gui)
+    # GroundStationPage(root, pipe_gui)
 
     # Thread to read data
     data_thread = threading.Thread(
