@@ -1,4 +1,4 @@
-from MainApplication import MainApplication
+from GroundStationGUI import GroundStationPage
 from multiprocessing import Pipe
 import tkinter as tk
 import threading
