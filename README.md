@@ -10,4 +10,8 @@ The [command line ground station](https://github.com/huiminlim/ground_stn) was b
 
 ## UI/UX Design and Mockup
 
+The beacons screen were added first.
+
+![Beacons](image/beacon.png)
+
 ## Development Process
