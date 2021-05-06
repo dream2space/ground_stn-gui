@@ -8,6 +8,8 @@ class MainApp(tk.Frame):
         self.parent.minsize(450, 80)
         self.parent.title("Ground Station")
 
+        self.pipe = pipe
+
         self.container = tk.Frame(self.parent)
         self.container.grid()
 
@@ -36,19 +38,20 @@ class MainApp(tk.Frame):
         option_menu2.grid(row=1, column=3)
 
         # Button to confirm
-        b = tk.Button(self.container, text="Start", command=self.btn_action)
+        b = tk.Button(self.container, text="Start",
+                      command=self.make_ground_page)
         b.grid(row=2)
 
-    def btn_action(self):
+    def make_ground_page(self):
         self.container.grid_forget()
+        self.container = tk.Frame(self.parent)
+        self.ground = GroundStationPage(self.parent, self.pipe)
 
 
 class GroundStationPage(tk.Frame):
     def __init__(self, parent, pipe):
         tk.Frame.__init__(self, parent)
         self.parent = parent
-        # self.parent.minsize(450, 80)
-        # self.parent.title("Ground Station")
 
         # Create a section/labelframe for beacon data
         self.beacon_pipe = pipe
@@ -70,7 +73,7 @@ class BeaconFrame(tk.LabelFrame):
     def __init__(self, parent, *args, **kwargs):
         tk.LabelFrame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.pack(padx=10, pady=10)
+        self.pack()
 
         # Create variable to store beacon values
         self.temp = tk.StringVar()
