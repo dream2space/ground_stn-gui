@@ -14,4 +14,8 @@ The beacons screen were added first.
 
 ![Beacons](image/beacons.png)
 
+This is how the initial beacon tickers work.
+
+![Beacon GUI](image/beacon.gif)
+
 ## Development Process
