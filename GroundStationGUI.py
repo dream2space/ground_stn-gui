@@ -8,44 +8,54 @@ class MainApp(tk.Frame):
         self.parent.minsize(450, 80)
         self.parent.title("Ground Station")
 
+        # Beacon pipes
         self.pipe = pipe
 
+        # Put all pages into container
         self.container = tk.Frame(self.parent)
         self.container.grid()
+        self.make_start_page()
 
-        # Create and display select port
-        l1 = tk.Label(self.container, text="Select TT&C COM port")
-        l1.grid(row=0, column=1)
-
-        ports = ["COM12", "COM13", "COM15"]
-        value_inside1 = tk.StringVar()
-        value_inside1.set(ports[0])
-        option_menu1 = tk.OptionMenu(self.container, value_inside1, *ports)
-        option_menu1.grid(row=1, column=1)
-
-        space1 = tk.Label(self.container, text="                 ")
-        space1.grid(row=0, column=0)
-        space2 = tk.Label(self.container, text="                 ")
-        space2.grid(row=0, column=2)
-
-        l2 = tk.Label(self.container, text="Select Payload COM port")
-        l2.grid(row=0, column=3)
-
-        ports = ["COM12", "COM13", "COM15"]
-        value_inside2 = tk.StringVar()
-        value_inside2.set(ports[0])
-        option_menu2 = tk.OptionMenu(self.container, value_inside2, *ports)
-        option_menu2.grid(row=1, column=3)
-
-        # Button to confirm
-        b = tk.Button(self.container, text="Start",
-                      command=self.make_ground_page)
-        b.grid(row=2)
+    def make_start_page(self):
+        self.start = StartPage(self.container, self)
 
     def make_ground_page(self):
         self.container.grid_forget()
         self.container = tk.Frame(self.parent)
         self.ground = GroundStationPage(self.parent, self.pipe)
+
+
+class StartPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.parent = parent
+
+        # Create and display select port
+        ttnc_label = tk.Label(self.parent, text="Select TT&C COM port")
+        ttnc_label.grid(row=0, column=0, padx=50, pady=10)
+
+        # Dummy list of COM ports
+        ports = ["COM12", "COM13", "COM15"]
+        ttnc_value_in_menu = tk.StringVar()
+        ttnc_value_in_menu.set(ports[0])
+        ttnc_option_menu = tk.OptionMenu(
+            self.parent, ttnc_value_in_menu, *ports)
+        ttnc_option_menu.grid(row=1, column=0, padx=10, pady=10)
+
+        payload_label = tk.Label(self.parent, text="Select Payload COM port")
+        payload_label.grid(row=0, column=2, padx=50, pady=10)
+
+        ports = ["COM12", "COM13", "COM15"]
+        payload_value_in_menu = tk.StringVar()
+        payload_value_in_menu.set(ports[0])
+        payload_option_menu = tk.OptionMenu(
+            self.parent, payload_value_in_menu, *ports)
+        payload_option_menu.grid(row=1, column=2, padx=10, pady=10)
+
+        # Button to confirm
+        b = tk.Button(self.parent, text="Start",
+                      command=controller.make_ground_page)
+        b.grid(row=2, column=1, padx=40, pady=10)
 
 
 class GroundStationPage(tk.Frame):
