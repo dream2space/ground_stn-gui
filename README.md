@@ -1,6 +1,6 @@
 # GUI Ground Station
 
-The [command line ground station](https://github.com/huiminlim/ground_stn) was built previous, so it's time for the GUI ground station to be built.
+The [command line ground station](https://github.com/huiminlim/ground_stn) was built previously, so it's time for the GUI ground station to be built.
 
 ## Getting Started
 
