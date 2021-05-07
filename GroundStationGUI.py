@@ -103,14 +103,14 @@ class GroundStationPage(tk.Frame):
         self.parent.after(1000, self.update_beacon_values)
 
     def update_beacon_values(self):
-        if self.beacon_pipe.poll():
+        if self.beacon_pipe.poll(timeout=0):
             ls = self.beacon_pipe.recv()
             temp = ls[0]
             gx = ls[1]
             gy = ls[2]
             gz = ls[3]
             self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
-            self.parent.after(1000, self.update_beacon_values)
+        self.parent.after(1000, self.update_beacon_values)
 
 
 class BeaconFrame(tk.LabelFrame):
@@ -121,9 +121,13 @@ class BeaconFrame(tk.LabelFrame):
 
         # Create variable to store beacon values
         self.temp = tk.StringVar()
+        self.temp.set("0.00")
         self.gx = tk.StringVar()
+        self.gx.set("0")
         self.gy = tk.StringVar()
+        self.gy.set("0")
         self.gz = tk.StringVar()
+        self.gz.set("0")
 
         # Create label for beacon data header
         self.temperature_label = self._create_header_label("Temp")
@@ -140,13 +144,23 @@ class BeaconFrame(tk.LabelFrame):
         # Put the labels in grids with row/col
         self._arrange_grid()
 
-        self.update_beacon_values("0.0", "0", "0", "0")
-
     def update_beacon_values(self, temp, gx, gy, gz):
+        def uncolor():
+            self.temperature_label['bg'] = 'grey94'
+            self.gx_label['bg'] = 'grey94'
+            self.gy_label['bg'] = 'grey94'
+            self.gz_label['bg'] = 'grey94'
+
         self.temp.set(temp)
         self.gx.set(gx)
         self.gy.set(gy)
         self.gz.set(gz)
+
+        self.temperature_label['bg'] = 'yellow'
+        self.gx_label['bg'] = 'yellow'
+        self.gy_label['bg'] = 'yellow'
+        self.gz_label['bg'] = 'yellow'
+        self.parent.after(1200, uncolor)
 
     def _create_header_label(self, header_text):
         return tk.Label(self, width=6, text=header_text, borderwidth=1, relief="groove")

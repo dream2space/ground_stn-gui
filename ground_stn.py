@@ -2,8 +2,6 @@ from GroundStationGUI import MainApp
 from multiprocessing import Pipe
 import tkinter as tk
 import threading
-import random
-import time
 
 # Serial port scan
 import serial
@@ -43,34 +41,37 @@ def beacon_collection(pipe_beacon):
     while pipe_beacon.poll() == b"":
         pass
 
-    if False:
-        # Setup ttnc serial port
-        ttnc_com_port = pipe_beacon.recv()
-        ttnc_ser = serial.Serial(ttnc_com_port)
-        ttnc_ser.baudrate = 9600
-        ttnc_ser.timeout = 1
+    # Setup ttnc serial port
+    ttnc_com_port = pipe_beacon.recv()
+    ttnc_ser = serial.Serial(ttnc_com_port)
+    ttnc_ser.baudrate = 9600
+    ttnc_ser.timeout = 0.5
+
+    temp = 0
+    gx = 0
+    gy = 0
+    gz = 0
 
     while True:
         # Read beacon packets
-        ccsds_beacon_bytes = False  # ttnc_ser.read(CCSDS_BEACON_LEN_BYTES)
+        ccsds_beacon_bytes = ttnc_ser.read(CCSDS_BEACON_LEN_BYTES)
+        # print(ccsds_beacon_bytes)
 
         if ccsds_beacon_bytes:
-            decoded_ccsds_beacon = Decoder.beacon_decode(ccsds_beacon_bytes)
-            temp = decoded_ccsds_beacon.get_temp()
+
+            try:
+                decoded_ccsds_beacon = Decoder.parse_beacon(ccsds_beacon_bytes)
+            except IndexError:
+                continue
+
+            temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
             gyro = decoded_ccsds_beacon.get_gyro()
-            gx = gyro['gx']
-            gy = gyro['gy']
-            gz = gyro['gz']
+            gx = f"{gyro['gx']}"
+            gy = f"{gyro['gy']}"
+            gz = f"{gyro['gz']}"
 
-        else:
-            # Feed data into pipes
-            temp = f"{random.randrange(20, 40)}"
-            gx = f"{random.randint(-50, 50)}"
-            gy = f"{random.randint(-50, 50)}"
-            gz = f"{random.randint(-50, 50)}"
-
-        pipe_beacon.send([temp, gx, gy, gz])
-        # time.sleep(1)
+            # print("beacon", temp, gx, gy, gz)
+            pipe_beacon.send([temp, gx, gy, gz])
 
 
 # Start running GUI
