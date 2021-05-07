@@ -2,7 +2,7 @@ import tkinter as tk
 
 
 class MainApp(tk.Frame):
-    def __init__(self, parent, pipe):
+    def __init__(self, parent, pipe, ports):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.minsize(450, 80)
@@ -10,6 +10,9 @@ class MainApp(tk.Frame):
 
         # Beacon pipes
         self.pipe = pipe
+
+        # Serial ports
+        self.ports = ports
 
         # Put all pages into container
         self.container = tk.Frame(self.parent)
@@ -34,8 +37,8 @@ class StartPage(tk.Frame):
         ttnc_label = tk.Label(self.parent, text="Select TT&C COM port")
         ttnc_label.grid(row=0, column=0, padx=50, pady=10)
 
-        # Dummy list of COM ports
-        ports = ["COM12", "COM13", "COM15"]
+        ports = controller.ports
+
         ttnc_value_in_menu = tk.StringVar()
         ttnc_value_in_menu.set(ports[0])
         ttnc_option_menu = tk.OptionMenu(
@@ -45,7 +48,6 @@ class StartPage(tk.Frame):
         payload_label = tk.Label(self.parent, text="Select Payload COM port")
         payload_label.grid(row=0, column=2, padx=50, pady=10)
 
-        ports = ["COM12", "COM13", "COM15"]
         payload_value_in_menu = tk.StringVar()
         payload_value_in_menu.set(ports[0])
         payload_option_menu = tk.OptionMenu(
