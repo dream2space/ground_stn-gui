@@ -2,14 +2,14 @@ import tkinter as tk
 
 
 class MainApp(tk.Frame):
-    def __init__(self, parent, pipe, ports):
+    def __init__(self, parent, pipe_beacon, ports):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.minsize(450, 80)
         self.parent.title("Ground Station")
 
         # Beacon pipes
-        self.pipe = pipe
+        self.pipe_beacon = pipe_beacon
 
         # Serial ports
         self.ports = ports
@@ -23,19 +23,20 @@ class MainApp(tk.Frame):
         self.start = StartPage(self.container, self)
 
     def handle_transition(self):
-
         # Extract ports selected
         self.port_ttnc = self.start.get_ttnc_port()
         self.port_payload = self.start.get_payload_port()
 
-        if self.port_ttnc == self.port_payload:
+        if self.port_ttnc == self.port_payload or self.port_ttnc == " " or self.port_ttnc == " ":
             # Same ports selected
             self.start.set_port_warning_message()
 
         else:
+            self.pipe_beacon.send(self.port_ttnc)
+
             self.container.grid_forget()
             self.container = tk.Frame(self.parent)
-            self.ground = GroundStationPage(self.parent, self.pipe)
+            self.ground = GroundStationPage(self.parent, self.pipe_beacon)
 
 
 class StartPage(tk.Frame):
