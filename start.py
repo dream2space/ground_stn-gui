@@ -107,7 +107,6 @@ if __name__ == "__main__":
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    root.iconbitmap(app_params.ICON_FILEPATH)
     MainApp(root, pipe_gui, ports)
 
     # Thread to read data

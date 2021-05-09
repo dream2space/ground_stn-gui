@@ -1,1 +1,1 @@
-pyinstaller --onefile -w start.py
+pyinstaller --onefile -w -i "assets/satellite.ico" start.py
