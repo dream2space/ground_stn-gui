@@ -8,10 +8,13 @@ class BeaconPanel(tk.Frame):
                           height=app_param.APP_HEIGHT, padx=10, pady=10)
         self.parent = parent
 
-        # Create a section/labelframe for beacon data
         self.beacon_pipe = pipe
+
+        # Create container to store all subsections
         self.container = tk.Frame(self)
         self.container.pack()
+
+        # Create a section/labelframe for beacon data
         self.beacon_frame = BeaconFrame(
             self.container, text="Beacon Data", padx=10, pady=8)
         self.parent.after(1000, self.update_beacon_values)
