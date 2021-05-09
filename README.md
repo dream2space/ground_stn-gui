@@ -19,3 +19,7 @@ This is how the initial beacon tickers work.
 ![Beacon GUI](image/beacon.gif)
 
 ## Development Process
+
+## Info
+
+How to run a long running process alongside Tkinter GUI: [here](https://zetcode.com/articles/tkinterlongruntask/)
