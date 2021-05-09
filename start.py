@@ -12,6 +12,10 @@ import sys
 from CCSDS_Parameters import CCSDS_BEACON_LEN_BYTES
 from CCSDS_Decoder import CCSDS_Decoder
 
+# Testing flag
+import random
+from Testing import IS_TESTING
+
 
 def scan_serial_ports():
     ports = []
@@ -54,6 +58,16 @@ def beacon_collection(pipe_beacon):
     gz = 0
 
     while True:
+
+        if IS_TESTING:
+            temp = f"{random.randrange(20, 40)}"
+            gx = f"{random.randint(-50, 50)}"
+            gy = f"{random.randint(-50, 50)}"
+            gz = f"{random.randint(-50, 50)}"
+            print("beacon", temp, gx, gy, gz)
+            pipe_beacon.send([temp, gx, gy, gz])
+            continue
+
         # Read beacon packets
         ccsds_beacon_bytes = ttnc_ser.read(CCSDS_BEACON_LEN_BYTES)
         # print(ccsds_beacon_bytes)
@@ -81,6 +95,10 @@ if __name__ == "__main__":
     # Scan for serial ports
     ports = scan_serial_ports()
     ports.insert(0, " ")
+
+    if IS_TESTING:
+        ports.append("COM14")
+        ports.append("COM15")
 
     # Create pipe for between Tk GUI and data thread
     pipe_gui, pipe_beacon = Pipe()
