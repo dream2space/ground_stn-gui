@@ -27,6 +27,7 @@ class HousekeepingDataFrame(tk.LabelFrame):
         self.parent = parent
         self.pack(side=tk.TOP, anchor=tk.NW, expand=1, fill="both")
 
+        # Add line for Housekeeping data
         self.label = tk.Label(self, text="test")
         self.label.pack()
 
@@ -37,5 +38,6 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.parent = parent
         self.pack(side=tk.BOTTOM, anchor=tk.SW, expand=1, fill="both")
 
+        # Add line for Mission and Downlink command
         self.label = tk.Label(self, text="test")
         self.label.pack()
