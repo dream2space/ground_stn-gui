@@ -94,6 +94,7 @@ if __name__ == "__main__":
     ports = scan_serial_ports()
     ports.insert(0, " ")
 
+    # In testing, add dummy entries
     if IS_TESTING:
         ports.append("COM14")
         ports.append("COM15")

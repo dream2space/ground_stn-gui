@@ -1,3 +1,4 @@
+from Testing import IS_TESTING
 import tkinter as tk
 import serial
 
@@ -33,11 +34,12 @@ class MainApp(tk.Frame):
             self.start.set_port_warning_message()
 
         else:
-
-            # Setup ttnc port serial object
-            self.ttnc_ser = serial.Serial(self.port_ttnc)
-            self.ttnc_ser.baudrate = 9600
-            self.ttnc_ser.timeout = 0.5
+            self.ttnc_ser = None
+            if IS_TESTING:
+                # Setup ttnc port serial object
+                self.ttnc_ser = serial.Serial(self.port_ttnc)
+                self.ttnc_ser.baudrate = 9600
+                self.ttnc_ser.timeout = 0.5
 
             # Pass ttnc serial object via pipe to thread
             self.pipe_beacon.send(self.ttnc_ser)
