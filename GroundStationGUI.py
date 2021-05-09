@@ -60,6 +60,5 @@ class MainApp(tk.Frame):
             self.beacon = BeaconPanel(self.container, self.pipe_beacon)
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW)
 
-            self.command = tk.Frame(
-                self.container, width=app_param.APP_WIDTH/2, height=app_param.APP_HEIGHT)
+            self.command = Command_Panel(self.container)
             self.command.pack(side=tk.LEFT)

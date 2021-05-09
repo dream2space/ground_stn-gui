@@ -3,6 +3,7 @@ from GroundStationGUI import MainApp
 import App_Parameters as app_params
 import tkinter as tk
 import threading
+import os
 
 # Serial port scan
 import serial
@@ -92,6 +93,10 @@ def beacon_collection(pipe_beacon):
 
 # Start running GUI
 if __name__ == "__main__":
+
+    # Check folder path to save CSV file
+    if not os.path.exists(app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH):
+        os.makedirs(app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
 
     # Scan for serial ports
     ports = scan_serial_ports()
