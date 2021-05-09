@@ -10,8 +10,10 @@ class BeaconPanel(tk.Frame):
 
         # Create a section/labelframe for beacon data
         self.beacon_pipe = pipe
+        self.beacon_display = tk.Frame(self)
+        self.beacon_display.pack()
         self.beacon_frame = BeaconFrame(
-            self, text="Beacon Data", padx=10, pady=8)
+            self.beacon_display, text="Beacon Data", padx=10, pady=8)
         self.parent.after(1000, self.update_beacon_values)
 
     def update_beacon_values(self):
