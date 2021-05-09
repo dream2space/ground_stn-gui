@@ -4,3 +4,4 @@ node_modules/*
 ground_stn.spec
 dist/*
 build/*
+*.spec
