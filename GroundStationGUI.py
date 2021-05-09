@@ -3,6 +3,10 @@ import tkinter as tk
 import serial
 
 
+APP_HEIGHT = 300
+APP_WIDTH = 900
+
+
 class MainApp(tk.Frame):
     def __init__(self, parent, pipe_beacon, ports):
         tk.Frame.__init__(self, parent)
@@ -44,9 +48,21 @@ class MainApp(tk.Frame):
             # Pass ttnc serial object via pipe to thread
             self.pipe_beacon.send(self.ttnc_ser)
 
+            # Erase Start Page
             self.container.grid_forget()
-            self.container = tk.Frame(self.parent)
-            self.ground = GroundStationPage(self.parent, self.pipe_beacon)
+
+            # Generate Containter to store new page
+            self.container = tk.Frame(
+                self.parent, width=APP_WIDTH, height=APP_HEIGHT)
+            self.container.pack()
+
+            # Generate Beacon page for left
+            self.beacon = BeaconPanel(self.container, self.pipe_beacon)
+            self.beacon.pack(side=tk.RIGHT, anchor=tk.NW)
+
+            self.command = tk.Frame(
+                self.container, width=APP_WIDTH/2, height=APP_HEIGHT)
+            self.command.pack(side=tk.LEFT)
 
 
 class StartPage(tk.Frame):
@@ -102,14 +118,16 @@ class StartPage(tk.Frame):
         self.warning_text.set("Invalid!")
 
 
-class GroundStationPage(tk.Frame):
+class BeaconPanel(tk.Frame):
     def __init__(self, parent, pipe):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent, width=APP_WIDTH/2,
+                          height=APP_HEIGHT, padx=10, pady=10)
         self.parent = parent
 
         # Create a section/labelframe for beacon data
         self.beacon_pipe = pipe
-        self.beacon_frame = BeaconFrame(self.parent, text="Beacon Data")
+        self.beacon_frame = BeaconFrame(
+            self, text="Beacon Data", padx=10, pady=8)
         self.parent.after(1000, self.update_beacon_values)
 
     def update_beacon_values(self):
