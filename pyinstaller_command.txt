@@ -1,1 +1,1 @@
-pyinstaller --onefile -w ground_stn.py
+pyinstaller --onefile -w start.py

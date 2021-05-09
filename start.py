@@ -1,5 +1,5 @@
+from multiprocessing import Pipe, Process
 from GroundStationGUI import MainApp
-from multiprocessing import Pipe
 import tkinter as tk
 import threading
 
@@ -8,8 +8,9 @@ import serial
 import glob
 import sys
 
-from ccsds_decoder import CCSDS_Decoder
-from ccsds_parameters import CCSDS_BEACON_LEN_BYTES
+# CCSDS
+from CCSDS_Parameters import CCSDS_BEACON_LEN_BYTES
+from CCSDS_Decoder import CCSDS_Decoder
 
 
 def scan_serial_ports():
