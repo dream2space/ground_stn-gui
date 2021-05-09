@@ -58,7 +58,7 @@ class MainApp(tk.Frame):
 
             # Generate Beacon page for left
             self.beacon = BeaconPanel(self.container, self.pipe_beacon)
-            self.beacon.pack(side=tk.RIGHT, anchor=tk.NW)
+            self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
             self.command = Command_Panel(self.container)
             self.command.pack(side=tk.LEFT)
