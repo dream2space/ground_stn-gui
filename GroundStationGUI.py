@@ -35,7 +35,7 @@ class MainApp(tk.Frame):
 
         else:
             self.ttnc_ser = None
-            if IS_TESTING:
+            if not IS_TESTING:
                 # Setup ttnc port serial object
                 self.ttnc_ser = serial.Serial(self.port_ttnc)
                 self.ttnc_ser.baudrate = 9600

@@ -13,8 +13,9 @@ from CCSDS_Parameters import CCSDS_BEACON_LEN_BYTES
 from CCSDS_Decoder import CCSDS_Decoder
 
 # Testing flag
-import random
 from Testing import IS_TESTING
+import random
+import time
 
 
 def scan_serial_ports():
@@ -63,6 +64,7 @@ def beacon_collection(pipe_beacon):
             gy = f"{random.randint(-50, 50)}"
             gz = f"{random.randint(-50, 50)}"
             print("beacon", temp, gx, gy, gz)
+            time.sleep(10)
             pipe_beacon.send([temp, gx, gy, gz])
             continue
 
