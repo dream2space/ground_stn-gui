@@ -46,12 +46,10 @@ def beacon_collection(pipe_beacon):
     while pipe_beacon.poll() == b"":
         pass
 
-    # Setup ttnc serial port
-    ttnc_com_port = pipe_beacon.recv()
-    ttnc_ser = serial.Serial(ttnc_com_port)
-    ttnc_ser.baudrate = 9600
-    ttnc_ser.timeout = 0.5
+    # Obtain ttnc serial port object
+    ttnc_ser = pipe_beacon.recv()
 
+    # Setup ttnc serial port
     temp = 0
     gx = 0
     gy = 0
