@@ -13,7 +13,7 @@ import os
 
 
 class MainApp(tk.Frame):
-    def __init__(self, parent, pipe_beacon, ports):
+    def __init__(self, parent, pipe_beacon, ports, ttnc_lock):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.minsize(650, 140)
@@ -24,6 +24,9 @@ class MainApp(tk.Frame):
 
         # Serial ports
         self.ports = ports
+
+        # Locks for serial ports
+        self. serial_ttnc_lock = ttnc_lock
 
         # Put all pages into container
         self.container = tk.Frame(self.parent)
@@ -68,7 +71,8 @@ class MainApp(tk.Frame):
             self.command.pack(side=tk.LEFT)
 
     def hk_process(self):
-        self.p1 = Process(target=sample_process, daemon=True)
+        self.p1 = Process(target=sample_process, daemon=True,
+                          args=(self.serial_ttnc_lock,))
         self.p1.start()
 
         # Hide button
@@ -100,9 +104,11 @@ def get_HK_logs():
     pass
 
 
-def sample_process():
+def sample_process(lock):
     i = 0
     max_val = 1000000
+    lock.acquire()
     while i < max_val:
         print(i)
         i += 1
+    lock.release()

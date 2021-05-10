@@ -40,7 +40,7 @@ def scan_serial_ports():
     return result
 
 
-def beacon_collection(pipe_beacon):
+def beacon_collection(pipe_beacon, lock):
     # Setup CCSDS Decoder
     Decoder = CCSDS_Decoder(isBeacon=True)
 
@@ -56,9 +56,10 @@ def beacon_collection(pipe_beacon):
     gx = 0
     gy = 0
     gz = 0
+    pipe_beacon.send([temp, gx, gy, gz])
 
     while True:
-
+        lock.acquire()
         if IS_TESTING:
             temp = f"{random.randrange(20, 40)}"
             gx = f"{random.randint(-50, 50)}"
@@ -67,6 +68,7 @@ def beacon_collection(pipe_beacon):
             print("beacon", temp, gx, gy, gz)
             time.sleep(10)
             pipe_beacon.send([temp, gx, gy, gz])
+            lock.release()
             continue
 
         # Read beacon packets
@@ -113,13 +115,16 @@ if __name__ == "__main__":
     # Create pipe for between Tk GUI and data thread
     pipe_gui, pipe_beacon = multiprocessing.Pipe()
 
+    # Create locks for serial port
+    serial_ttnc_lock = multiprocessing.Lock()
+
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    MainApp(root, pipe_gui, ports)
+    MainApp(root, pipe_gui, ports, serial_ttnc_lock)
 
     # Thread to read data
     data_process = multiprocessing.Process(
-        target=beacon_collection, args=(pipe_beacon, ), daemon=True)
+        target=beacon_collection, args=(pipe_beacon, serial_ttnc_lock,), daemon=True)
     data_process.start()
 
     # Start Tk GUI in main thread
