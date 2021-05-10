@@ -1,4 +1,4 @@
-from multiprocessing.context import Process
+from multiprocessing import Process, Pipe
 from Command_Panel import Command_Panel
 from Beacon_Panel import BeaconPanel
 import App_Parameters as app_param
@@ -64,13 +64,31 @@ class MainApp(tk.Frame):
             self.command = Command_Panel(self.container, self)
             self.command.pack(side=tk.LEFT)
 
-    def start_hk_process(self):
-        self.p1 = Process(target=sample_process)
+    def hk_process(self):
+        self.p1 = Process(target=sample_process, daemon=True)
         self.p1.start()
+
+        # Hide button
+        self.command.housekeeping_command.start_hk_button.pack_forget()
+
+        # Display the progress bar
+        self.command.housekeeping_command.pbar_container.pack()
+        self.command.housekeeping_command.pbar.pack()
+        self.command.housekeeping_command.pbar.start()
+        self.after(100, self.checking)
+
+    def checking(self):
+        if self.p1.is_alive():
+            self.after(100, self.checking)
+        else:
+            self.command.housekeeping_command.pbar.stop()
+            self.command.housekeeping_command.pbar_container.pack_forget()
+            self.command.housekeeping_command.start_hk_button.pack()
 
 
 def sample_process():
     i = 0
-    while i < 1000000:
+    max_val = 100000
+    while i < max_val:
         print(i)
         i += 1

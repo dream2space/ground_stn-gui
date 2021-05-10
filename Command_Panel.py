@@ -1,5 +1,6 @@
 import App_Parameters as app_param
 import tkinter as tk
+import tkinter.ttk as ttk
 
 
 class Command_Panel(tk.Frame):
@@ -29,13 +30,20 @@ class HousekeepingDataFrame(tk.LabelFrame):
         self.pack(side=tk.TOP, anchor=tk.NW, expand=1, fill="both")
 
         # Add line for Housekeeping data
-        self.label = tk.Label(self, text="Request for Housekeeping data")
+        self.label = tk.Label(
+            self, text="Request for Housekeeping data", pady=8)
         self.label.pack()
 
         # Add button to trigger housekeeping data command
         self.start_hk_button = tk.Button(
-            self, text="Click here", command=controller.start_hk_process)
+            self, text="Click here", command=controller.hk_process, pady=8)
         self.start_hk_button.pack()
+
+        # Progress bar
+        self.pbar_container = tk.Frame(self, pady=8)
+        self.pbar_container.pack()
+        self.pbar = ttk.Progressbar(
+            self.pbar_container, mode='indeterminate', length=100)
 
 
 class MissionDownlinkFrame(tk.LabelFrame):
