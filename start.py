@@ -1,6 +1,6 @@
-from multiprocessing import Pipe
 from GroundStationGUI import MainApp
 import App_Parameters as app_params
+import multiprocessing
 import tkinter as tk
 import threading
 import os
@@ -94,6 +94,8 @@ def beacon_collection(pipe_beacon):
 # Start running GUI
 if __name__ == "__main__":
 
+    multiprocessing.freeze_support()
+
     # Check folder path to save CSV file
     if not os.path.exists(app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH):
         os.makedirs(app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
@@ -108,7 +110,7 @@ if __name__ == "__main__":
         ports.append("COM15")
 
     # Create pipe for between Tk GUI and data thread
-    pipe_gui, pipe_beacon = Pipe()
+    pipe_gui, pipe_beacon = multiprocessing.Pipe()
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
