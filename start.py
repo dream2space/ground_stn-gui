@@ -94,6 +94,7 @@ def beacon_collection(pipe_beacon):
 # Start running GUI
 if __name__ == "__main__":
 
+    # To fix the multiple tkinter window spawning problem
     multiprocessing.freeze_support()
 
     # Check folder path to save CSV file
