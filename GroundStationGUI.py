@@ -1,3 +1,4 @@
+from multiprocessing.context import Process
 from Command_Panel import Command_Panel
 from Beacon_Panel import BeaconPanel
 import App_Parameters as app_param
@@ -60,5 +61,16 @@ class MainApp(tk.Frame):
             self.beacon = BeaconPanel(self.container, self.pipe_beacon)
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
-            self.command = Command_Panel(self.container)
+            self.command = Command_Panel(self.container, self)
             self.command.pack(side=tk.LEFT)
+
+    def start_hk_process(self):
+        self.p1 = Process(target=sample_process)
+        self.p1.start()
+
+
+def sample_process():
+    i = 0
+    while i < 1000000:
+        print(i)
+        i += 1

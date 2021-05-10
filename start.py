@@ -65,7 +65,7 @@ def beacon_collection(pipe_beacon):
             gx = f"{random.randint(-50, 50)}"
             gy = f"{random.randint(-50, 50)}"
             gz = f"{random.randint(-50, 50)}"
-            print("beacon", temp, gx, gy, gz)
+            # print("beacon", temp, gx, gy, gz)
             time.sleep(10)
             pipe_beacon.send([temp, gx, gy, gz])
             continue
