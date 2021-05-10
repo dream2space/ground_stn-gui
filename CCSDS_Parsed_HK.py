@@ -8,3 +8,6 @@ class CCSDS_Parsed_HK:
 
     def __str___(self):
         return f"HK#{self.count} | temp: {self.temp} | gx: {self.gx} | gy: {self.gy} | gz: {self.gz}"
+
+    def get_list(self):
+        return [self.temp, self.gx, self.gy, self.gz]

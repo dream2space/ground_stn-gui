@@ -1,9 +1,10 @@
-from CCSDS_Parsed_Beacon import CCSDS_Parsed_Beacon
 from CCSDS_Parsed_HK import CCSDS_Parsed_HK
 import App_Parameters as app_params
+from datetime import datetime
+import csv
 
 
-class CCSDS_HK_Decoder:
+class CCSDS_HK_Util:
     def __init__(self):
         pass
 
@@ -33,6 +34,21 @@ class CCSDS_HK_Decoder:
             list_hk_datapoints.append(parsed_hk)
 
         return list_hk_datapoints
+
+    def log(self, list_hk_obj):
+        # Prepare filename
+        file_name = app_params.HOUSEKEEPING_DATA_FILE_PREFIX
+        file_name += datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
+
+        # Prepare header of CSV file
+        header = ["temp", "gx", "gy", "gz"]
+
+        # Open CSV file
+        with open(f'{app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH}/{file_name}.csv', mode='a') as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=header)
+            writer.writeheader()
+            for d in list_hk_obj:
+                writer.writerow(d.get_list())
 
     def _parse_each_hk(self, hk_slice, count):
         temp = int.from_bytes(

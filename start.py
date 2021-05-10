@@ -9,14 +9,9 @@ import serial
 import glob
 import sys
 
-# CCSDS
-from CCSDS_Parameters import CCSDS_BEACON_LEN_BYTES
-from CCSDS_Decoder import CCSDS_Decoder
 
 # Testing flag
 from Testing import IS_TESTING
-import random
-import time
 
 
 def scan_serial_ports():
@@ -40,59 +35,6 @@ def scan_serial_ports():
     return result
 
 
-def beacon_collection(pipe_beacon, lock):
-    # Setup CCSDS Decoder
-    Decoder = CCSDS_Decoder(isBeacon=True)
-
-    # Collect com port
-    while pipe_beacon.poll() == b"":
-        pass
-
-    # Obtain ttnc serial port object
-    ttnc_ser = pipe_beacon.recv()
-
-    # Setup ttnc serial port
-    temp = 0
-    gx = 0
-    gy = 0
-    gz = 0
-    pipe_beacon.send([temp, gx, gy, gz])
-
-    while True:
-        lock.acquire()
-        if IS_TESTING:
-            temp = f"{random.randrange(20, 40)}"
-            gx = f"{random.randint(-50, 50)}"
-            gy = f"{random.randint(-50, 50)}"
-            gz = f"{random.randint(-50, 50)}"
-            print("beacon", temp, gx, gy, gz)
-            time.sleep(10)
-            pipe_beacon.send([temp, gx, gy, gz])
-            lock.release()
-            continue
-
-        # Read beacon packets
-        ccsds_beacon_bytes = ttnc_ser.read(CCSDS_BEACON_LEN_BYTES)
-        # print(ccsds_beacon_bytes)
-
-        if ccsds_beacon_bytes:
-
-            try:
-                decoded_ccsds_beacon = Decoder.parse_beacon(
-                    ccsds_beacon_bytes)
-            except IndexError:
-                continue
-
-            temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
-            gyro = decoded_ccsds_beacon.get_gyro()
-            gx = f"{gyro['gx']}"
-            gy = f"{gyro['gy']}"
-            gz = f"{gyro['gz']}"
-
-            # print("beacon", temp, gx, gy, gz)
-            pipe_beacon.send([temp, gx, gy, gz])
-
-
 # Start running GUI
 if __name__ == "__main__":
 
@@ -112,20 +54,14 @@ if __name__ == "__main__":
         ports.append("COM14")
         ports.append("COM15")
 
-    # Create pipe for between Tk GUI and data thread
-    pipe_gui, pipe_beacon = multiprocessing.Pipe()
-
     # Create locks for serial port
     serial_ttnc_lock = multiprocessing.Lock()
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    MainApp(root, pipe_gui, ports, serial_ttnc_lock)
+    MainApp(root, ports, serial_ttnc_lock)
 
     # Thread to read data
-    data_process = multiprocessing.Process(
-        target=beacon_collection, args=(pipe_beacon, serial_ttnc_lock,), daemon=True)
-    data_process.start()
 
     # Start Tk GUI in main thread
     root.mainloop()

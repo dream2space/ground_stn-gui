@@ -1,4 +1,5 @@
 import App_Parameters as app_param
+from queue import Empty
 import tkinter as tk
 
 
@@ -20,13 +21,17 @@ class BeaconPanel(tk.Frame):
         self.parent.after(10, self.update_beacon_values)
 
     def update_beacon_values(self):
-        if self.beacon_pipe.poll(timeout=0):
-            ls = self.beacon_pipe.recv()
-            temp = ls[0]
-            gx = ls[1]
-            gy = ls[2]
-            gz = ls[3]
-            self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
+        try:
+            ls = self.beacon_pipe.get()
+        except Empty:
+            self.parent.after(500, self.update_beacon_values)
+            return
+
+        temp = ls[0]
+        gx = ls[1]
+        gy = ls[2]
+        gz = ls[3]
+        self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
         self.parent.after(500, self.update_beacon_values)
 
 
