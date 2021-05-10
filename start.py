@@ -2,7 +2,6 @@ from GroundStationGUI import MainApp
 import App_Parameters as app_params
 import multiprocessing
 import tkinter as tk
-import threading
 import os
 
 # Serial port scan
