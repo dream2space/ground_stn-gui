@@ -5,7 +5,11 @@ import App_Parameters as app_param
 from Start_Page import StartPage
 from Testing import IS_TESTING
 import tkinter as tk
+import subprocess
+import platform
+import webbrowser
 import serial
+import os
 
 
 class MainApp(tk.Frame):
@@ -85,10 +89,19 @@ class MainApp(tk.Frame):
             self.command.housekeeping_command.pbar_container.pack_forget()
             self.command.housekeeping_command.start_hk_button.pack()
 
+            # Open up explorer
+
+            # if platform.system() == "Windows":
+            #     subprocess.Popen(r'explorer ./housekeeping_data')
+            # elif platform.system() == "Darwin":
+            #     subprocess.Popen(["open", path])
+            # else:
+            #     subprocess.Popen(["xdg-open", path])
+
 
 def sample_process():
     i = 0
-    max_val = 100000
+    max_val = 10000
     while i < max_val:
         print(i)
         i += 1
