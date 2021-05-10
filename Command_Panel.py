@@ -29,7 +29,7 @@ class HousekeepingDataFrame(tk.LabelFrame):
         self.pack(side=tk.TOP, anchor=tk.NW, expand=1, fill="both")
 
         # Add line for Housekeeping data
-        self.label = tk.Label(self, text="Housekeeping data")
+        self.label = tk.Label(self, text="Request for Housekeeping data")
         self.label.pack()
 
         # Add button to trigger housekeeping data command
