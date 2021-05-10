@@ -1,4 +1,4 @@
-from multiprocessing import Pipe, Process
+from multiprocessing import Pipe
 from GroundStationGUI import MainApp
 import App_Parameters as app_params
 import tkinter as tk
@@ -43,7 +43,7 @@ def scan_serial_ports():
 
 def beacon_collection(pipe_beacon):
     # Setup CCSDS Decoder
-    Decoder = CCSDS_Decoder()
+    Decoder = CCSDS_Decoder(isBeacon=True)
 
     # Collect com port
     while pipe_beacon.poll() == b"":

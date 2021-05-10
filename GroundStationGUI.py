@@ -51,7 +51,7 @@ class MainApp(tk.Frame):
             # Erase Start Page
             self.container.grid_forget()
 
-            # Generate Containter to store new page
+            # Generate Container to store new page
             self.container = tk.Frame(
                 self.parent, width=app_param.APP_WIDTH, height=app_param.APP_HEIGHT)
             self.container.pack()
