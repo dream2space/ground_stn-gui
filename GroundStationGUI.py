@@ -1,14 +1,13 @@
-from multiprocessing import Process, Pipe
 from Command_Panel import Command_Panel
 from Beacon_Panel import BeaconPanel
+from multiprocessing import Process
 import App_Parameters as app_param
 from Start_Page import StartPage
 from Testing import IS_TESTING
 import tkinter as tk
 import subprocess
-import platform
-import webbrowser
 import serial
+import sys
 import os
 
 
@@ -90,13 +89,11 @@ class MainApp(tk.Frame):
             self.command.housekeeping_command.start_hk_button.pack()
 
             # Open up explorer
-
-            # if platform.system() == "Windows":
-            #     subprocess.Popen(r'explorer ./housekeeping_data')
-            # elif platform.system() == "Darwin":
-            #     subprocess.Popen(["open", path])
-            # else:
-            #     subprocess.Popen(["xdg-open", path])
+            path = os.path.relpath(app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
+            if sys.platform.startswith('win'):
+                os.startfile(path)
+            elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+                subprocess.check_call(['xdg-open', '--', path])
 
 
 def sample_process():
