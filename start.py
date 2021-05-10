@@ -59,6 +59,7 @@ def beacon_collection(pipe_beacon):
     gz = 0
 
     while True:
+        # print(f"mutex {app_params.TTNC_SERIAL_MUTEX}")
 
         if IS_TESTING:
             temp = f"{random.randrange(20, 40)}"
@@ -70,25 +71,31 @@ def beacon_collection(pipe_beacon):
             pipe_beacon.send([temp, gx, gy, gz])
             continue
 
-        # Read beacon packets
-        ccsds_beacon_bytes = ttnc_ser.read(CCSDS_BEACON_LEN_BYTES)
-        # print(ccsds_beacon_bytes)
+        if app_params.TTNC_SERIAL_MUTEX == True:
 
-        if ccsds_beacon_bytes:
+            # Take mutex
+            app_params.TTNC_SERIAL_MUTEX = False
 
-            try:
-                decoded_ccsds_beacon = Decoder.parse_beacon(ccsds_beacon_bytes)
-            except IndexError:
-                continue
+            # Read beacon packets
+            ccsds_beacon_bytes = ttnc_ser.read(CCSDS_BEACON_LEN_BYTES)
+            # print(ccsds_beacon_bytes)
 
-            temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
-            gyro = decoded_ccsds_beacon.get_gyro()
-            gx = f"{gyro['gx']}"
-            gy = f"{gyro['gy']}"
-            gz = f"{gyro['gz']}"
+            if ccsds_beacon_bytes:
 
-            # print("beacon", temp, gx, gy, gz)
-            pipe_beacon.send([temp, gx, gy, gz])
+                try:
+                    decoded_ccsds_beacon = Decoder.parse_beacon(
+                        ccsds_beacon_bytes)
+                except IndexError:
+                    continue
+
+                temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
+                gyro = decoded_ccsds_beacon.get_gyro()
+                gx = f"{gyro['gx']}"
+                gy = f"{gyro['gy']}"
+                gz = f"{gyro['gz']}"
+
+                # print("beacon", temp, gx, gy, gz)
+                pipe_beacon.send([temp, gx, gy, gz])
 
 
 # Start running GUI

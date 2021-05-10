@@ -42,16 +42,15 @@ class MainApp(tk.Frame):
             self.start.set_port_warning_message()
 
         else:
-            self.ttnc_ser = None
+            self.ttnc_serial = None
             if not IS_TESTING:
                 # Setup ttnc port serial object
-                self.ttnc_ser = serial.Serial(self.port_ttnc)
-                self.ttnc_ser.baudrate = 9600
-                self.ttnc_ser.timeout = 0.5
+                self.ttnc_serial = serial.Serial(self.port_ttnc)
+                self.ttnc_serial.baudrate = 9600
+                self.ttnc_serial.timeout = 0.5
 
             # Pass ttnc serial object via pipe to thread
-            self.pipe_beacon.send(self.ttnc_ser)
-
+            self.pipe_beacon.send(self.ttnc_serial)
             # Erase Start Page
             self.container.grid_forget()
 
@@ -68,7 +67,7 @@ class MainApp(tk.Frame):
             self.command.pack(side=tk.LEFT)
 
     def hk_process(self):
-        self.p1 = Process(target=sample_process, daemon=True)
+        self.p1 = Process(target=get_HK_logs, daemon=True)
         self.p1.start()
 
         # Hide button
@@ -96,9 +95,12 @@ class MainApp(tk.Frame):
                 subprocess.check_call(['xdg-open', '--', path])
 
 
-def sample_process():
-    i = 0
-    max_val = 10000
-    while i < max_val:
-        print(i)
-        i += 1
+def get_HK_logs():
+    pass
+
+# def sample_process():
+#     i = 0
+#     max_val = 10000
+#     while i < max_val:
+#         print(i)
+#         i += 1
