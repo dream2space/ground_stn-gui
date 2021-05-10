@@ -7,6 +7,7 @@ from Testing import IS_TESTING
 import tkinter as tk
 import subprocess
 import serial
+import time
 import sys
 import os
 
@@ -67,7 +68,7 @@ class MainApp(tk.Frame):
             self.command.pack(side=tk.LEFT)
 
     def hk_process(self):
-        self.p1 = Process(target=get_HK_logs, daemon=True)
+        self.p1 = Process(target=sample_process, daemon=True)
         self.p1.start()
 
         # Hide button
@@ -98,9 +99,10 @@ class MainApp(tk.Frame):
 def get_HK_logs():
     pass
 
-# def sample_process():
-#     i = 0
-#     max_val = 10000
-#     while i < max_val:
-#         print(i)
-#         i += 1
+
+def sample_process():
+    i = 0
+    max_val = 1000000
+    while i < max_val:
+        print(i)
+        i += 1

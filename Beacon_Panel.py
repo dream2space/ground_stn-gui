@@ -17,7 +17,7 @@ class BeaconPanel(tk.Frame):
         # Create a section/labelframe for beacon data
         self.beacon_frame = BeaconFrame(
             self.container, text="Beacon Data", padx=10, pady=8)
-        self.parent.after(1000, self.update_beacon_values)
+        self.parent.after(10, self.update_beacon_values)
 
     def update_beacon_values(self):
         if self.beacon_pipe.poll(timeout=0):
@@ -27,7 +27,7 @@ class BeaconPanel(tk.Frame):
             gy = ls[2]
             gz = ls[3]
             self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
-        self.parent.after(1000, self.update_beacon_values)
+        self.parent.after(500, self.update_beacon_values)
 
 
 class BeaconFrame(tk.LabelFrame):
