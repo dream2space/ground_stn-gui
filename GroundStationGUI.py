@@ -149,8 +149,6 @@ def sample_process(pipe, lock):
     i = 0
     max_val = 1000000
 
-    print("here")
-
     pipe.send("close_serial")
     while pipe.poll() == "":
         pass
@@ -162,5 +160,4 @@ def sample_process(pipe, lock):
         i += 1
     lock.release()
 
-    print("done")
     pipe.send("open_serial")
