@@ -1,3 +1,4 @@
+from multiprocessing import Pipe
 import App_Parameters as app_param
 from queue import Empty
 import tkinter as tk
@@ -8,7 +9,6 @@ class BeaconPanel(tk.Frame):
         tk.Frame.__init__(self, parent, width=app_param.APP_WIDTH/2,
                           height=app_param.APP_HEIGHT, padx=10, pady=10)
         self.parent = parent
-
         self.beacon_pipe = pipe
 
         # Create container to store all subsections
@@ -21,17 +21,13 @@ class BeaconPanel(tk.Frame):
         self.parent.after(10, self.update_beacon_values)
 
     def update_beacon_values(self):
-        try:
-            ls = self.beacon_pipe.get()
-        except Empty:
-            self.parent.after(500, self.update_beacon_values)
-            return
-
-        temp = ls[0]
-        gx = ls[1]
-        gy = ls[2]
-        gz = ls[3]
-        self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
+        if self.beacon_pipe.poll(timeout=0):
+            ls = self.beacon_pipe.recv()
+            temp = ls[0]
+            gx = ls[1]
+            gy = ls[2]
+            gz = ls[3]
+            self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
         self.parent.after(500, self.update_beacon_values)
 
 

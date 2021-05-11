@@ -1,3 +1,6 @@
+import CCSDS_Parameters as ccsds_params
+
+
 class CCSDS_Encoder():
     def __init__(self):
         self.packet_count = 0
@@ -16,7 +19,16 @@ class CCSDS_Encoder():
         header = self._generate_packet_header(len(packet_field))
 
         # Return appended packet
-        return header + packet_field
+        return self._pad(header + packet_field)
+
+    def _pad(self, packet):
+        """Pad with fake header"""
+        while len(packet) < ccsds_params.TELECOMMAND_PACKET_LEN_BYTES:
+            packet = packet + b'B'
+
+        # Add fake header
+        packet = b'A' + packet
+        return packet
 
     def _generate_packet_header(self, length):
         # Abstract header as 6 bytes

@@ -1,5 +1,6 @@
 from CCSDS_Parsed_HK import CCSDS_Parsed_HK
 import App_Parameters as app_params
+import CCSDS_Parameters as ccsds_params
 from datetime import datetime
 import csv
 
@@ -17,17 +18,17 @@ class CCSDS_HK_Util:
         hk_payload = packet[7:]
 
         # Packet cannot be parsed correctly
-        if len(hk_payload) != app_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES * app_params.CCSDS_OBC_HK_DATAPOINTS_COUNT:
+        if len(hk_payload) != ccsds_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES * ccsds_params.CCSDS_OBC_HK_DATAPOINT_COUNT:
             return []
 
         # Extract out each hk datapoint
         list_hk_datapoints = []
         idx = 0
         # i is count to 20 since 20 dataset in packets
-        for count in range(app_params.CCSDS_OBC_HK_DATAPOINTS_COUNT):
+        for count in range(ccsds_params.CCSDS_OBC_HK_DATAPOINT_COUNT):
             slice = hk_payload[idx: idx +
-                               app_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES]
-            idx = idx + app_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES
+                               ccsds_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES]
+            idx = idx + ccsds_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES
 
             # Parse each hk datapoint
             parsed_hk = self._parse_each_hk(slice, count)
@@ -44,7 +45,7 @@ class CCSDS_HK_Util:
         header = ["temp", "gx", "gy", "gz"]
 
         # Open CSV file
-        with open(f'{app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH}/{file_name}.csv', mode='a') as csv_file:
+        with open(f'{app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH}/{file_name}.csv', mode='a', newline="") as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=header)
             writer.writeheader()
             for d in list_hk_obj:

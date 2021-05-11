@@ -1,9 +1,9 @@
-from multiprocessing import Process, Queue
 from CCSDS_HK_Util import CCSDS_HK_Util
 from CCSDS_Encoder import CCSDS_Encoder
 from Command_Panel import Command_Panel
 import CCSDS_Parameters as ccsds_param
 from Beacon_Panel import BeaconPanel
+from multiprocessing import Process
 import App_Parameters as app_param
 from Start_Page import StartPage
 from Testing import IS_TESTING
@@ -13,17 +13,9 @@ import serial
 import sys
 import os
 
-# CCSDS
-from CCSDS_Parameters import CCSDS_BEACON_LEN_BYTES
-from CCSDS_Decoder import CCSDS_Decoder
-
-
-import random
-import time
-
 
 class MainApp(tk.Frame):
-    def __init__(self, parent, ports, ttnc_lock):
+    def __init__(self, parent, ports, pipe_beacon, ttnc_lock):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.minsize(650, 140)
@@ -34,6 +26,9 @@ class MainApp(tk.Frame):
 
         # Locks for serial ports
         self. serial_ttnc_lock = ttnc_lock
+
+        # Pipe for beacon
+        self.pipe_beacon = pipe_beacon
 
         # Put all pages into container
         self.container = tk.Frame(self.parent)
@@ -53,16 +48,9 @@ class MainApp(tk.Frame):
             self.start.set_port_warning_message()
 
         else:
-            self.ttnc_serial = None
-            if not IS_TESTING:
-                # Setup ttnc port serial object
-                self.ttnc_serial = serial.Serial(self.port_ttnc)
-                self.ttnc_serial.baudrate = 9600
-                # Changed the time since child processes will not block parent process
-                self.ttnc_serial.timeout = 10
 
-            # Create pipes
-            pipe_ttnc = Queue()
+            # Pass ttnc serial object via pipe to thread
+            self.pipe_beacon.send(self.port_ttnc)
 
             # Erase Start Page
             self.container.grid_forget()
@@ -73,22 +61,17 @@ class MainApp(tk.Frame):
             self.container.pack()
 
             # Generate Beacon page for left
-            self.beacon = BeaconPanel(self.container, pipe_ttnc)
+            self.beacon = BeaconPanel(self.container, self.pipe_beacon)
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
             self.command = Command_Panel(self.container, self)
             self.command.pack(side=tk.LEFT)
 
-            # Pass ttnc serial object via pipe to thread
-            self.data_process = Process(
-                target=beacon_collection, args=(self.ttnc_serial, self.serial_ttnc_lock, pipe_ttnc,), daemon=True)
-            self.data_process.start()
-
     def hk_process(self):
         # self.p1 = Process(target=sample_process, daemon=True,
-        #                 args=(self.serial_ttnc_lock,))  # Testing
+        #                   args=(self.pipe_beacon, self.serial_ttnc_lock,))  # Testing
         self.p1 = Process(target=get_HK_logs, daemon=True,
-                          args=(self.ttnc_serial, self.serial_ttnc_lock,))
+                          args=(self.pipe_beacon, self.port_ttnc, self.serial_ttnc_lock,))
         self.p1.start()
 
         # Hide button
@@ -116,7 +99,14 @@ class MainApp(tk.Frame):
                 subprocess.check_call(['xdg-open', '--', path])
 
 
-def get_HK_logs(ttnc_serial, lock):
+def get_HK_logs(pipe, ttnc_serial_port, lock):
+
+    def setup_serial(port):
+        ttnc_ser = serial.Serial(port)
+        ttnc_ser.baudrate = 9600
+        ttnc_ser.timeout = 10
+        return ttnc_ser
+
     Encoder = CCSDS_Encoder()
     HK_Util = CCSDS_HK_Util()
 
@@ -127,72 +117,50 @@ def get_HK_logs(ttnc_serial, lock):
     telecommand = Encoder.generate_HK_telecommand(
         ccsds_param.TELECOMMAND_TYPE_OBC_HK_REQUEST, timestamp_query_start, timestamp_query_end)
 
-    lock.acquire()
+    pipe.send("close_serial")
+    while pipe.poll() == "":
+        pass
+    print(f"process receive {pipe.recv()}")
+
+    # lock.acquire()
+    ttnc_serial = setup_serial(ttnc_serial_port)
+
+    print(f"telecommand is {telecommand}")
+    print(f"telecommand len is {len(telecommand)}")
     ttnc_serial.write(telecommand)
     hk_bytes = ttnc_serial.read(
         ccsds_param.CCSDS_OBC_TELEMETRY_LEN_BYTES)
-    lock.release()
+    print(f"hk bytes {hk_bytes}")
+    # lock.release()
+
+    print("done sending command")
+    ttnc_serial.close()
+    pipe.send("open_serial")
 
     if hk_bytes:
         list_hk_obj = HK_Util.parse(hk_bytes)
         HK_Util.log(list_hk_obj)
+        print("done do logs")
     else:
         print("hk logs failed")
 
 
-def sample_process(lock):
+def sample_process(pipe, lock):
     i = 0
     max_val = 1000000
+
+    print("here")
+
+    pipe.send("close_serial")
+    while pipe.poll() == "":
+        pass
+    print(pipe.recv())
+
     lock.acquire()
     while i < max_val:
         print(i)
         i += 1
     lock.release()
 
-
-def beacon_collection(serial_ttnc, lock, pipe_beacon):
-    # Setup CCSDS Decoder
-    Decoder = CCSDS_Decoder(isBeacon=True)
-
-    # Setup ttnc serial port
-    temp = 0
-    gx = 0
-    gy = 0
-    gz = 0
-    pipe_beacon.send([temp, gx, gy, gz])
-
-    while True:
-        # Acquire lock
-        lock.acquire()
-
-        if IS_TESTING:
-            temp = f"{random.randrange(20, 40)}"
-            gx = f"{random.randint(-50, 50)}"
-            gy = f"{random.randint(-50, 50)}"
-            gz = f"{random.randint(-50, 50)}"
-            print("beacon", temp, gx, gy, gz)
-            time.sleep(10)
-            pipe_beacon.put([temp, gx, gy, gz])
-            lock.release()
-            continue
-
-        # Read beacon packets
-        ccsds_beacon_bytes = serial_ttnc.read(CCSDS_BEACON_LEN_BYTES)
-        # print(ccsds_beacon_bytes)
-        lock.release()
-
-        if ccsds_beacon_bytes:
-            try:
-                decoded_ccsds_beacon = Decoder.parse_beacon(
-                    ccsds_beacon_bytes)
-            except IndexError:
-                continue
-
-            temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
-            gyro = decoded_ccsds_beacon.get_gyro()
-            gx = f"{gyro['gx']}"
-            gy = f"{gyro['gy']}"
-            gz = f"{gyro['gz']}"
-
-            # print("beacon", temp, gx, gy, gz)
-            pipe_beacon.put([temp, gx, gy, gz])
+    print("done")
+    pipe.send("open_serial")
