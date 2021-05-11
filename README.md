@@ -36,6 +36,14 @@ The Ground Station Desktop app will appear, like in the screenshot below.
 
 ## Features
 
+### Overview
+
+### Beacons
+
+### Housekeeping Data Telecommands
+
+### Mission and Downlink Telecommands
+
 ## Requirements Gathering
 
 ## UI/UX Design and Mockup
@@ -48,7 +56,7 @@ This is how the initial beacon tickers work.
 
 ![Beacon GUI](images/beacon.gif)
 
-## Development Process
+## Software Architecture
 
 ## Info
 
