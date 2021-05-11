@@ -10,6 +10,8 @@ Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` f
 
 Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
 
+![picture 2](images/ground_stn_exe_releases.png)
+
 You can find the latest version of the Ground Station Desktop app and the Version tag in the table below.
 
 | Executable Name | Version Number |
@@ -22,9 +24,15 @@ After downloading the Desktop app, start the Ground Station Desktop app.
 
 A security warning may pop up in some cases. In such cases, click on `More Info` as shown in the screenshot below.
 
+![Security Warning 1](images/security_warning1.png)
+
 After that, click on `Run anyway`.
 
+![picture 4](images/security_warning2.png)
+
 The Ground Station Desktop app will appear, like in the screenshot below.
+
+![picture 5](images/app_start.png)
 
 ## Features
 
@@ -34,11 +42,11 @@ The Ground Station Desktop app will appear, like in the screenshot below.
 
 The beacons screen were added first.
 
-![Beacons](image/beacons.png)
+![Beacons](images/beacons.png)
 
 This is how the initial beacon tickers work.
 
-![Beacon GUI](image/beacon.gif)
+![Beacon GUI](images/beacon.gif)
 
 ## Development Process
 
