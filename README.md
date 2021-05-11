@@ -4,6 +4,28 @@ The [command line ground station](https://github.com/huiminlim/ground_stn) was b
 
 ## Getting Started
 
+To begin, download the Ground Station Desktop app.
+
+Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` from the `Releases` page [here](https://github.com/huiminlim/ground_stn-gui/releases).
+
+Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
+
+You can find the latest version of the Ground Station Desktop app and the Version tag in the table below.
+
+| Executable Name | Version Number |
+| --------------- | -------------- |
+| `Ground_Stn.exe`| `v-beacon-hk`  |
+
+Click on the `Ground_Stn.exe` under the `Assets` section to download it.
+
+After downloading the Desktop app, start the Ground Station Desktop app.
+
+A security warning may pop up in some cases. In such cases, click on `More Info` as shown in the screenshot below.
+
+After that, click on `Run anyway`.
+
+The Ground Station Desktop app will appear, like in the screenshot below.
+
 ## Features
 
 ## Requirements Gathering
