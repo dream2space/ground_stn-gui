@@ -63,7 +63,6 @@ The first page of the Ground Station app shows the serial port selection.
 
 #### For Windows
 
-
 | 💡 | **Plug the transceivers into your laptop sequentially for this step** |
 | --- | -------------------------------------------------------------------- |
 
