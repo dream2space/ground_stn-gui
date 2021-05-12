@@ -8,23 +8,22 @@ To begin, download the Ground Station Desktop app.
 
 | Column 1 Header | Column 2 Header | Column 3 Header |
 | --------------- | --------------- | --------------- |
-| Row 1 Column 1 | Row 1 Column 2 | Row 1 Column 3 |
-| Row 2 Column 1 | Row 2 Column 2 | Row 2 Column 3 |
-| Row 3 Column 1 | Row 3 Column 2 | Row 3 Column 3 |
+| Row 1 Column 1  | Row 1 Column 2  | Row 1 Column 3  |
+| Row 2 Column 1  | Row 2 Column 2  | Row 2 Column 3  |
+| Row 3 Column 1  | Row 3 Column 2  | Row 3 Column 3  |
 
 Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` from the `Releases` page [here](https://github.com/huiminlim/ground_stn-gui/releases).
 
 Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
 
-| |
-|-|
-![Ground Station exe releases](images/ground_stn_exe_releases.png)
-| |
+| Column 1 Header                                                    |
+| ------------------------------------------------------------------ |
+| ![Ground Station exe releases](images/ground_stn_exe_releases.png) |
 
 You can find the latest version of the Ground Station Desktop app and the Version tag in the table below.
 
 | Executable Name  | Version Number |
-|------------------|----------------|
+| ---------------- | -------------- |
 | `Ground_Stn.exe` | `v-beacon-hk`  |
 
 Click on the `Ground_Stn.exe` under the `Assets` section to download it.
