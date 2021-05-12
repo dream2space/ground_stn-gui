@@ -62,7 +62,7 @@ The first page of the Ground Station app shows the serial port selection.
 
 Click [here](#for-windows) for Window OS instructions and [here](#for-mac) for Mac.
 
-| 💡 | **Plug the transceivers into your laptop sequentially for this step** |
+| 💡 | **Plug the transceivers into your laptop sequentially for this step.** |
 | --- | -------------------------------------------------------------------- |
 
 #### For Windows
