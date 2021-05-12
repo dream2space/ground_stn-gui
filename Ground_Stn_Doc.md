@@ -16,7 +16,7 @@ You can find the latest version of the Ground Station Desktop app and the Versio
 
 | Executable Name  | Version Number |
 | ---------------- | -------------- |
-| `Ground_Stn.exe` | `v-beacon-hk`  |
+| `Ground_Stn.exe` | `v-hk-logs`    |
 
 Click on the `Ground_Stn.exe` under the `Assets` section to download it.
 

@@ -67,10 +67,10 @@ Click [here](#for-windows) for Window OS instructions and [here](#for-mac) for M
 
 #### For Windows
 
-<details style="background-color:#fbfbfb">
+<details style="background-color:#f0f0f0">
 <summary> 🔔 <b>How to access Device Manager</b> 🔔 </summary>
 <br>
-<div style="background-color:#fbfbfb">
+<div style="background-color:#f0f0f0">
 
 Press and hold the Windows key and type in <code> Device Manager </code>.
 
