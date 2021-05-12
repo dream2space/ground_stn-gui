@@ -10,13 +10,13 @@ Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` f
 
 Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
 
-![picture 2](images/ground_stn_exe_releases.png)
+![Ground Station exe releases](images/ground_stn_exe_releases.png)
 
 You can find the latest version of the Ground Station Desktop app and the Version tag in the table below.
 
-| Executable Name | Version Number |
-| --------------- | -------------- |
-| `Ground_Stn.exe`| `v-beacon-hk`  |
+| Executable Name  | Version Number |
+|------------------|----------------|
+| `Ground_Stn.exe` | `v-beacon-hk`  |
 
 Click on the `Ground_Stn.exe` under the `Assets` section to download it.
 
@@ -30,7 +30,7 @@ After that, click on `Run anyway`.
 
 ![Security Warning 2](images/security_warning2.png)
 
-The Ground Station Desktop app will appear, like in the screenshot below.
+To check if the Ground Station is downloaded correctly, the Ground Station Desktop app will appear, like in the screenshot below.
 
 ![Desktop App](images/app_start.png)
 
@@ -38,7 +38,35 @@ The Ground Station Desktop app will appear, like in the screenshot below.
 
 The Ground Station app has several functions to interact with the CubeSat.
 
-### Overview
+### Port Setup
+
+| ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
+| --- | -------------------------------------------------------------------------------------- |
+
+To setup the Ground Station, connect the 2 transceivers to talk to the TT&C and Payload to your laptop.
+
+The transceivers need a intermediary bridge to connect its pins to the USB ports of laptops and an USB adapter is used.
+
+This is how the TT&C transceiver connected to the USB adapter.
+
+![TT&C Ground Station](images/ttnc_ground_station.jpg)
+
+Similarly, this is how the Payload transceiver is connected to the USB adapter.
+
+![Payload Ground Station](images/payload_ground_station.jpg)
+
+The first page of the Ground Station app shows the serial port selection.
+
+![Ground Station Ports Selection](images/ground_station_page1.PNG)
+
+#### For Windows
+
+| 💡 | **Plug the transceivers into your laptop sequentially for this step** |
+| --- | -------------------------------------------------------------------- |
+
+Plug in the USB adapter for the TT&C transceiver to the laptop.
+
+#### For Mac
 
 ### Beacons
 
