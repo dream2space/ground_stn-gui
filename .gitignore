@@ -5,4 +5,4 @@ ground_stn.spec
 dist/*
 build/*
 *.spec
-housekeeping_data*
+*housekeeping_data
