@@ -6,12 +6,6 @@ The [command line ground station](https://github.com/huiminlim/ground_stn) was b
 
 To begin, download the Ground Station Desktop app.
 
-| Column 1 Header | Column 2 Header | Column 3 Header |
-| --------------- | --------------- | --------------- |
-| Row 1 Column 1  | Row 1 Column 2  | Row 1 Column 3  |
-| Row 2 Column 1  | Row 2 Column 2  | Row 2 Column 3  |
-| Row 3 Column 1  | Row 3 Column 2  | Row 3 Column 3  |
-
 Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` from the `Releases` page [here](https://github.com/huiminlim/ground_stn-gui/releases).
 
 Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
@@ -19,6 +13,7 @@ Navigate to the section as shown in the screenshot below to find the latest vers
 |                                                                    |
 | ------------------------------------------------------------------ |
 | ![Ground Station exe releases](images/ground_stn_exe_releases.png) |
+|                                                                    |
 
 You can find the latest version of the Ground Station Desktop app and the Version tag in the table below.
 
@@ -48,10 +43,11 @@ The Ground Station app has several functions to interact with the CubeSat.
 
 ### Port Setup
 
-This.
+| ⚠️ |                                                                                        |
+| - | -------------------------------------------------------------------------------------- |
+|   | **Ensure that your Ground Station app is closed before continuing with this section.** |
+|   |                                                                                        |
 
-| ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
-| --- | -------------------------------------------------------------------------------------- |
 
 To setup the Ground Station, connect the 2 transceivers to talk to the TT&C and Payload to your laptop.
 
