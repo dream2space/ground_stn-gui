@@ -10,10 +10,8 @@ Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` f
 
 Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
 
-|                                                                    |
-| ------------------------------------------------------------------ |
 | ![Ground Station exe releases](images/ground_stn_exe_releases.png) |
-|                                                                    |
+| ------------------------------------------------------------------ |
 
 You can find the latest version of the Ground Station Desktop app and the Version tag in the table below.
 
@@ -43,10 +41,9 @@ The Ground Station app has several functions to interact with the CubeSat.
 
 ### Port Setup
 
-|   |                                                                                        |
-| - | -------------------------------------------------------------------------------------- |
-| ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
 
+| ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
+| - | -------------------------------------------------------------------------------------- |
 
 To setup the Ground Station, connect the 2 transceivers to talk to the TT&C and Payload to your laptop.
 
@@ -66,7 +63,6 @@ The first page of the Ground Station app shows the serial port selection.
 
 #### For Windows
 
-This.
 
 | 💡 | **Plug the transceivers into your laptop sequentially for this step** |
 | --- | -------------------------------------------------------------------- |
