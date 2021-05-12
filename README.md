@@ -43,9 +43,9 @@ The Ground Station app has several functions to interact with the CubeSat.
 
 ### Port Setup
 
-| ⚠️ |                                                                                        |
+|   |                                                                                        |
 | - | -------------------------------------------------------------------------------------- |
-|   | **Ensure that your Ground Station app is closed before continuing with this section.** |
+| ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
 |   |                                                                                        |
 
 
