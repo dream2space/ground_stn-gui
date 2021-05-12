@@ -60,14 +60,43 @@ The first page of the Ground Station app shows the serial port selection.
 
 ![Ground Station Ports Selection](images/ground_station_page1.PNG)
 
-#### For Windows
+Click [here](#for-windows) for Window OS instructions and [here](#for-mac) for Mac.
 
 | 💡 | **Plug the transceivers into your laptop sequentially for this step** |
 | --- | -------------------------------------------------------------------- |
 
+#### For Windows
+
+<details style="background-color:#fbfbfb">
+<summary> 🔔 <b>How to access Device Manager</b> 🔔 </summary>
+<br>
+<div style="background-color:#fbfbfb">
+
+Press and hold the Windows key and type in <code> Device Manager </code>.
+
+Click on <code> Device Manager </code> and navigate to <code> COM and LPT </code>
+
+View the current COM port of the USB inserted.
+</div>
+</details>
+
 Plug in the USB adapter for the TT&C transceiver to the laptop.
 
+Take note of the COM port assigned to the TT&C transceiver's USB adapter by checking the Device Manager.
+
+Plug in the USB adapter for the Payload transceiver to the laptop.
+
+Take note of the COM port assigned to the Payload transceiver's USB adapter by checking the Device Manager.
+
+Select the correct Ports in the Ground Station with the COM ports noted down by clicking on the respective drop down menus.
+
+![Ground Station Ports Selection](images/ground_station_page1_select.PNG)
+
+To complete, click on `Start`.
+
 #### For Mac
+
+In progress.
 
 ### Beacons
 
