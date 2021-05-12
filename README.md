@@ -43,6 +43,8 @@ The Ground Station app has several functions to interact with the CubeSat.
 
 ### Port Setup
 
+This.
+
 | ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
 | --- | -------------------------------------------------------------------------------------- |
 
@@ -63,6 +65,8 @@ The first page of the Ground Station app shows the serial port selection.
 ![Ground Station Ports Selection](images/ground_station_page1.PNG)
 
 #### For Windows
+
+This.
 
 | 💡 | **Plug the transceivers into your laptop sequentially for this step** |
 | --- | -------------------------------------------------------------------- |
