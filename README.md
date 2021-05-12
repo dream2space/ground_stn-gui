@@ -100,13 +100,37 @@ In progress.
 
 ### Beacons
 
-The panel on the right is to capture the Beacons that the Cubesat sends out every 60 seconds.
+The panel on the right is to display the Beacons that the Cubesat sends out every 60 seconds.
 
 ![Beacon feature](images/beacon_feature.png)
 
 Once the Ground Station receives a new Beacon, the fields will display a yellow alert when it updates the Beacon panel.
 
 ### Housekeeping Data Telecommands
+
+The top left panel is dedicated to the Housekeeping Command.
+
+The housekeeping data command is sent from the Ground Station to the Cubesat's TT&C transceiver to retrieve a log of satellite sensor data.
+
+![Housekeeping data telecommand](images/housekeeping_data.png)
+
+To retrieve the log of satellite sensor data from the Cubesat, click on the `Click here` button.
+
+The telecommand will be sent from the Ground Station to the Cubesat.
+
+Wait for the housekeeping data is transmitted from the Cubesat back to the Ground Station.
+
+![Retrieving housekeeping data](images/housekeeping_data_retrieve.png)
+
+Upon completion of the housekeeping data transmission, the folder containing the housekeeping data will appear and the log will be saved in CSV file format.
+
+The folder will be created in the same location as the Ground Station app.
+
+![Housekeeping data folder](images/housekeeping_folder.png)
+
+Click on the CSV file to view the log.
+
+![CSV log](images/csv_log.png)
 
 ### Mission and Downlink Telecommands
 
