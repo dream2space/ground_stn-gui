@@ -28,13 +28,15 @@ A security warning may pop up in some cases. In such cases, click on `More Info`
 
 After that, click on `Run anyway`.
 
-![picture 4](images/security_warning2.png)
+![Security Warning 2](images/security_warning2.png)
 
 The Ground Station Desktop app will appear, like in the screenshot below.
 
-![picture 5](images/app_start.png)
+![Desktop App](images/app_start.png)
 
 ## Features
+
+The Ground Station app has several functions to interact with the CubeSat.
 
 ### Overview
 
