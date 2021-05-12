@@ -100,9 +100,17 @@ In progress.
 
 ### Beacons
 
+The panel on the right is to capture the Beacons that the Cubesat sends out every 60 seconds.
+
+![Beacon feature](images/beacon_feature.png)
+
+Once the Ground Station receives a new Beacon, the fields will display a yellow alert when it updates the Beacon panel.
+
 ### Housekeeping Data Telecommands
 
 ### Mission and Downlink Telecommands
+
+In progress.
 
 ## Requirements Gathering
 
