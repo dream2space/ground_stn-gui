@@ -16,7 +16,7 @@ Download the latest version of the Ground Station Desktop app `Ground_Stn.exe` f
 
 Navigate to the section as shown in the screenshot below to find the latest version of the Ground Station Desktop app.
 
-| Column 1 Header                                                    |
+|                                                                    |
 | ------------------------------------------------------------------ |
 | ![Ground Station exe releases](images/ground_stn_exe_releases.png) |
 
