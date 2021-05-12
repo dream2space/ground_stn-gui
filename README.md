@@ -45,7 +45,6 @@ The Ground Station app has several functions to interact with the CubeSat.
 
 | ⚠️ | **Ensure that your Ground Station app is closed before continuing with this section.** |
 | --- | -------------------------------------------------------------------------------------- |
-|     |                                                                                        |
 
 To setup the Ground Station, connect the 2 transceivers to talk to the TT&C and Payload to your laptop.
 
