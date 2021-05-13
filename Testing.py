@@ -1,1 +1,1 @@
-IS_TESTING = False
+IS_TESTING = True

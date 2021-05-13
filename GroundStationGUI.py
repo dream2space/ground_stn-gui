@@ -15,7 +15,7 @@ import os
 
 
 class MainApp(tk.Frame):
-    def __init__(self, parent, ports, pipe_beacon, ttnc_lock):
+    def __init__(self, parent, ports, pipe_beacon):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.minsize(650, 140)
@@ -23,9 +23,6 @@ class MainApp(tk.Frame):
 
         # Serial ports
         self.ports = ports
-
-        # Locks for serial ports
-        self.serial_ttnc_lock = ttnc_lock
 
         # Pipe for beacon
         self.pipe_beacon = pipe_beacon
@@ -68,10 +65,11 @@ class MainApp(tk.Frame):
             self.command.pack(side=tk.LEFT)
 
     def hk_process(self):
-        # self.p1 = Process(target=sample_process, daemon=True,
-        #                   args=(self.pipe_beacon, self.serial_ttnc_lock,))  # Testing
-        self.p1 = Process(target=get_HK_logs, daemon=True,
-                          args=(self.pipe_beacon, self.port_ttnc, self.serial_ttnc_lock,))
+        if IS_TESTING:
+            self.p1 = Process(target=sample_process, daemon=True)  # Testing
+        else:
+            self.p1 = Process(target=get_HK_logs, daemon=True,
+                              args=(self.pipe_beacon, self.port_ttnc,))
         self.p1.start()
 
         # Hide button
@@ -99,7 +97,7 @@ class MainApp(tk.Frame):
                 subprocess.check_call(['xdg-open', '--', path])
 
 
-def get_HK_logs(pipe, ttnc_serial_port, lock):
+def get_HK_logs(pipe, ttnc_serial_port):
 
     def setup_serial(port):
         ttnc_ser = serial.Serial(port)
@@ -122,7 +120,6 @@ def get_HK_logs(pipe, ttnc_serial_port, lock):
         pass
     print(f"process receive {pipe.recv()}")
 
-    # lock.acquire()
     ttnc_serial = setup_serial(ttnc_serial_port)
 
     print(f"telecommand is {telecommand}")
@@ -131,7 +128,6 @@ def get_HK_logs(pipe, ttnc_serial_port, lock):
     hk_bytes = ttnc_serial.read(
         ccsds_param.CCSDS_OBC_TELEMETRY_LEN_BYTES)
     print(f"hk bytes {hk_bytes}")
-    # lock.release()
 
     print("done sending command")
     ttnc_serial.close()
@@ -145,19 +141,10 @@ def get_HK_logs(pipe, ttnc_serial_port, lock):
         print("hk logs failed")
 
 
-def sample_process(pipe, lock):
+def sample_process():
     i = 0
-    max_val = 1000000
+    max_val = 50000
 
-    pipe.send("close_serial")
-    while pipe.poll() == "":
-        pass
-    print(pipe.recv())
-
-    lock.acquire()
     while i < max_val:
         print(i)
         i += 1
-    lock.release()
-
-    pipe.send("open_serial")
