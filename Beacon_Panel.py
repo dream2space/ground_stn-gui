@@ -1,6 +1,4 @@
-from multiprocessing import Pipe
 import App_Parameters as app_param
-from queue import Empty
 import tkinter as tk
 
 
