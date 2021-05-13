@@ -18,7 +18,7 @@ class MainApp(tk.Frame):
     def __init__(self, parent, ports, pipe_beacon):
         tk.Frame.__init__(self, parent)
         self.parent = parent
-        # self.parent.minsize(650, 140)
+        self.parent.resizable(width=False, height=False)
         self.parent.title("Ground Station")
 
         # Serial ports
