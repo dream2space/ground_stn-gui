@@ -25,7 +25,7 @@ class MainApp(tk.Frame):
         self.ports = ports
 
         # Locks for serial ports
-        self. serial_ttnc_lock = ttnc_lock
+        self.serial_ttnc_lock = ttnc_lock
 
         # Pipe for beacon
         self.pipe_beacon = pipe_beacon
