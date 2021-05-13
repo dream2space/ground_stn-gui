@@ -40,7 +40,7 @@ def scan_serial_ports():
     return result
 
 
-def beacon_collection(lock, pipe_beacon):
+def beacon_collection(pipe_beacon):
 
     def setup_serial(port):
         ttnc_ser = serial.Serial(port)
@@ -72,10 +72,7 @@ def beacon_collection(lock, pipe_beacon):
     isStopBeacon = False
     while True:
 
-        # Acquire lock and begin beacon receiving
-
         if IS_TESTING:
-            # lock.acquire()
             temp = f"{random.randrange(20, 40)}"
             gx = f"{random.randint(-50, 50)}"
             gy = f"{random.randint(-50, 50)}"
@@ -83,7 +80,6 @@ def beacon_collection(lock, pipe_beacon):
             print("beacon", temp, gx, gy, gz)
             time.sleep(10)
             pipe_beacon.send([temp, gx, gy, gz])
-            # lock.release()
             continue
 
         # If receive signal to close serial port
@@ -145,19 +141,16 @@ if __name__ == "__main__":
         ports.append("COM14")
         ports.append("COM15")
 
-    # Create locks for serial port
-    serial_ttnc_lock = multiprocessing.Lock()
-
     # Create pipes for beacon
     pipe_beacon, pipe_gui = multiprocessing.Pipe(True)
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    MainApp(root, ports, pipe_gui, serial_ttnc_lock)
+    MainApp(root, ports, pipe_gui)
 
     # Thread to read data
     beacon_thread = threading.Thread(
-        target=beacon_collection, daemon=True, args=(serial_ttnc_lock, pipe_beacon,))
+        target=beacon_collection, daemon=True, args=(pipe_beacon,))
     beacon_thread.start()
 
     # Start Tk GUI in main thread
