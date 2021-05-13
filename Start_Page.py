@@ -20,10 +20,10 @@ class StartPage(tk.Frame):
         self.bottom_container = tk.Frame(self.main_container)
         self.button_container = tk.Frame(self.bottom_container)
         self.warning_container = tk.Frame(self.bottom_container)
-        self.top_container.pack(side=tk.TOP, padx=5, pady=5)
-        self.bottom_container.pack(side=tk.BOTTOM, padx=5, pady=5)
-        self.warning_container.pack(side=tk.BOTTOM, padx=5, pady=5)
-        self.button_container.pack(side=tk.BOTTOM, padx=5, pady=5)
+        self.top_container.pack(side=tk.TOP, padx=10, pady=10)
+        self.bottom_container.pack(side=tk.BOTTOM, padx=10, pady=5)
+        self.warning_container.pack(side=tk.BOTTOM)
+        self.button_container.pack(side=tk.BOTTOM)
 
         # Create welcome and logo
         fontStyle = tkFont.Font(family="Helvetica", size=14, weight="bold")
