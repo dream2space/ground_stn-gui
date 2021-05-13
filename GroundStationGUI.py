@@ -1,6 +1,6 @@
 from CCSDS_HK_Util import CCSDS_HK_Util
 from CCSDS_Encoder import CCSDS_Encoder
-from Command_Panel import Command_Panel
+from Command_Panel import CommandPanel
 import CCSDS_Parameters as ccsds_param
 from Beacon_Panel import BeaconPanel
 from multiprocessing import Process
@@ -64,7 +64,7 @@ class MainApp(tk.Frame):
             self.beacon = BeaconPanel(self.container, self.pipe_beacon)
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
-            self.command = Command_Panel(self.container, self)
+            self.command = CommandPanel(self.container, self)
             self.command.pack(side=tk.LEFT)
 
     def hk_process(self):

@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter as tk
 
 
-class Command_Panel(tk.Frame):
+class CommandPanel(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, width=app_param.APP_WIDTH/2,
                           height=app_param.APP_HEIGHT, padx=10, pady=10)
