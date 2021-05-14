@@ -1,5 +1,5 @@
-import tkinter.font as tkFont
 from PIL import Image, ImageTk
+import tkinter.font as tkFont
 import tkinter as tk
 
 
