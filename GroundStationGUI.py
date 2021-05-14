@@ -45,7 +45,6 @@ class MainApp(tk.Frame):
             self.start.set_port_warning_message()
 
         else:
-
             # Pass ttnc serial object via pipe to thread
             self.pipe_beacon.send(self.port_ttnc)
 
@@ -95,6 +94,12 @@ class MainApp(tk.Frame):
                 os.startfile(path)
             elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
                 subprocess.check_call(['xdg-open', '--', path])
+
+    def open_mission_downlink_command_window(self):
+        print("hello mission command")
+        self.mission_window = tk.Toplevel(self.parent)
+        self.mission_window.title("Mission and Downlink Command")
+        self.mission_window.geometry("200x200")
 
 
 def get_HK_logs(pipe, ttnc_serial_port):
