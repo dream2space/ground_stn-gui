@@ -36,11 +36,11 @@ class HousekeepingDataFrame(tk.LabelFrame):
 
         # Add button to trigger housekeeping data command
         self.start_hk_button = tk.Button(
-            self, text="Click here", command=controller.hk_process, pady=8)
+            self, text="Click here", command=controller.hk_process)
         self.start_hk_button.pack()
 
         # Progress bar
-        self.pbar_container = tk.Frame(self, pady=8)
+        self.pbar_container = tk.Frame(self, pady=4)
         self.pbar_container.pack()
         self.pbar = ttk.Progressbar(
             self.pbar_container, mode='indeterminate', length=100)
@@ -48,7 +48,7 @@ class HousekeepingDataFrame(tk.LabelFrame):
         # Outcome message
         self.outcome_message = tk.StringVar()
         self.outcome_message_label = tk.Label(
-            self, pady=8,  textvariable=self.outcome_message)
+            self, textvariable=self.outcome_message)
         self.outcome_message_label.pack()
 
 
@@ -61,7 +61,7 @@ class MissionDownlinkFrame(tk.LabelFrame):
 
         # Add line for Mission and Downlink command
         self.label = tk.Label(
-            self, text="Send Mission + Downlink Command", pady=8)
+            self, text="Send Mission + Downlink Command")
         self.label.pack()
 
         # Add button to start process to send Mission and Downlink command
