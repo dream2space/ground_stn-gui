@@ -104,10 +104,10 @@ def beacon_collection(pipe_beacon):
 
         if not isStopBeacon:
             # Read beacon packets
-            print("reading beaconds")
+            # print("reading beaconds")
             ccsds_beacon_bytes = ttnc_ser.read(
                 ccsds_params.CCSDS_BEACON_LEN_BYTES)
-            print(ccsds_beacon_bytes)
+            # print(ccsds_beacon_bytes)
             # lock.release()
 
             if ccsds_beacon_bytes:

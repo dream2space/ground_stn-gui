@@ -45,6 +45,12 @@ class HousekeepingDataFrame(tk.LabelFrame):
         self.pbar = ttk.Progressbar(
             self.pbar_container, mode='indeterminate', length=100)
 
+        # Outcome message
+        self.outcome_message = tk.StringVar()
+        self.outcome_message_label = tk.Label(
+            self, pady=8,  textvariable=self.outcome_message)
+        self.outcome_message_label.pack()
+
 
 class MissionDownlinkFrame(tk.LabelFrame):
     def __init__(self, parent, *args, **kwargs):

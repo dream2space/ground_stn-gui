@@ -1,3 +1,4 @@
+from typing import Sized
 from CCSDS_HK_Util import CCSDS_HK_Util
 from CCSDS_Encoder import CCSDS_Encoder
 from Command_Panel import CommandPanel
@@ -68,8 +69,11 @@ class MainApp(tk.Frame):
         if IS_TESTING:
             self.p1 = Process(target=sample_process, daemon=True)  # Testing
         else:
+            self.is_hk_process_success = False
+            self.prev_file_number = len(os.listdir(
+                app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH))
             self.p1 = Process(target=get_HK_logs, daemon=True,
-                              args=(self.pipe_beacon, self.port_ttnc,))
+                              args=(self.pipe_beacon, self.port_ttnc, ))
         self.p1.start()
 
         # Hide button
@@ -79,22 +83,54 @@ class MainApp(tk.Frame):
         self.command.housekeeping_command.pbar_container.pack()
         self.command.housekeeping_command.pbar.pack()
         self.command.housekeeping_command.pbar.start()
-        self.after(100, self.checking)
+        self.after(100, self.hk_process_checking)
 
-    def checking(self):
+    def hk_process_checking(self):
         if self.p1.is_alive():
-            self.after(100, self.checking)
+            self.after(100, self.hk_process_checking)
         else:
             self.command.housekeeping_command.pbar.stop()
             self.command.housekeeping_command.pbar_container.pack_forget()
             self.command.housekeeping_command.start_hk_button.pack()
 
+            # Determine if telecommand obtaining is successful
+            curr_number_files = len(os.listdir(
+                app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH))
+            if curr_number_files > self.prev_file_number:
+                self.is_hk_process_success = True
+                self.prev_file_number = curr_number_files
+
             # Open up explorer
-            path = os.path.relpath(app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
-            if sys.platform.startswith('win'):
-                os.startfile(path)
-            elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-                subprocess.check_call(['xdg-open', '--', path])
+            if self.is_hk_process_success == True:
+                path = os.path.relpath(
+                    app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
+                if sys.platform.startswith('win'):
+                    os.startfile(path)
+                elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+                    subprocess.check_call(['xdg-open', '--', path])
+
+                # display success message
+                self.command.housekeeping_command.outcome_message.set(
+                    "Success!")
+                self.command.housekeeping_command.outcome_message_label["fg"] = 'green'
+            else:
+                # display fail message
+                self.command.housekeeping_command.outcome_message.set(
+                    "Failed!")
+                self.command.housekeeping_command.outcome_message_label["fg"] = 'red'
+
+            # Display message
+            self.command.housekeeping_command.outcome_message_label.pack(
+                side=tk.BOTTOM)
+
+            # Set task to clear the message
+            self.after(10000, self.hk_outcome_message_clear)
+
+            # Undo flag
+            self.is_hk_process_success = False
+
+    def hk_outcome_message_clear(self):
+        self.command.housekeeping_command.outcome_message.set("  ")
 
 
 def get_HK_logs(pipe, ttnc_serial_port):
@@ -127,7 +163,7 @@ def get_HK_logs(pipe, ttnc_serial_port):
     ttnc_serial.write(telecommand)
     hk_bytes = ttnc_serial.read(
         ccsds_param.CCSDS_OBC_TELEMETRY_LEN_BYTES)
-    print(f"hk bytes {hk_bytes}")
+    # print(f"hk bytes {hk_bytes}")
 
     print("done sending command")
     ttnc_serial.close()
