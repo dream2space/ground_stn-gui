@@ -1,4 +1,3 @@
-from typing import Sized
 from CCSDS_HK_Util import CCSDS_HK_Util
 from CCSDS_Encoder import CCSDS_Encoder
 from Command_Panel import CommandPanel
