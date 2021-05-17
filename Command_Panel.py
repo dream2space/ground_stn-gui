@@ -20,7 +20,7 @@ class CommandPanel(tk.Frame):
 
         # Create section for mission and downlink
         self.mission_command = MissionDownlinkFrame(
-            self.container, text="Mission and Downlink Command", padx=10, pady=8)
+            self.container, self.controller,  text="Mission and Downlink Command", padx=10, pady=8)
 
 
 class HousekeepingDataFrame(tk.LabelFrame):
@@ -53,11 +53,18 @@ class HousekeepingDataFrame(tk.LabelFrame):
 
 
 class MissionDownlinkFrame(tk.LabelFrame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, controller, *args, **kwargs):
         tk.LabelFrame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+        self.controller = controller
         self.pack(side=tk.BOTTOM, anchor=tk.SW, expand=1, fill="both")
 
         # Add line for Mission and Downlink command
-        self.label = tk.Label(self, text="test")
+        self.label = tk.Label(
+            self, text="Send Mission + Downlink Command", pady=8)
         self.label.pack()
+
+        # Add button to start process to send Mission and Downlink command
+        self.button = tk.Button(self, text="Click here", pady=8,
+                                command=self.controller.open_mission_downlink_command_window)
+        self.button.pack()
