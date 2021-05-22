@@ -1,4 +1,4 @@
-from App_Util import beacon_collection, resource_path
+from App_Util import beacon_collection
 from GroundStationGUI import MainApp
 import App_Parameters as app_params
 import multiprocessing
@@ -21,7 +21,6 @@ if __name__ == "__main__":
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    root.iconbitmap(resource_path("assets/satellite.ico"))
     MainApp(root, pipe_gui)
 
     # Thread to read data

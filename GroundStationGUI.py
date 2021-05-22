@@ -6,6 +6,7 @@ import CCSDS_Parameters as ccsds_param
 from Beacon_Panel import BeaconPanel
 from multiprocessing import Process
 import App_Parameters as app_param
+from App_Util import resource_path
 from Start_Page import StartPage
 from Testing import IS_TESTING
 import tkinter as tk
@@ -21,7 +22,8 @@ class MainApp(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.resizable(width=False, height=False)
-        self.parent.title("Ground Station")
+        self.parent.iconbitmap(resource_path("assets/satellite.ico"))
+        self.parent.title("Dream2space Ground Station")
 
         # Scan for serial ports
         ports = self.scan_serial_ports()
