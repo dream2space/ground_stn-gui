@@ -124,12 +124,15 @@ class MainApp(tk.Frame):
             self.command.housekeeping_command.pbar_container.pack_forget()
             self.command.housekeeping_command.start_hk_button.pack()
 
-            # Determine if telecommand obtaining is successful
-            curr_number_files = len(os.listdir(
-                app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH))
-            if curr_number_files > self.prev_file_number:
+            if not IS_TESTING:
+                # Determine if telecommand obtaining is successful
+                curr_number_files = len(os.listdir(
+                    app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH))
+                if curr_number_files > self.prev_file_number:
+                    self.is_hk_process_success = True
+                    self.prev_file_number = curr_number_files
+            else:
                 self.is_hk_process_success = True
-                self.prev_file_number = curr_number_files
 
             # Open up explorer
             if self.is_hk_process_success == True:
