@@ -7,6 +7,7 @@ class StartPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.parent = parent
+        self.controller = controller
 
         # Extract list of ports
         ports = controller.ports
@@ -85,7 +86,7 @@ class StartPage(tk.Frame):
         refresh_image = ImageTk.PhotoImage(
             Image.open("assets/refresh.jpg").resize((20, 20)))
         self.refresh_button = tk.Button(
-            self.refresh_container, text="Refresh ", image=refresh_image, compound=tk.RIGHT)
+            self.refresh_container, text="Refresh ", image=refresh_image, compound=tk.RIGHT, command=self.refresh_serial_ports)
         self.refresh_button.photo = refresh_image
         self.refresh_button.pack(expand=True)
 
@@ -116,3 +117,13 @@ class StartPage(tk.Frame):
         self.warning_text.set(
             "To begin, select the COM ports for TT&C and Payload transceivers.")
         self.warning_label.pack()
+
+    def refresh_serial_ports(self):
+        ports = self.controller.scan_serial_ports()
+        self.ttnc_value_in_menu.set(ports[0])
+        self.ttnc_option_menu = tk.OptionMenu(
+            self.middle_left_container, self.ttnc_value_in_menu, *ports)
+
+        self.payload_value_in_menu.set(ports[0])
+        self.payload_option_menu = tk.OptionMenu(
+            self.middle_right_container, self.payload_value_in_menu, *ports)

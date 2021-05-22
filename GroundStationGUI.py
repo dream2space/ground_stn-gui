@@ -11,18 +11,20 @@ from Testing import IS_TESTING
 import tkinter as tk
 import subprocess
 import serial
+import glob
 import sys
 import os
 
 
 class MainApp(tk.Frame):
-    def __init__(self, parent, ports, pipe_beacon):
+    def __init__(self, parent, pipe_beacon):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.parent.resizable(width=False, height=False)
         self.parent.title("Ground Station")
 
-        # Serial ports
+        # Scan for serial ports
+        ports = self.scan_serial_ports()
         self.ports = ports
 
         # Pipe for beacon
@@ -63,6 +65,34 @@ class MainApp(tk.Frame):
 
             self.command = CommandPanel(self.container, self)
             self.command.pack(side=tk.LEFT)
+
+    def scan_serial_ports(self):
+        ports = []
+        if sys.platform.startswith('win'):
+            ports = ['COM%s' % (i + 1) for i in range(256)]
+        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+            # this excludes your current terminal "/dev/tty"
+            ports = glob.glob('/dev/tty[A-Za-z]*')
+        # else:
+        #     raise EnvironmentError('Unsupported platform')
+
+        result = []
+        for port in ports:
+            try:
+                s = serial.Serial(port)
+                s.close()
+                result.append(port)
+            except (OSError, serial.SerialException):
+                pass
+
+        result.insert(0, " ")
+
+        # In testing, add dummy entries
+        if IS_TESTING:
+            result.append("COM14")
+            result.append("COM15")
+
+        return result
 
     def hk_process(self):
         if IS_TESTING:

@@ -1,42 +1,10 @@
-# Serial port scan
-import serial
-import glob
-import sys
-
-
 # Testing flag
 from Testing import IS_TESTING
 from CCSDS_Decoder import CCSDS_Decoder
 import CCSDS_Parameters as ccsds_params
 import random
+import serial
 import time
-
-
-def scan_serial_ports():
-    """
-    Scans for serial ports currently open and returns as a list.
-
-    Returns:
-        list: List of serial ports as Strings
-    """
-    ports = []
-    if sys.platform.startswith('win'):
-        ports = ['COM%s' % (i + 1) for i in range(256)]
-    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-        # this excludes your current terminal "/dev/tty"
-        ports = glob.glob('/dev/tty[A-Za-z]*')
-    # else:
-    #     raise EnvironmentError('Unsupported platform')
-
-    result = []
-    for port in ports:
-        try:
-            s = serial.Serial(port)
-            s.close()
-            result.append(port)
-        except (OSError, serial.SerialException):
-            pass
-    return result
 
 
 def beacon_collection(pipe_beacon):
