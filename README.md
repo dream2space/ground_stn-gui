@@ -2,6 +2,10 @@
 
 The [command line ground station](https://github.com/huiminlim/ground_stn) was built previously, so it's time for the GUI ground station to be built.
 
+![Ground Station Start Page](web_images/gui-front.png)
+
+![Ground Station Dashboard](web_images/gui-panel.png)
+
 ## Getting Started
 
 ## Requirements Gathering
