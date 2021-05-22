@@ -1,7 +1,6 @@
 node_modules/*
 *pycache*
 *vscode*
-ground_stn.spec
 dist/*
 build/*
 *housekeeping_data
