@@ -15,20 +15,24 @@ class StartPage(tk.Frame):
         self.main_container = tk.Frame(self.parent)
         self.main_container.pack()
 
-        # Create top and bottom container
+        # Create holding containers
         self.top_container = tk.Frame(self.main_container)
+        self.middle_continer = tk.Frame(self.main_container)
         self.bottom_container = tk.Frame(self.main_container)
-        self.button_container = tk.Frame(self.bottom_container)
-        self.warning_container = tk.Frame(self.bottom_container)
         self.top_container.pack(side=tk.TOP, padx=10, pady=10)
+        self.middle_continer.pack(padx=10)
         self.bottom_container.pack(side=tk.BOTTOM, padx=10, pady=5)
-        self.warning_container.pack(side=tk.BOTTOM)
+
+        self.button_container = tk.Frame(self.middle_continer)
+        self.warning_container = tk.Frame(self.middle_continer)
+        self.warning_container.pack(side=tk.TOP)
         self.button_container.pack(side=tk.BOTTOM)
 
         # Create welcome and logo
-        fontStyle = tkFont.Font(family="Helvetica", size=14, weight="bold")
+        welcome_fontStyle = tkFont.Font(
+            family="Helvetica", size=14, weight="bold")
         self.welcome = tk.Label(
-            self.top_container, text="Welcome to dream2space Cubesat Ground Station!", compound=tk.CENTER, font=fontStyle)
+            self.top_container, text="Welcome to dream2space Cubesat Ground Station!", compound=tk.CENTER, font=welcome_fontStyle)
         self.welcome.pack(side=tk.TOP, padx=5, pady=5)
         img = ImageTk.PhotoImage(Image.open("assets/d2s.png").convert("RGBA"))
         self.image_logo = tk.Label(self.top_container, image=img)
@@ -37,10 +41,13 @@ class StartPage(tk.Frame):
                              expand="yes", padx=5, pady=5)
 
         # Create left and right for bottom container
-        self.bottom_left = tk.Frame(self.bottom_container)
-        self.bottom_right = tk.Frame(self.bottom_container)
+        self.bottom_left = tk.Frame(self.middle_continer)
+        self.bottom_right = tk.Frame(self.middle_continer)
         self.bottom_left.pack(side=tk.LEFT, padx=40)
         self.bottom_right.pack(side=tk.RIGHT, padx=40)
+
+        # Create a label for messages and warning
+        self.display_instruction_message()
 
         # Create label to prompt ttnc port selection
         self.ttnc_label = tk.Label(
@@ -71,12 +78,6 @@ class StartPage(tk.Frame):
                                 compound=tk.CENTER, command=controller.handle_transition)
         self.button.pack()
 
-        # Create a label for warning
-        self.warning_text = tk.StringVar()
-        self.warning_label = tk.Label(
-            self.warning_container, textvariable=self.warning_text, compound=tk.CENTER, fg="red")
-        self.warning_label.pack()
-
     def get_ttnc_port(self):
         return self.ttnc_value_in_menu.get()
 
@@ -84,4 +85,23 @@ class StartPage(tk.Frame):
         return self.payload_value_in_menu.get()
 
     def set_port_warning_message(self):
+        self.warning_label['fg'] = 'red'
         self.warning_text.set("Invalid!")
+        self.warning_label.pack()
+        self.after(2000, self.reset_instruction_message)
+
+    def display_instruction_message(self):
+        self.warning_fontStyle = tkFont.Font(
+            family="TkDefaultFont", weight="bold", size=10)
+        self.warning_text = tk.StringVar()
+        self.warning_text.set(
+            "To begin, select the COM ports for TT&C and Payload transceivers.")
+        self.warning_label = tk.Label(
+            self.warning_container, textvariable=self.warning_text, compound=tk.CENTER, font=self.warning_fontStyle)
+        self.warning_label.pack(side=tk.TOP, padx=3, pady=3)
+
+    def reset_instruction_message(self):
+        self.warning_label['fg'] = 'black'
+        self.warning_text.set(
+            "To begin, select the COM ports for TT&C and Payload transceivers.")
+        self.warning_label.pack()
