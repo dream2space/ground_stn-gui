@@ -30,7 +30,7 @@ class StartPage(tk.Frame):
         self.welcome = tk.Label(
             self.top_container, text="Welcome to dream2space Cubesat Ground Station!", compound=tk.CENTER, font=fontStyle)
         self.welcome.pack(side=tk.TOP, padx=5, pady=5)
-        img = ImageTk.PhotoImage(Image.open("images/d2s.png").convert("RGBA"))
+        img = ImageTk.PhotoImage(Image.open("assets/d2s.png").convert("RGBA"))
         self.image_logo = tk.Label(self.top_container, image=img)
         self.image_logo.photo = img
         self.image_logo.pack(side=tk.BOTTOM, fill="both",
