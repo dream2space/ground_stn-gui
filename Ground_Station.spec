@@ -5,7 +5,8 @@ block_cipher = None
 
 
 a = Analysis(['Ground_Station.py'],
-             pathex=['C:\\Users\\65844\\Desktop\\ground_stn-gui'],
+#             pathex=['C:\\Users\\65844\\Desktop\\ground_stn-gui'],
+             pathex=['C:\\Users\\user\\Desktop\\ground_stn-gui'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -17,9 +18,13 @@ a = Analysis(['Ground_Station.py'],
              cipher=block_cipher,
              noarchive=False)
 
-a.datas += [('assets/refresh.jpg', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\refresh.jpg', 'DATA')]
-a.datas += [('assets/d2s.png', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\d2s.png', 'DATA')]
-a.datas += [('assets/satellite.ico', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\satellite.ico', 'DATA')]
+a.datas += [('assets/refresh.jpg', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\assets\\refresh.jpg', 'DATA')]
+a.datas += [('assets/d2s.png', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\assets\\d2s.png', 'DATA')]
+a.datas += [('assets/satellite.ico', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\assets\\satellite.ico', 'DATA')]
+
+#a.datas += [('assets/refresh.jpg', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\refresh.jpg', 'DATA')]
+#a.datas += [('assets/d2s.png', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\d2s.png', 'DATA')]
+#a.datas += [('assets/satellite.ico', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\satellite.ico', 'DATA')]
 
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
