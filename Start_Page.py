@@ -1,3 +1,4 @@
+from App_Util import resource_path
 from PIL import Image, ImageTk
 import tkinter.font as tkFont
 import tkinter as tk
@@ -32,7 +33,8 @@ class StartPage(tk.Frame):
         self.welcome = tk.Label(
             self.top_container, text="Welcome to dream2space Cubesat Ground Station!", compound=tk.CENTER, font=welcome_fontStyle)
         self.welcome.pack(side=tk.TOP, padx=5, pady=5)
-        img = ImageTk.PhotoImage(Image.open("assets/d2s.png").convert("RGBA"))
+        img = ImageTk.PhotoImage(Image.open(
+            resource_path("assets/d2s.png")).convert("RGBA"))
         self.image_logo = tk.Label(self.top_container, image=img)
         self.image_logo.photo = img
         self.image_logo.pack(side=tk.BOTTOM, fill="both",
@@ -84,7 +86,7 @@ class StartPage(tk.Frame):
         self.refresh_container = tk.Frame(self.bottom_container)
         self.refresh_container.pack(side=tk.RIGHT)
         refresh_image = ImageTk.PhotoImage(
-            Image.open("assets/refresh.jpg").resize((20, 20)))
+            Image.open(resource_path("assets/refresh.jpg")).resize((20, 20)))
         self.refresh_button = tk.Button(
             self.refresh_container, text="Refresh ", image=refresh_image, compound=tk.RIGHT, command=self.refresh_serial_ports)
         self.refresh_button.photo = refresh_image

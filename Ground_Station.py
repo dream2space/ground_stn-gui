@@ -1,13 +1,10 @@
-from App_Util import beacon_collection
+from App_Util import beacon_collection, resource_path
 from GroundStationGUI import MainApp
 import App_Parameters as app_params
 import multiprocessing
 import tkinter as tk
 import threading
 import os
-
-# Testing flag
-from Testing import IS_TESTING
 
 # Start running GUI
 if __name__ == "__main__":
@@ -24,6 +21,7 @@ if __name__ == "__main__":
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
+    root.iconbitmap(resource_path("assets/satellite.ico"))
     MainApp(root, pipe_gui)
 
     # Thread to read data
