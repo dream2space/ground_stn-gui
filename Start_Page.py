@@ -17,11 +17,13 @@ class StartPage(tk.Frame):
 
         # Create holding containers
         self.top_container = tk.Frame(self.main_container)
-        self.middle_continer = tk.Frame(self.main_container)
+        self.middle_up_container = tk.Frame(self.main_container)
+        self.middle_down_container = tk.Frame(self.main_container)
         self.bottom_container = tk.Frame(self.main_container)
         self.top_container.pack(side=tk.TOP, padx=10, pady=10)
-        self.middle_continer.pack(padx=10)
-        self.bottom_container.pack(side=tk.BOTTOM, padx=10, pady=5)
+        self.middle_up_container.pack(padx=10)
+        self.middle_down_container.pack(padx=10)
+        self.bottom_container.pack(side=tk.RIGHT, padx=5, pady=5)
 
         # Create welcome and logo
         welcome_fontStyle = tkFont.Font(
@@ -36,13 +38,13 @@ class StartPage(tk.Frame):
                              expand="yes", padx=5, pady=5)
 
         # Create a label for messages and warning
-        self.warning_container = tk.Frame(self.middle_continer)
+        self.warning_container = tk.Frame(self.middle_up_container)
         self.warning_container.pack(side=tk.TOP)
         self.display_instruction_message(self.warning_container)
 
         # Create left and right for bottom container
-        self.middle_left_container = tk.Frame(self.middle_continer)
-        self.middle_right_container = tk.Frame(self.middle_continer)
+        self.middle_left_container = tk.Frame(self.middle_up_container)
+        self.middle_right_container = tk.Frame(self.middle_up_container)
         self.middle_left_container.pack(side=tk.LEFT, padx=40)
         self.middle_right_container.pack(side=tk.RIGHT, padx=40)
 
@@ -71,11 +73,21 @@ class StartPage(tk.Frame):
         self.payload_option_menu.pack(side=tk.BOTTOM)
 
         # Button to confirm choice
-        self.button_container = tk.Frame(self.middle_continer)
+        self.button_container = tk.Frame(self.middle_down_container)
         self.button_container.pack(side=tk.BOTTOM)
         self.button = tk.Button(self.button_container, text="Start",
                                 compound=tk.CENTER, command=controller.handle_transition)
         self.button.pack()
+
+        # Button to hit refresh
+        self.refresh_container = tk.Frame(self.bottom_container)
+        self.refresh_container.pack(side=tk.RIGHT)
+        refresh_image = ImageTk.PhotoImage(
+            Image.open("assets/refresh.jpg").resize((20, 20)))
+        self.refresh_button = tk.Button(
+            self.refresh_container, text="Refresh ", image=refresh_image, compound=tk.RIGHT)
+        self.refresh_button.photo = refresh_image
+        self.refresh_button.pack(expand=True)
 
     def get_ttnc_port(self):
         return self.ttnc_value_in_menu.get()
