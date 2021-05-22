@@ -122,10 +122,17 @@ class StartPage(tk.Frame):
 
     def refresh_serial_ports(self):
         ports = self.controller.scan_serial_ports()
+        print(ports)
+
+        # Refresh menu
+        self.ttnc_option_menu.pack_forget()
         self.ttnc_value_in_menu.set(ports[0])
         self.ttnc_option_menu = tk.OptionMenu(
             self.middle_left_container, self.ttnc_value_in_menu, *ports)
+        self.ttnc_option_menu.pack()
 
+        self.payload_option_menu.pack_forget()
         self.payload_value_in_menu.set(ports[0])
         self.payload_option_menu = tk.OptionMenu(
             self.middle_right_container, self.payload_value_in_menu, *ports)
+        self.payload_option_menu.pack()

@@ -85,7 +85,7 @@ class MainApp(tk.Frame):
                 s.close()
                 result.append(port)
             except (OSError, serial.SerialException):
-                pass
+                continue
 
         result.insert(0, " ")
 
