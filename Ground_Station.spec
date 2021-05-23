@@ -4,9 +4,9 @@
 block_cipher = None
 
 
-a = Analysis(['src\\Ground_Station\\Ground_Station.py'],
-#             pathex=['C:\\Users\\65844\\Desktop\\ground_stn-gui\\src\\Ground_Station'],
-             pathex=['C:\\Users\\user\\Desktop\\ground_stn-gui\\src\\Ground_Station'],
+a = Analysis(['Ground_Station.py'],
+#             pathex=['C:\\Users\\65844\\Desktop\\ground_stn-gui'],
+             pathex=['C:\\Users\\user\\Desktop\\ground_stn-gui'],
              binaries=[],
              datas=[],
              hiddenimports=["babel.numbers"],
@@ -18,13 +18,13 @@ a = Analysis(['src\\Ground_Station\\Ground_Station.py'],
              cipher=block_cipher,
              noarchive=False)
 
-a.datas += [('assets/refresh.jpg', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\src\\Ground_Station\\assets\\refresh.jpg', 'DATA')]
-a.datas += [('assets/d2s.png', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\src\\Ground_Station\\assets\\d2s.png', 'DATA')]
-a.datas += [('assets/satellite.ico', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\src\\Ground_Station\\assets\\satellite.ico', 'DATA')]
+a.datas += [('assets/refresh.jpg', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\assets\\refresh.jpg', 'DATA')]
+a.datas += [('assets/d2s.png', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\assets\\d2s.png', 'DATA')]
+a.datas += [('assets/satellite.ico', 'C:\\Users\\user\\Desktop\\ground_stn-gui\\assets\\satellite.ico', 'DATA')]
 
-#a.datas += [('assets/refresh.jpg', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\src\\Ground_Station\\assets\\refresh.jpg', 'DATA')]
-#a.datas += [('assets/d2s.png', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\src\\Ground_Station\\assets\\d2s.png', 'DATA')]
-#a.datas += [('assets/satellite.ico', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\src\\Ground_Station\\assets\\satellite.ico', 'DATA')]
+#a.datas += [('assets/refresh.jpg', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\refresh.jpg', 'DATA')]
+#a.datas += [('assets/d2s.png', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\d2s.png', 'DATA')]
+#a.datas += [('assets/satellite.ico', 'C:\\Users\\65844\\Desktop\\ground_stn-gui\\assets\\satellite.ico', 'DATA')]
 
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
@@ -41,4 +41,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False , icon='src\\Ground_Station\\assets\\satellite.ico')
+          console=False , icon='assets\\satellite.ico')
