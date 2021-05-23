@@ -58,7 +58,8 @@ class MissionWindow(tk.Toplevel):
 
         # Mission number of image selector
         self.image_number_selection = tk.Spinbox(
-            self.mission_number_images_frame, from_=1, to=3, width=5, increment=1, state='readonly', readonlybackground='white', justify=tk.CENTER)
+            self.mission_number_images_frame, from_=1, to=3, width=5, increment=1, state='readonly',
+            readonlybackground='white', justify=tk.CENTER)
         self.image_number_selection.pack(padx=5, pady=5)
 
         # Mission time interval frame
@@ -71,7 +72,8 @@ class MissionWindow(tk.Toplevel):
 
         # Mission time interval selector
         self.interval_selection = tk.Spinbox(
-            self.mission_interval_frame, from_=1000, to=5000, width=5, increment=1000, state='readonly', readonlybackground='white', justify=tk.CENTER)
+            self.mission_interval_frame, from_=1000, to=5000, width=5, increment=1000, state='readonly',
+            readonlybackground='white', justify=tk.CENTER)
         self.interval_selection.pack(padx=5, pady=5)
 
         # Downlink start date labelframe

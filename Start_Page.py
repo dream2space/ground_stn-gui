@@ -31,8 +31,8 @@ class StartPage(tk.Frame):
         # Create welcome and logo
         welcome_fontStyle = tkFont.Font(
             family="TkDefaultFont", size=12, weight="bold")
-        self.welcome = tk.Label(
-            self.top_container, text="Welcome to Dream2space Cubesat Ground Station!", compound=tk.CENTER, font=welcome_fontStyle, relief='groove', borderwidth=2)
+        self.welcome = tk.Label(self.top_container, text="Welcome to Dream2space Cubesat Ground Station!",
+                                compound=tk.CENTER, font=welcome_fontStyle, relief='groove', borderwidth=2)
         self.welcome.pack(side=tk.TOP, padx=5, pady=5,
                           fill="both", expand=True)
         img = ImageTk.PhotoImage(Image.open(
@@ -90,7 +90,8 @@ class StartPage(tk.Frame):
         refresh_image = ImageTk.PhotoImage(
             Image.open(resource_path("assets/refresh.jpg")).resize((20, 20)))
         self.refresh_button = tk.Button(
-            self.refresh_container, text="Refresh ", image=refresh_image, compound=tk.RIGHT, command=self.refresh_serial_ports)
+            self.refresh_container, text="Refresh ", image=refresh_image, compound=tk.RIGHT,
+            command=self.refresh_serial_ports)
         self.refresh_button.photo = refresh_image
         self.refresh_button.pack(expand=True)
 
