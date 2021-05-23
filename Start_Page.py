@@ -29,7 +29,7 @@ class StartPage(tk.Frame):
 
         # Create welcome and logo
         welcome_fontStyle = tkFont.Font(
-            family="Helvetica", size=14, weight="bold")
+            family="TkDefaultFont", size=12, weight="bold")
         self.welcome = tk.Label(
             self.top_container, text="Welcome to dream2space Cubesat Ground Station!", compound=tk.CENTER, font=welcome_fontStyle)
         self.welcome.pack(side=tk.TOP, padx=5, pady=5)
@@ -109,7 +109,7 @@ class StartPage(tk.Frame):
             family="TkDefaultFont", weight="bold", size=10)
         self.warning_text = tk.StringVar()
         self.warning_text.set(
-            "To begin, select the COM ports for TT&C and Payload transceivers.")
+            "To begin, select the Serial ports for TT&C and Payload transceivers.")
         self.warning_label = tk.Label(
             parent, textvariable=self.warning_text, compound=tk.CENTER, font=self.warning_fontStyle)
         self.warning_label.pack(side=tk.TOP, padx=3, pady=3)
