@@ -15,14 +15,15 @@ class StartPage(tk.Frame):
 
         # Main container
         self.main_container = tk.Frame(self.parent)
-        self.main_container.pack()
+        self.main_container.pack(padx=10, pady=10)
 
         # Create holding containers
         self.top_container = tk.Frame(self.main_container)
         self.middle_up_container = tk.Frame(self.main_container)
         self.middle_down_container = tk.Frame(self.main_container)
         self.bottom_container = tk.Frame(self.main_container)
-        self.top_container.pack(side=tk.TOP, padx=10, pady=10)
+        self.top_container.pack(side=tk.TOP, padx=10,
+                                pady=10, fill="both", expand=True)
         self.middle_up_container.pack(padx=10)
         self.middle_down_container.pack(padx=10)
         self.bottom_container.pack(side=tk.RIGHT, padx=5, pady=5)
@@ -31,8 +32,9 @@ class StartPage(tk.Frame):
         welcome_fontStyle = tkFont.Font(
             family="TkDefaultFont", size=12, weight="bold")
         self.welcome = tk.Label(
-            self.top_container, text="Welcome to dream2space Cubesat Ground Station!", compound=tk.CENTER, font=welcome_fontStyle)
-        self.welcome.pack(side=tk.TOP, padx=5, pady=5)
+            self.top_container, text="Welcome to Dream2space Cubesat Ground Station!", compound=tk.CENTER, font=welcome_fontStyle, relief='groove', borderwidth=2)
+        self.welcome.pack(side=tk.TOP, padx=5, pady=5,
+                          fill="both", expand=True)
         img = ImageTk.PhotoImage(Image.open(
             resource_path("assets/d2s.png")).convert("RGBA"))
         self.image_logo = tk.Label(self.top_container, image=img)
