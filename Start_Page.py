@@ -1,7 +1,9 @@
-from App_Util import resource_path
-from PIL import Image, ImageTk
-import tkinter.font as tkFont
 import tkinter as tk
+import tkinter.font as tkFont
+
+from PIL import Image, ImageTk
+
+from App_Util import resource_path
 
 
 class StartPage(tk.Frame):

@@ -1,8 +1,9 @@
-from CCSDS_Parsed_HK import CCSDS_Parsed_HK
-import CCSDS_Parameters as ccsds_params
-import App_Parameters as app_params
-from datetime import datetime
 import csv
+from datetime import datetime
+
+import App_Parameters as app_params
+import CCSDS_Parameters as ccsds_params
+from CCSDS_Parsed_HK import CCSDS_Parsed_HK
 
 
 class CCSDS_HK_Util:

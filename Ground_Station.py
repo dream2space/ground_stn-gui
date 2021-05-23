@@ -1,10 +1,11 @@
+import multiprocessing
+import os
+import threading
+import tkinter as tk
+
+import App_Parameters as app_params
 from App_Util import beacon_collection
 from GroundStationGUI import MainApp
-import App_Parameters as app_params
-import multiprocessing
-import tkinter as tk
-import threading
-import os
 
 # Start running GUI
 if __name__ == "__main__":

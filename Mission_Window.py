@@ -1,4 +1,5 @@
 import tkinter as tk
+
 import tkcalendar
 
 
@@ -52,8 +53,7 @@ class MissionWindow(tk.Toplevel):
             self.container, text="Mission Image Count")
         self.mission_number_images_frame.pack(expand=1, fill="both")
 
-        self.image_number_selection_label = tk.Label(self.mission_number_images_frame,
-                                                     text="Select number of images:")
+        self.image_number_selection_label = tk.Label(self.mission_number_images_frame, text="Select number of images:")
         self.image_number_selection_label.pack()
 
         # Mission number of image selector

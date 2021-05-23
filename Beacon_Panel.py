@@ -1,5 +1,6 @@
-import App_Parameters as app_param
 import tkinter as tk
+
+import App_Parameters as app_param
 
 
 class BeaconPanel(tk.Frame):

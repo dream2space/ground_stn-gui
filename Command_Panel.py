@@ -1,6 +1,7 @@
-import App_Parameters as app_param
-import tkinter.ttk as ttk
 import tkinter as tk
+import tkinter.ttk as ttk
+
+import App_Parameters as app_param
 
 
 class CommandPanel(tk.Frame):

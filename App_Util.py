@@ -1,12 +1,13 @@
-# Testing flag
-from Testing import IS_TESTING
-from CCSDS_Decoder import CCSDS_Decoder
-import CCSDS_Parameters as ccsds_params
-import random
-import serial
-import time
-import sys
 import os
+import random
+import sys
+import time
+
+import serial
+
+import CCSDS_Parameters as ccsds_params
+from CCSDS_Decoder import CCSDS_Decoder
+from Testing import IS_TESTING
 
 
 def resource_path(relative_path):

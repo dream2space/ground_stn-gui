@@ -1,20 +1,22 @@
-from Mission_Window import MissionWindow
-from CCSDS_HK_Util import CCSDS_HK_Util
-from CCSDS_Encoder import CCSDS_Encoder
-from Command_Panel import CommandPanel
-import CCSDS_Parameters as ccsds_param
-from Beacon_Panel import BeaconPanel
+import glob
+import os
+import subprocess
+import sys
+import tkinter as tk
 from multiprocessing import Process
+
+import serial
+
 import App_Parameters as app_param
+import CCSDS_Parameters as ccsds_param
 from App_Util import resource_path
+from Beacon_Panel import BeaconPanel
+from CCSDS_Encoder import CCSDS_Encoder
+from CCSDS_HK_Util import CCSDS_HK_Util
+from Command_Panel import CommandPanel
+from Mission_Window import MissionWindow
 from Start_Page import StartPage
 from Testing import IS_TESTING
-import tkinter as tk
-import subprocess
-import serial
-import glob
-import sys
-import os
 
 
 class MainApp(tk.Frame):
