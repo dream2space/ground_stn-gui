@@ -1,3 +1,0 @@
-pyinstaller Ground_Station.spec
-
-pyinstaller --onefile -w -i "assets/satellite.ico" Ground_Station.py
