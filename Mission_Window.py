@@ -57,23 +57,22 @@ class MissionWindow(tk.Toplevel):
         self.image_number_selection_label.pack()
 
         # Mission number of image selector
-        self.image_number_selection = tk.Label(
-            self.mission_number_images_frame, text="--- Placeholder ---")
-        self.image_number_selection.pack()
+        self.image_number_selection = tk.Spinbox(
+            self.mission_number_images_frame, from_=1, to=3, width=5, increment=1, state='readonly', readonlybackground='white', justify=tk.CENTER)
+        self.image_number_selection.pack(padx=5, pady=5)
 
         # Mission time interval frame
         self.mission_interval_frame = tk.LabelFrame(
             self.container, text="Mission Image Interval")
         self.mission_interval_frame.pack(expand=1, fill="both")
-
         self.interval_selection_label = tk.Label(self.mission_interval_frame,
                                                  text="Select interval between images:")
         self.interval_selection_label.pack()
 
-        # Mission number of image selector
-        self.interval_selection = tk.Label(
-            self.mission_interval_frame, text="--- Placeholder ---")
-        self.interval_selection.pack()
+        # Mission time interval selector
+        self.interval_selection = tk.Spinbox(
+            self.mission_interval_frame, from_=1000, to=5000, width=5, increment=1000, state='readonly', readonlybackground='white', justify=tk.CENTER)
+        self.interval_selection.pack(padx=5, pady=5)
 
         # Downlink start date labelframe
         self.downlink_start_date_frame = tk.LabelFrame(
