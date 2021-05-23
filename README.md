@@ -39,5 +39,5 @@ pyinstaller Ground_Station.spec
 The backup command is:
 
 ```bash
-pyinstaller --onefile -w -i "src/Ground_Station/assets/satellite.ico" Ground_Station.py
+pyinstaller --onefile -w -i "assets/satellite.ico" Ground_Station.py
 ```
