@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 import tkcalendar
 
@@ -108,9 +109,33 @@ class MissionWindow(tk.Toplevel):
         self.downlink_start_time_label.pack()
 
         # Downlink start time selector
-        self.downlink_start_time_picker = tk.Label(
-            self.downlink_start_time_container, text="--- Placeholder ---")
-        self.downlink_start_time_picker.pack()
+        self.downlink_start_time_picker_container = tk.Frame(
+            self.downlink_start_time_container)  # Container to store timestamp picker
+        self.downlink_start_time_picker_container.pack()
+
+        self.downlink_start_time_hh = tk.Frame(self.downlink_start_time_picker_container)
+        self.downlink_start_time_hh.pack(side=tk.LEFT, padx=10, pady=3)
+        self.downlink_start_time_hh_label = tk.Label(
+            self.downlink_start_time_hh, text="hh")
+        self.downlink_start_time_hh_label.pack(side=tk.TOP)
+        self.downlink_start_time_select_hh = ttk.Combobox(self.downlink_start_time_hh, width=3)
+        self.downlink_start_time_select_hh.pack(side=tk.BOTTOM)
+
+        self.downlink_start_time_mm = tk.Frame(self.downlink_start_time_picker_container)
+        self.downlink_start_time_mm.pack(side=tk.LEFT, padx=10, pady=3)
+        self.downlink_start_time_mm_label = tk.Label(
+            self.downlink_start_time_mm, text="mm")
+        self.downlink_start_time_mm_label.pack()
+        self.downlink_start_time_select_mm = ttk.Combobox(self.downlink_start_time_mm, width=3)
+        self.downlink_start_time_select_mm.pack(side=tk.BOTTOM)
+
+        self.downlink_start_time_ss = tk.Frame(self.downlink_start_time_picker_container)
+        self.downlink_start_time_ss.pack(side=tk.RIGHT, padx=10, pady=3)
+        self.downlink_start_time_ss_label = tk.Label(
+            self.downlink_start_time_ss, text="ss")
+        self.downlink_start_time_ss_label.pack()
+        self.downlink_start_time_select_ss = ttk.Combobox(self.downlink_start_time_ss, width=3)
+        self.downlink_start_time_select_ss.pack(side=tk.BOTTOM)
 
         # Submit button container
         self.button_container = tk.Frame(self.container)
