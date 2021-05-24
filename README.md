@@ -6,6 +6,8 @@ The [command line ground station](https://github.com/huiminlim/ground_stn) was b
 
 ![Ground Station Dashboard](images/gui-panel.png)
 
+![Ground Station Mission Window](images/gui-mission_window_horizontal.png)
+
 ## Getting Started
 
 ## Requirements Gathering
