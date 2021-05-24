@@ -1,5 +1,4 @@
 import tkinter as tk
-from os import stat
 from tkinter import ttk
 
 import tkcalendar
