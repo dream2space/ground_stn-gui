@@ -45,9 +45,9 @@ class MissionWindow(tk.Toplevel):
         self.mission_start_time_label.pack()
 
         # Mission start time selector
-        self.mission_start_time_picker = tk.Label(
-            self.mission_start_time_container, text="--- Placeholder ---")
-        self.mission_start_time_picker.pack()
+        self.mission_start_time_picker_container = tk.Frame(self.mission_start_time_container)
+        self.mission_start_time_picker_container.pack()
+        self.mission_start_time_picker = TimestampPicker(self.mission_start_time_picker_container)
 
         # Mission number of images
         self.mission_number_images_frame = tk.LabelFrame(
