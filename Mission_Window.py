@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from typing import Sized
 
 import tkcalendar
 
@@ -10,6 +9,8 @@ class MissionWindow(tk.Toplevel):
         tk.Toplevel.__init__(self, parent)
         self.resizable(False, False)
         self.title("Mission and Downlink")
+
+        self.controller = controller
 
         # Container for mission and downlink widgets
         self.container = tk.Frame(self)
@@ -45,7 +46,7 @@ class MissionWindow(tk.Toplevel):
             self.mission_start_date_frame)
         self.mission_calendar_container.pack(padx=5, pady=3)
         self.mission_start_calendar = tkcalendar.Calendar(
-            self.mission_calendar_container)
+            self.mission_calendar_container, date_pattern='y-mm-dd')
         self.mission_start_calendar.pack(side=tk.BOTTOM)
 
         # Mission start time labelframe
@@ -120,7 +121,7 @@ class MissionWindow(tk.Toplevel):
             self.downlink_start_date_frame)
         self.downlink_calendar_container.pack(padx=5, pady=3)
         self.downlink_start_calendar = tkcalendar.Calendar(
-            self.downlink_calendar_container)
+            self.downlink_calendar_container, date_pattern='y-mm-dd')
         self.downlink_start_calendar.pack(side=tk.BOTTOM)
 
         # Downlink start time labelframe
@@ -145,8 +146,64 @@ class MissionWindow(tk.Toplevel):
         # Submit button container
         self.button_container = tk.Frame(self.bottom_container)
         self.button_container.pack(side=tk.BOTTOM)
-        self.submit_button = tk.Button(self.button_container, text="Submit")
+        self.submit_button = tk.Button(self.button_container, text="Submit",
+                                       command=self.controller.handle_mission_scheduling)
         self.submit_button.pack(padx=5, pady=5)
+
+    def get_user_mission_input(self):
+        mission_date = self.mission_start_calendar.get_date()
+        downlink_date = self.downlink_start_calendar.get_date()
+        mission_time = self.mission_start_time_picker.get_timestamp()
+        downlink_time = self.downlink_start_time_picker.get_timestamp()
+        image_count = self.image_number_selection.get()
+        interval = self.interval_selection.get()
+        return Mission(mission_date, downlink_date, mission_time, downlink_time, image_count, interval)
+
+
+class Mission:
+    def __init__(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
+        self._parse(mission_date, downlink_date, mission_time, downlink_time, image_count, interval)
+
+    def __str__(self):
+        _1 = f"mission date: {'{:02d}'.format(self.mission_date_yyyy)}/{'{:02d}'.format(self.mission_date_MM)}/{'{:02d}'.format(self.mission_date_dd)} | mission time: {'{:02d}'.format(self.mission_time_hh)}:{'{:02d}'.format(self.mission_time_mm)}:{'{:02d}'.format(self.mission_time_ss)}\n"
+        _2 = f"downlink date: {'{:02d}'.format(self.downlink_date_yyyy)}/{'{:02d}'.format(self.downlink_date_MM)}/{'{:02d}'.format(self.downlink_date_dd)} | mission time: {'{:02d}'.format(self.downlink_time_hh)}:{'{:02d}'.format(self.downlink_time_mm)}:{'{:02d}'.format(self.downlink_time_ss)}\n"
+        _3 = f"image count: {self.image_count} | image interval: {self.interval}"
+        return _1 + _2 + _3
+
+    def _parse(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
+
+        # date format: yyyy/MM/dd
+        def _parse_date(date):
+            date_split = date.split('-')
+            return date_split
+
+        # time format: hh mm ss
+        def _parse_time(time):
+            time_split = time.split(' ')
+            return time_split
+
+        parsed_mission_date = _parse_date(mission_date)
+        self.mission_date_yyyy = int(parsed_mission_date[0])
+        self.mission_date_MM = int(parsed_mission_date[1])
+        self.mission_date_dd = int(parsed_mission_date[2])
+
+        parsed_downlink_date = _parse_date(downlink_date)
+        self.downlink_date_yyyy = int(parsed_downlink_date[0])
+        self.downlink_date_MM = int(parsed_downlink_date[1])
+        self.downlink_date_dd = int(parsed_downlink_date[2])
+
+        parsed_mission_time = _parse_time(mission_time)
+        self.mission_time_hh = int(parsed_mission_time[0])
+        self.mission_time_mm = int(parsed_mission_time[1])
+        self.mission_time_ss = int(parsed_mission_time[2])
+
+        parsed_downlink_time = _parse_time(downlink_time)
+        self.downlink_time_hh = int(parsed_downlink_time[0])
+        self.downlink_time_mm = int(parsed_downlink_time[1])
+        self.downlink_time_ss = int(parsed_downlink_time[2])
+
+        self.image_count = int(image_count)
+        self.interval = int(interval)
 
 
 class TimestampPicker(tk.Frame):
@@ -208,4 +265,4 @@ class TimestampPicker(tk.Frame):
         hh = self.downlink_start_time_hh_current_option.get()
         mm = self.downlink_start_time_mm_current_option.get()
         ss = self.downlink_start_time_ss_current_option.get()
-        return {'hh': hh, 'mm': mm, 'ss': ss}  # return dictionary of strings
+        return f"{hh} {mm} {ss}"  # return string

@@ -171,6 +171,22 @@ class MainApp(tk.Frame):
     def open_mission_downlink_command_window(self):
         self.mission_window = MissionWindow(self.parent, self)
 
+    def handle_mission_scheduling(self):
+
+        # Validate if (1) mission time is after current time, (2) downlink time after mission time
+        def validate_mission_input(mission_input):
+            print(mission_input)
+            return True
+
+        # Do input validation
+        mission_input = self.mission_window.get_user_mission_input()
+        is_valid_input = validate_mission_input(mission_input)
+
+        if is_valid_input:
+            pass
+        else:
+            pass
+
 
 def get_HK_logs(pipe, ttnc_serial_port):
 
