@@ -33,7 +33,7 @@ class MissionWindow(tk.Toplevel):
         # Mission start date labelframe
         self.mission_start_date_frame = tk.LabelFrame(
             self.mission_timestamp_container, text="Mission Start Date")
-        self.mission_start_date_frame.pack(expand=1, fill="both")
+        self.mission_start_date_frame.pack(expand=1, fill="both", padx=3, pady=3)
 
         # Mission start date label
         self.mission_start_date_label = tk.Label(
@@ -51,7 +51,7 @@ class MissionWindow(tk.Toplevel):
         # Mission start time labelframe
         self.mission_start_time_frame = tk.LabelFrame(
             self.mission_timestamp_container, text="Mission Start Time")
-        self.mission_start_time_frame.pack(expand=1, fill="both")
+        self.mission_start_time_frame.pack(expand=True, fill="both", padx=3, pady=3)
 
         # Mission start time label
         self.mission_start_time_container = tk.Frame(
@@ -69,35 +69,46 @@ class MissionWindow(tk.Toplevel):
         # Mission number of images
         self.mission_number_images_frame = tk.LabelFrame(
             self.mission_definition_container, text="Mission Image Count")
-        self.mission_number_images_frame.pack(expand=1, fill="both")
+        self.mission_number_images_frame.pack(expand=1, fill="both", padx=3, pady=3)
 
-        self.image_number_selection_label = tk.Label(self.mission_number_images_frame, text="Select number of images:")
+        self.mission_number_images_container = tk.Frame(self.mission_number_images_frame)
+        self.mission_number_images_container.pack(
+            padx=5, pady=5, expand=True, fill="none")  # Centralize the widget in labelframe
+
+        self.image_number_selection_label = tk.Label(
+            self.mission_number_images_container, text="Select images count:")
         self.image_number_selection_label.pack()
 
         # Mission number of image selector
         self.image_number_selection = tk.Spinbox(
-            self.mission_number_images_frame, from_=1, to=3, width=5, increment=1, state='readonly',
+            self.mission_number_images_container, from_=1, to=3, width=5, increment=1, state='readonly',
             readonlybackground='white', justify=tk.CENTER)
         self.image_number_selection.pack(padx=5, pady=5)
 
-        # Mission time interval frame
+        # Mission time interval container
         self.mission_interval_frame = tk.LabelFrame(
             self.mission_definition_container, text="Mission Image Interval")
-        self.mission_interval_frame.pack(expand=1, fill="both")
-        self.interval_selection_label = tk.Label(self.mission_interval_frame,
-                                                 text="Select interval between images:")
+        self.mission_interval_frame.pack(expand=True, fill="both", padx=3, pady=3)
+
+        self.mission_time_interval_container = tk.Frame(self.mission_interval_frame)
+        self.mission_time_interval_container.pack(
+            padx=5, pady=5, expand=True, fill="none")  # Centralize the widget in labelframe
+
+        # Mission time interval label
+        self.interval_selection_label = tk.Label(self.mission_time_interval_container,
+                                                 text="Select image interval :")
         self.interval_selection_label.pack()
 
         # Mission time interval selector
         self.interval_selection = tk.Spinbox(
-            self.mission_interval_frame, from_=1000, to=5000, width=5, increment=1000, state='readonly',
+            self.mission_time_interval_container, from_=1000, to=5000, width=5, increment=1000, state='readonly',
             readonlybackground='white', justify=tk.CENTER)
-        self.interval_selection.pack(padx=5, pady=5)
+        self.interval_selection.pack()
 
         # Downlink start date labelframe
         self.downlink_start_date_frame = tk.LabelFrame(
             self.downlink_timestamp_container, text="Downlink Start Date")
-        self.downlink_start_date_frame.pack(expand=1, fill="both")
+        self.downlink_start_date_frame.pack(expand=1, fill="both", padx=3, pady=3)
 
         # Downlink start date label
         self.downlink_start_date_label = tk.Label(
@@ -115,7 +126,7 @@ class MissionWindow(tk.Toplevel):
         # Downlink start time labelframe
         self.downlink_start_time_frame = tk.LabelFrame(
             self.downlink_timestamp_container, text="Downlink Start Time")
-        self.downlink_start_time_frame.pack(expand=1, fill="both")
+        self.downlink_start_time_frame.pack(expand=1, fill="both", padx=3, pady=3)
 
         # Downlink start time label
         self.downlink_start_time_container = tk.Frame(
