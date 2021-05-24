@@ -7,11 +7,12 @@ import tkcalendar
 class MissionWindow(tk.Toplevel):
     def __init__(self, parent, controller):
         tk.Toplevel.__init__(self, parent)
+        self.resizable(False, False)
         self.title("Mission and Downlink Command")
 
         # Container for mission and downlink widgets
         self.container = tk.Frame(self)
-        self.container.pack(anchor=tk.NW, padx=30, pady=10)
+        self.container.pack(padx=30, pady=10)
 
         # Mission start date labelframe
         self.mission_start_date_frame = tk.LabelFrame(
@@ -116,13 +117,9 @@ class MissionWindow(tk.Toplevel):
 
         # Submit button container
         self.button_container = tk.Frame(self.container)
-        self.button_container.pack()
-
-        self.submit_button_label = tk.Label(self.button_container)
-        self.submit_button_label.pack(side=tk.TOP)
-
+        self.button_container.pack(side=tk.BOTTOM)
         self.submit_button = tk.Button(self.button_container, text="Submit")
-        self.submit_button.pack(side=tk.BOTTOM)
+        self.submit_button.pack(padx=5, pady=5)
 
 
 class TimestampPicker(tk.Frame):
