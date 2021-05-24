@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from typing import Sized
 
 import tkcalendar
 
@@ -8,15 +9,30 @@ class MissionWindow(tk.Toplevel):
     def __init__(self, parent, controller):
         tk.Toplevel.__init__(self, parent)
         self.resizable(False, False)
-        self.title("Mission and Downlink Command")
+        self.title("Mission and Downlink")
 
         # Container for mission and downlink widgets
         self.container = tk.Frame(self)
         self.container.pack(padx=30, pady=10)
 
+        self.top_container = tk.Frame(self.container)
+        self.top_container.pack()
+
+        self.bottom_container = tk.Frame(self.container)
+        self.bottom_container.pack()
+
+        self.mission_timestamp_container = tk.Frame(self.top_container)
+        self.mission_timestamp_container.pack(side=tk.LEFT, padx=10, pady=10)
+
+        self.mission_definition_container = tk.Frame(self.top_container)
+        self.mission_definition_container.pack(side=tk.LEFT, padx=10, pady=10, expand=1, fill="both")
+
+        self.downlink_timestamp_container = tk.Frame(self.top_container)
+        self.downlink_timestamp_container.pack(side=tk.RIGHT, padx=10, pady=10)
+
         # Mission start date labelframe
         self.mission_start_date_frame = tk.LabelFrame(
-            self.container, text="Mission Start Date")
+            self.mission_timestamp_container, text="Mission Start Date")
         self.mission_start_date_frame.pack(expand=1, fill="both")
 
         # Mission start date label
@@ -34,7 +50,7 @@ class MissionWindow(tk.Toplevel):
 
         # Mission start time labelframe
         self.mission_start_time_frame = tk.LabelFrame(
-            self.container, text="Mission Start Time")
+            self.mission_timestamp_container, text="Mission Start Time")
         self.mission_start_time_frame.pack(expand=1, fill="both")
 
         # Mission start time label
@@ -52,7 +68,7 @@ class MissionWindow(tk.Toplevel):
 
         # Mission number of images
         self.mission_number_images_frame = tk.LabelFrame(
-            self.container, text="Mission Image Count")
+            self.mission_definition_container, text="Mission Image Count")
         self.mission_number_images_frame.pack(expand=1, fill="both")
 
         self.image_number_selection_label = tk.Label(self.mission_number_images_frame, text="Select number of images:")
@@ -66,7 +82,7 @@ class MissionWindow(tk.Toplevel):
 
         # Mission time interval frame
         self.mission_interval_frame = tk.LabelFrame(
-            self.container, text="Mission Image Interval")
+            self.mission_definition_container, text="Mission Image Interval")
         self.mission_interval_frame.pack(expand=1, fill="both")
         self.interval_selection_label = tk.Label(self.mission_interval_frame,
                                                  text="Select interval between images:")
@@ -80,7 +96,7 @@ class MissionWindow(tk.Toplevel):
 
         # Downlink start date labelframe
         self.downlink_start_date_frame = tk.LabelFrame(
-            self.container, text="Downlink Start Date")
+            self.downlink_timestamp_container, text="Downlink Start Date")
         self.downlink_start_date_frame.pack(expand=1, fill="both")
 
         # Downlink start date label
@@ -98,7 +114,7 @@ class MissionWindow(tk.Toplevel):
 
         # Downlink start time labelframe
         self.downlink_start_time_frame = tk.LabelFrame(
-            self.container, text="Downlink Start Time")
+            self.downlink_timestamp_container, text="Downlink Start Time")
         self.downlink_start_time_frame.pack(expand=1, fill="both")
 
         # Downlink start time label
@@ -116,7 +132,7 @@ class MissionWindow(tk.Toplevel):
         self.downlink_start_time_picker = TimestampPicker(self.downlink_start_time_picker_container)
 
         # Submit button container
-        self.button_container = tk.Frame(self.container)
+        self.button_container = tk.Frame(self.bottom_container)
         self.button_container.pack(side=tk.BOTTOM)
         self.submit_button = tk.Button(self.button_container, text="Submit")
         self.submit_button.pack(padx=5, pady=5)
@@ -133,8 +149,9 @@ class TimestampPicker(tk.Frame):
         for i in range(0, 24):
             hh_values += ("{:02d}".format(i),)
 
-        mm_values = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+        mm_values = tuple()
+        for i in range(0, 60):
+            mm_values += ("{:02d}".format(i),)
 
         ss_values = tuple()
         for i in range(0, 60):
