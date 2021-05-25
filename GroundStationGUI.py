@@ -177,8 +177,6 @@ class MainApp(tk.Frame):
         # Validate if (1) mission time is after current time, (2) downlink time after mission time
         def validate_mission_input(mission_input):
             print(mission_input)
-            print(mission_input.mission_datetime > datetime.datetime.now())
-            print(mission_input.downlink_datetime > mission_input.mission_datetime)
             if mission_input.mission_datetime > datetime.datetime.now() and mission_input.downlink_datetime > mission_input.mission_datetime:
                 return True
             else:
