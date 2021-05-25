@@ -52,6 +52,7 @@ class MainApp(tk.Frame):
             # Same ports selected
             self.start.set_port_warning_message()
 
+        # Ports selected are correct -> Proceed to generate main page
         else:
             # Pass ttnc serial object via pipe to thread
             self.pipe_beacon.send(self.port_ttnc)
@@ -69,7 +70,7 @@ class MainApp(tk.Frame):
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
             self.command = CommandPanel(self.container, self)
-            self.command.pack(side=tk.LEFT)
+            self.command.pack(side=tk.LEFT, expand=True, fill="both")
 
     def scan_serial_ports(self):
         ports = []
@@ -187,8 +188,10 @@ class MainApp(tk.Frame):
         is_valid_input = validate_mission_input(mission_input)
 
         if is_valid_input:
+            # Close top window and do mission scheduling
             self.mission_window.destroy()
         else:
+            # Input time is not valid
             self.mission_window.display_error_message()
 
 
