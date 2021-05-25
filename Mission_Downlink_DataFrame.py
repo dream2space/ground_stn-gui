@@ -34,10 +34,12 @@ class MissionTable(ttk.Treeview):
         self.parent = parent
 
         # Display currently pending missions
-        col = (1, 2, 3)
-        self.mission_pending_view = ttk.Treeview(self.parent, columns=col, show='headings', height=3)
+        column_id = (1, 2, 3, 4, 5)
+        column_names = ('#', 'Mission', 'Downlink', 'Count', 'Interval')
+        self.mission_pending_view = ttk.Treeview(self.parent, column=column_id, show='headings', height=3)
         self.mission_pending_view.pack(padx=2, pady=2)
 
-        # Setup columns in treeview table
-        for i in range(len(col)):
-            self.mission_pending_view.column(col[i], width=100, anchor='e')
+        # Setup column in treeview table
+        for i in range(len(column_id)):
+            self.mission_pending_view.column(column_id[i], width=60, anchor=tk.NW)
+            self.mission_pending_view.heading(column_id[i], text=column_names[i], anchor=tk.CENTER)
