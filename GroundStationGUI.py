@@ -14,7 +14,7 @@ from App_Util import resource_path
 from Beacon_Panel import BeaconPanel
 from CCSDS_Encoder import CCSDS_Encoder
 from CCSDS_HK_Util import CCSDS_HK_Util
-from Command_Panel import CommandPanel
+from Command_Panel import HousekeepingDataFrame, MissionDownlinkFrame
 from Mission_Window import MissionWindow
 from Start_Page import StartPage
 from Testing import IS_TESTING
@@ -69,8 +69,17 @@ class MainApp(tk.Frame):
             self.beacon = BeaconPanel(self.container, self.pipe_beacon)
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
-            self.command = CommandPanel(self.container, self)
-            self.command.pack(side=tk.LEFT)
+            # Create container to store all subsections
+            self.command_panel_container = tk.Frame(self.container)
+            self.command_panel_container.pack(side=tk.LEFT, expand=1, fill="both", padx=10, pady=10)
+
+            # Create section to request for housekeeping data
+            self.housekeeping_command = HousekeepingDataFrame(
+                self.command_panel_container, self, tk.TOP, text="Housekeeping Command", padx=10, pady=8)
+
+            # Create section for mission and downlink
+            self.mission_command = MissionDownlinkFrame(
+                self.command_panel_container, self, tk.BOTTOM, text="Mission and Downlink Command", padx=10, pady=8)
 
     def scan_serial_ports(self):
         ports = []
@@ -112,21 +121,21 @@ class MainApp(tk.Frame):
         self.p1.start()
 
         # Hide button
-        self.command.housekeeping_command.start_hk_button.pack_forget()
+        self.housekeeping_command.start_hk_button.pack_forget()
 
         # Display the progress bar
-        self.command.housekeeping_command.pbar_container.pack()
-        self.command.housekeeping_command.pbar.pack()
-        self.command.housekeeping_command.pbar.start()
+        self.housekeeping_command.pbar_container.pack()
+        self.housekeeping_command.pbar.pack()
+        self.housekeeping_command.pbar.start()
         self.after(100, self.hk_process_checking)
 
     def hk_process_checking(self):
         if self.p1.is_alive():
             self.after(100, self.hk_process_checking)
         else:
-            self.command.housekeeping_command.pbar.stop()
-            self.command.housekeeping_command.pbar_container.pack_forget()
-            self.command.housekeeping_command.start_hk_button.pack()
+            self.housekeeping_command.pbar.stop()
+            self.housekeeping_command.pbar_container.pack_forget()
+            self.housekeeping_command.start_hk_button.pack()
 
             if not IS_TESTING:
                 # Determine if telecommand obtaining is successful
@@ -148,17 +157,17 @@ class MainApp(tk.Frame):
                     subprocess.check_call(['xdg-open', '--', path])
 
                 # display success message
-                self.command.housekeeping_command.outcome_message.set(
+                self.housekeeping_command.outcome_message.set(
                     "Success!")
-                self.command.housekeeping_command.outcome_message_label["fg"] = 'green'
+                self.housekeeping_command.outcome_message_label["fg"] = 'green'
             else:
                 # display fail message
-                self.command.housekeeping_command.outcome_message.set(
+                self.housekeeping_command.outcome_message.set(
                     "Failed!")
-                self.command.housekeeping_command.outcome_message_label["fg"] = 'red'
+                self.housekeeping_command.outcome_message_label["fg"] = 'red'
 
             # Display message
-            self.command.housekeeping_command.outcome_message_label.pack(
+            self.housekeeping_command.outcome_message_label.pack(
                 side=tk.BOTTOM)
 
             # Set task to clear the message
@@ -168,7 +177,7 @@ class MainApp(tk.Frame):
             self.is_hk_process_success = False
 
     def hk_outcome_message_clear(self):
-        self.command.housekeeping_command.outcome_message.set("  ")
+        self.housekeeping_command.outcome_message.set("  ")
 
     def open_mission_downlink_command_window(self):
         self.mission_window = MissionWindow(self.parent, self)
