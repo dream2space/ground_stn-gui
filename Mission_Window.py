@@ -144,6 +144,11 @@ class MissionWindow(tk.Toplevel):
         self.downlink_start_time_picker_container.pack()
         self.downlink_start_time_picker = TimestampPicker(self.downlink_start_time_picker_container)
 
+        # Error message
+        self.error_message = tk.StringVar()
+        self.error_message_label = tk.Label(self.bottom_container, textvariable=self.error_message)
+        self.error_message_label.pack(side=tk.TOP)
+
         # Submit button container
         self.button_container = tk.Frame(self.bottom_container)
         self.button_container.pack(side=tk.BOTTOM)
@@ -160,6 +165,10 @@ class MissionWindow(tk.Toplevel):
         interval = self.interval_selection.get()
         return Mission(mission_date, downlink_date, mission_time, downlink_time, image_count, interval)
 
+    def display_error_message(self):
+        self.error_message.set('Error!')
+        self.error_message_label['fg'] = 'red'
+
 
 class Mission:
     def __init__(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
@@ -167,7 +176,7 @@ class Mission:
 
     def __str__(self):
         _1 = f"mission date: {self.mission_datetime.strftime('%d/%m/%Y')} | mission time: {self.mission_datetime.strftime('%H:%M:%S')}\n"
-        _2 = f"downlink date: {self.downlink_datetime.strftime('%d/%m/%Y')} | mission time: {self.downlink_datetime.strftime('%H:%M:%S')}\n"
+        _2 = f"downlink date: {self.downlink_datetime.strftime('%d/%m/%Y')} | downlink time: {self.downlink_datetime.strftime('%H:%M:%S')}\n"
         _3 = f"image count: {self.image_count} | image interval: {self.interval}"
         return _1 + _2 + _3
 

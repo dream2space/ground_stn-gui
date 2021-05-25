@@ -1,3 +1,4 @@
+import datetime
 import glob
 import os
 import subprocess
@@ -176,16 +177,21 @@ class MainApp(tk.Frame):
         # Validate if (1) mission time is after current time, (2) downlink time after mission time
         def validate_mission_input(mission_input):
             print(mission_input)
-            return True
+            print(mission_input.mission_datetime > datetime.datetime.now())
+            print(mission_input.downlink_datetime > mission_input.mission_datetime)
+            if mission_input.mission_datetime > datetime.datetime.now() and mission_input.downlink_datetime > mission_input.mission_datetime:
+                return True
+            else:
+                return False
 
         # Do input validation
         mission_input = self.mission_window.get_user_mission_input()
         is_valid_input = validate_mission_input(mission_input)
 
         if is_valid_input:
-            pass
+            self.mission_window.destroy()
         else:
-            pass
+            self.mission_window.display_error_message()
 
 
 def get_HK_logs(pipe, ttnc_serial_port):
