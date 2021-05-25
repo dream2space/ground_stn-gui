@@ -14,7 +14,8 @@ from App_Util import resource_path
 from Beacon_Panel import BeaconPanel
 from CCSDS_Encoder import CCSDS_Encoder
 from CCSDS_HK_Util import CCSDS_HK_Util
-from Command_Panel import HousekeepingDataFrame, MissionDownlinkFrame
+from Housekeeping_DataFrame import HousekeepingDataFrame
+from Mission_Downlink_DataFrame import MissionDownlinkFrame
 from Mission_Window import MissionWindow
 from Start_Page import StartPage
 from Testing import IS_TESTING
