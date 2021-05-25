@@ -70,7 +70,7 @@ class MainApp(tk.Frame):
             self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
 
             self.command = CommandPanel(self.container, self)
-            self.command.pack(side=tk.LEFT, expand=True, fill="both")
+            self.command.pack(side=tk.LEFT)
 
     def scan_serial_ports(self):
         ports = []

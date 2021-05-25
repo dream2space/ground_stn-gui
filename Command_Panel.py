@@ -60,6 +60,9 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.controller = controller
         self.pack(side=tk.BOTTOM, anchor=tk.SW, expand=1, fill="both")
 
+        # Display table for pending mission
+        self.pending_mission_table = MissionTable(self)
+
         # Add line for Mission and Downlink command
         self.label = tk.Label(
             self, text="Send Mission + Downlink Command")
@@ -69,3 +72,18 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.button = tk.Button(self, text="Click here", pady=8,
                                 command=self.controller.open_mission_downlink_command_window)
         self.button.pack()
+
+
+class MissionTable(ttk.Treeview):
+    def __init__(self, parent, *args, **kwargs):
+        ttk.Treeview.__init__(self, parent, *args, **kwargs)
+        self.parent = parent
+
+        # Display currently pending missions
+        col = (1, 2, 3)
+        self.mission_pending_view = ttk.Treeview(self.parent, columns=col, show='headings', height=3)
+        self.mission_pending_view.pack()
+
+        # Setup columns in treeview table
+        for i in range(len(col)):
+            self.mission_pending_view.column(col[i], width=100, anchor='e')
