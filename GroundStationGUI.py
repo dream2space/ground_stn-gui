@@ -194,7 +194,7 @@ class MainApp(tk.Frame):
             # Display success and show mission loading screen
             self.mission_command.display_add_success_msg()
             self.mission_command.show_progress_bar()
-            self.mission_command.after(4000, self.mission_command.stop_mission_block)
+            self.mission_command.after(10000, self.mission_command.stop_mission_block)
 
             # Send CCSDS mission command to Cubesat
 
