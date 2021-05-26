@@ -11,8 +11,6 @@ import serial
 import App_Parameters as app_param
 from App_Util import get_HK_logs, resource_path, sample_process
 from Beacon_Panel import BeaconPanel
-from CCSDS_Encoder import CCSDS_Encoder
-from CCSDS_HK_Util import CCSDS_HK_Util
 from Housekeeping_DataFrame import HousekeepingDataFrame
 from Mission_Downlink_DataFrame import MissionDownlinkFrame
 from Mission_Window import MissionWindow
