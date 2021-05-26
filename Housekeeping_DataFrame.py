@@ -15,7 +15,7 @@ class HousekeepingDataFrame(tk.LabelFrame):
 
         # Add button to trigger housekeeping data command
         self.start_hk_button = tk.Button(
-            self, text="Click here", command=controller.hk_process)
+            self, text="Click here", command=controller.handle_hk_process_start)
         self.start_hk_button.pack()
 
         # Progress bar

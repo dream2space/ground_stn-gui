@@ -27,6 +27,14 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.success_label = tk.Label(self, textvariable=self.success_message)
         self.success_label.pack()
 
+    def display_add_success_msg(self):
+        self.success_message.set("Success!")
+        self.success_label['fg'] = 'green'
+        self.after(10000, self.clear_success_message)
+
+    def clear_success_message(self):
+        self.success_message.set(" ")
+
 
 class MissionTable(ttk.Treeview):
     def __init__(self, parent, *args, **kwargs):
@@ -43,3 +51,7 @@ class MissionTable(ttk.Treeview):
         for i in range(len(column_id)):
             self.mission_pending_view.column(column_id[i], width=60, anchor=tk.NW)
             self.mission_pending_view.heading(column_id[i], text=column_names[i], anchor=tk.CENTER)
+
+    # Add a mission entry into table
+    def insert_mission_entry(self):
+        pass

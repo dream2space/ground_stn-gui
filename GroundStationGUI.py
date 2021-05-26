@@ -9,8 +9,7 @@ from multiprocessing import Process
 import serial
 
 import App_Parameters as app_param
-import CCSDS_Parameters as ccsds_param
-from App_Util import resource_path
+from App_Util import get_HK_logs, resource_path, sample_process
 from Beacon_Panel import BeaconPanel
 from CCSDS_Encoder import CCSDS_Encoder
 from CCSDS_HK_Util import CCSDS_HK_Util
@@ -41,14 +40,45 @@ class MainApp(tk.Frame):
         self.container.grid()
         self.make_start_page()
 
+    # Initializing method to create Start Page
     def make_start_page(self):
         self.start = StartPage(self.container, self)
 
+    # Scan Serial ports in PC
+    def scan_serial_ports(self):
+        ports = []
+        if sys.platform.startswith('win'):
+            ports = ['COM%s' % (i + 1) for i in range(256)]
+        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+            # this excludes your current terminal "/dev/tty"
+            ports = glob.glob('/dev/tty[A-Za-z]*')
+
+        result = []
+        for port in ports:
+            try:
+                s = serial.Serial(port)
+                s.close()
+                result.append(port)
+            except (OSError, serial.SerialException):
+                continue
+
+        result.insert(0, " ")
+
+        # In testing, add dummy entries
+        if IS_TESTING:
+            result.append("COM14")
+            result.append("COM15")
+
+        return result
+
+    # Handle transition from Start Page to Main Page
+    # Upon pressing button to select Serial ports
     def handle_transition(self):
         # Extract ports selected
         self.port_ttnc = self.start.get_ttnc_port()
         self.port_payload = self.start.get_payload_port()
 
+        # Ports selected are wrong -> Prompt users to reselect
         if self.port_ttnc == self.port_payload or self.port_ttnc == " " or self.port_ttnc == " ":
             # Same ports selected
             self.start.set_port_warning_message()
@@ -82,35 +112,8 @@ class MainApp(tk.Frame):
             self.mission_command = MissionDownlinkFrame(
                 self.command_panel_container, self, tk.BOTTOM, text="Mission and Downlink Command", padx=10, pady=8)
 
-    def scan_serial_ports(self):
-        ports = []
-        if sys.platform.startswith('win'):
-            ports = ['COM%s' % (i + 1) for i in range(256)]
-        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-            # this excludes your current terminal "/dev/tty"
-            ports = glob.glob('/dev/tty[A-Za-z]*')
-        # else:
-        #     raise EnvironmentError('Unsupported platform')
-
-        result = []
-        for port in ports:
-            try:
-                s = serial.Serial(port)
-                s.close()
-                result.append(port)
-            except (OSError, serial.SerialException):
-                continue
-
-        result.insert(0, " ")
-
-        # In testing, add dummy entries
-        if IS_TESTING:
-            result.append("COM14")
-            result.append("COM15")
-
-        return result
-
-    def hk_process(self):
+    # Handles Housekeeping Process after button pressed
+    def handle_hk_process_start(self):
         if IS_TESTING:
             self.p1 = Process(target=sample_process, daemon=True)  # Testing
         else:
@@ -131,6 +134,10 @@ class MainApp(tk.Frame):
         self.after(100, self.hk_process_checking)
 
     def hk_process_checking(self):
+
+        def hk_outcome_message_clear():
+            self.housekeeping_command.outcome_message.set("  ")
+
         if self.p1.is_alive():
             self.after(100, self.hk_process_checking)
         else:
@@ -172,19 +179,15 @@ class MainApp(tk.Frame):
                 side=tk.BOTTOM)
 
             # Set task to clear the message
-            self.after(10000, self.hk_outcome_message_clear)
+            self.after(10000, hk_outcome_message_clear)
 
             # Undo flag
             self.is_hk_process_success = False
-
-    def hk_outcome_message_clear(self):
-        self.housekeeping_command.outcome_message.set("  ")
 
     def open_mission_downlink_command_window(self):
         self.mission_window = MissionWindow(self.parent, self)
 
     def handle_mission_scheduling(self):
-
         # Validate if (1) mission time is after current time, (2) downlink time after mission time
         def validate_mission_input(mission_input):
             print(mission_input)
@@ -198,61 +201,18 @@ class MainApp(tk.Frame):
         is_valid_input = validate_mission_input(mission_input)
 
         if is_valid_input:
-            # Close top window and do mission scheduling
+            # Close top window
             self.mission_window.destroy()
+            self.mission_command.display_add_success_msg()
+
+            # Disable and show mission loading screen
+
+            # Send CCSDS mission command to Cubesat
+
+            # Add into pending mission list
+
+            # Display the pending mission into mission table
+
         else:
             # Input time is not valid
             self.mission_window.display_error_message()
-
-
-def get_HK_logs(pipe, ttnc_serial_port):
-
-    def setup_serial(port):
-        ttnc_ser = serial.Serial(port)
-        ttnc_ser.baudrate = 9600
-        ttnc_ser.timeout = 10
-        return ttnc_ser
-
-    Encoder = CCSDS_Encoder()
-    HK_Util = CCSDS_HK_Util()
-
-    # Default for command
-    timestamp_query_start = '0-0-0-0-0-0'
-    timestamp_query_end = '0-0-0-0-0-0'
-
-    telecommand = Encoder.generate_HK_telecommand(
-        ccsds_param.TELECOMMAND_TYPE_OBC_HK_REQUEST, timestamp_query_start, timestamp_query_end)
-
-    pipe.send("close_serial")
-    while pipe.poll() == "":
-        pass
-    print(f"process receive {pipe.recv()}")
-
-    ttnc_serial = setup_serial(ttnc_serial_port)
-
-    print(f"telecommand is {telecommand}")
-    print(f"telecommand len is {len(telecommand)}")
-    ttnc_serial.write(telecommand)
-    hk_bytes = ttnc_serial.read(
-        ccsds_param.CCSDS_OBC_TELEMETRY_LEN_BYTES)
-    # print(f"hk bytes {hk_bytes}")
-
-    print("done sending command")
-    ttnc_serial.close()
-    pipe.send("open_serial")
-
-    if hk_bytes:
-        list_hk_obj = HK_Util.parse(hk_bytes)
-        HK_Util.log(list_hk_obj)
-        print("done do logs")
-    else:
-        print("hk logs failed")
-
-
-def sample_process():
-    i = 0
-    max_val = 50000
-
-    while i < max_val:
-        print(i)
-        i += 1

@@ -7,6 +7,8 @@ import serial
 
 import CCSDS_Parameters as ccsds_params
 from CCSDS_Decoder import CCSDS_Decoder
+from CCSDS_Encoder import CCSDS_Encoder
+from CCSDS_HK_Util import CCSDS_HK_Util
 from Testing import IS_TESTING
 
 
@@ -14,7 +16,7 @@ def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
+        base_path = sys._MEIPASS  # pylint: disable=no-member
     except Exception:
         base_path = os.path.abspath(".")
 
@@ -107,3 +109,57 @@ def beacon_collection(pipe_beacon):
 
                 # print("beacon", temp, gx, gy, gz)
                 pipe_beacon.send([temp, gx, gy, gz])
+
+
+# Process to get housekeeping logs
+def get_HK_logs(pipe, ttnc_serial_port):
+
+    def setup_serial(port):
+        ttnc_ser = serial.Serial(port)
+        ttnc_ser.baudrate = 9600
+        ttnc_ser.timeout = 10
+        return ttnc_ser
+
+    Encoder = CCSDS_Encoder()
+    HK_Util = CCSDS_HK_Util()
+
+    # Default for command
+    timestamp_query_start = '0-0-0-0-0-0'
+    timestamp_query_end = '0-0-0-0-0-0'
+
+    telecommand = Encoder.generate_HK_telecommand(
+        ccsds_params.TELECOMMAND_TYPE_OBC_HK_REQUEST, timestamp_query_start, timestamp_query_end)
+
+    pipe.send("close_serial")
+    while pipe.poll() == "":
+        pass
+    print(f"process receive {pipe.recv()}")
+
+    ttnc_serial = setup_serial(ttnc_serial_port)
+
+    print(f"telecommand is {telecommand}")
+    print(f"telecommand len is {len(telecommand)}")
+    ttnc_serial.write(telecommand)
+    hk_bytes = ttnc_serial.read(
+        ccsds_params.CCSDS_OBC_TELEMETRY_LEN_BYTES)
+    # print(f"hk bytes {hk_bytes}")
+
+    print("done sending command")
+    ttnc_serial.close()
+    pipe.send("open_serial")
+
+    if hk_bytes:
+        list_hk_obj = HK_Util.parse(hk_bytes)
+        HK_Util.log(list_hk_obj)
+        print("done do logs")
+    else:
+        print("hk logs failed")
+
+
+def sample_process():
+    i = 0
+    max_val = 50000
+
+    while i < max_val:
+        print(i)
+        i += 1
