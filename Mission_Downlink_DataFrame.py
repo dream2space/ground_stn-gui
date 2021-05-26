@@ -49,10 +49,14 @@ class MissionDownlinkFrame(tk.LabelFrame):
 
     # Stop progress bar and reinstate button
     def stop_mission_block(self):
+        # Stop progress bar and destroy
         self.pbar.stop()
-        self.pbar.destroy()
         self.pbar_container.pack_forget()
+
+        # Reinstate button
         self.button.pack()
+
+        # Stop message display
         self.clear_success_message()
 
 
