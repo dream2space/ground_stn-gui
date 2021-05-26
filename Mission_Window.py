@@ -193,6 +193,12 @@ class Mission:
         _3 = f"image count: {self.image_count} | image interval: {self.interval}"
         return _1 + _2 + _3
 
+    def __repr__(self) -> str:
+        _1 = f"\nmission date: {self.mission_datetime.strftime('%d/%m/%Y')} | mission time: {self.mission_datetime.strftime('%H:%M:%S')}\n"
+        _2 = f"downlink date: {self.downlink_datetime.strftime('%d/%m/%Y')} | downlink time: {self.downlink_datetime.strftime('%H:%M:%S')}\n"
+        _3 = f"image count: {self.image_count} | image interval: {self.interval}\n"
+        return _1 + _2 + _3
+
     def _parse(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
 
         # date format: yyyy/MM/dd

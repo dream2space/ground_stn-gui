@@ -175,7 +175,7 @@ class MainApp(tk.Frame):
     def handle_mission_scheduling(self):
         # Validate if (1) mission time is after current time, (2) downlink time after mission time
         def validate_mission_input(mission_input):
-            print(mission_input)
+            # print(mission_input)
             is_mission_time_future = mission_input.mission_datetime > datetime.datetime.now()
             is_downlink_after_mission = mission_input.downlink_datetime > mission_input.mission_datetime
             if is_mission_time_future and is_downlink_after_mission:
@@ -184,8 +184,8 @@ class MainApp(tk.Frame):
                 return False
 
         # Do input validation
-        mission_input = self.mission_window.get_user_mission_input()
-        is_valid_input = validate_mission_input(mission_input)
+        mission = self.mission_window.get_user_mission_input()
+        is_valid_input = validate_mission_input(mission)
 
         if is_valid_input:
             # Close top window
@@ -199,7 +199,9 @@ class MainApp(tk.Frame):
             # Send CCSDS mission command to Cubesat
 
             # Add into pending mission list
-            # self.pending_mission_list
+            self.pending_mission_list.append(mission)
+            self.pending_mission_list.sort(key=lambda x: x.downlink_datetime)  # Sort on earliest downlink datetime
+            print(self.pending_mission_list)
 
             # Display the pending mission into mission table
 
