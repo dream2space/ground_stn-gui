@@ -33,6 +33,9 @@ class MainApp(tk.Frame):
         # Pipe for beacon
         self.pipe_beacon = pipe_beacon
 
+        # List of pending missions
+        self.pending_mission_list = []
+
         # Put all pages into container
         self.container = tk.Frame(self.parent)
         self.container.grid()
@@ -113,21 +116,24 @@ class MainApp(tk.Frame):
     # Handles Housekeeping Process after button pressed
     def handle_hk_process_start(self):
         if IS_TESTING:
-            self.p1 = Process(target=sample_process, daemon=True)  # Testing
+            self.housekeeping_process = Process(target=sample_process, daemon=True)  # Testing
         else:
             self.is_hk_process_success = False
             self.prev_file_number = len(os.listdir(
                 app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH))
-            self.p1 = Process(target=get_HK_logs, daemon=True,
-                              args=(self.pipe_beacon, self.port_ttnc, ))
-        self.p1.start()
+            self.housekeeping_process = Process(target=get_HK_logs, daemon=True,
+                                                args=(self.pipe_beacon, self.port_ttnc, ))
+        self.housekeeping_process.start()
         self.housekeeping_command.show_progress_bar()
 
     # Checks regularly if housekeeping process is complete
     def hk_process_checking(self):
 
-        if self.p1.is_alive():
+        # If process still alive, continute to check
+        if self.housekeeping_process.is_alive():
             self.after(100, self.hk_process_checking)
+
+        # If process ended, inform user
         else:
             self.housekeeping_command.stop_showing_progress_bar()
 
@@ -141,7 +147,7 @@ class MainApp(tk.Frame):
             else:
                 self.is_hk_process_success = True
 
-            # Open up explorer
+            # Housekeeping data parsing sucess - Open up explorer
             if self.is_hk_process_success == True:
                 path = os.path.relpath(
                     app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
@@ -152,6 +158,8 @@ class MainApp(tk.Frame):
 
                 # display success message
                 self.housekeeping_command.display_success_message()
+
+            # Housekeeping data parsing failed
             else:
                 # display fail message
                 self.housekeeping_command.display_failed_message()
@@ -181,7 +189,7 @@ class MainApp(tk.Frame):
 
         if is_valid_input:
             # Close top window
-            self.mission_window.destroy()
+            self.mission_window.handle_mission_success()
             self.mission_command.display_add_success_msg()
 
             # Disable and show mission loading screen
@@ -189,6 +197,7 @@ class MainApp(tk.Frame):
             # Send CCSDS mission command to Cubesat
 
             # Add into pending mission list
+            # self.pending_mission_list
 
             # Display the pending mission into mission table
 

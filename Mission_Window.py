@@ -179,6 +179,9 @@ class MissionWindow(tk.Toplevel):
         if not is_future_mission and is_downlink_valid:
             self.error_message.set('Error! Mission Start time has passed!')
 
+    def handle_mission_success(self):
+        self.destroy()
+
 
 class Mission:
     def __init__(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
