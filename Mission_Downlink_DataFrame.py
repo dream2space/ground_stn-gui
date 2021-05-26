@@ -60,3 +60,6 @@ class MissionDownlinkFrame(tk.LabelFrame):
 
         # Stop message display
         self.clear_success_message()
+
+    def disable_mission_command(self):
+        self.show_progress_bar()

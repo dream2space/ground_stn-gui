@@ -126,6 +126,9 @@ class MainApp(tk.Frame):
         self.housekeeping_process.start()
         self.housekeeping_command.show_progress_bar()
 
+        # Disable mission function
+        self.mission_command.disable_mission_command()
+
     # Checks regularly if housekeeping process is complete
     def hk_process_checking(self):
 
@@ -136,6 +139,9 @@ class MainApp(tk.Frame):
         # If process ended, inform user
         else:
             self.housekeeping_command.stop_showing_progress_bar()
+
+            # Re-enable mission command
+            self.mission_command.stop_mission_block()
 
             if not IS_TESTING:
                 # Determine if telecommand obtaining is successful
@@ -196,8 +202,9 @@ class MainApp(tk.Frame):
             self.mission_command.show_progress_bar()
             self.mission_command.after(10000, self.mission_command.stop_mission_block)
 
-            # Send CCSDS mission command to Cubesat
-            # TODO: Handle the CCSDS command
+            # Disable housekeeping data function
+            self.housekeeping_command.disable_housekeeping_command()
+            self.housekeeping_command.after(10000, self.housekeeping_command.stop_showing_progress_bar)
 
             # Add into pending mission list
             self.pending_mission_list.append(mission)
@@ -206,6 +213,9 @@ class MainApp(tk.Frame):
 
             # Display the pending mission into mission table
             self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)
+
+            # Send CCSDS mission command to Cubesat
+            # TODO: Handle the CCSDS command
 
         else:
             # Input time is not valid

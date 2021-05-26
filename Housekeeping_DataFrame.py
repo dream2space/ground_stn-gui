@@ -70,3 +70,12 @@ class HousekeepingDataFrame(tk.LabelFrame):
         self.pbar.stop()
         self.pbar_container.pack_forget()
         self.start_hk_button.pack()
+
+    def disable_housekeeping_command(self):
+        # Hide button
+        self.start_hk_button.pack_forget()
+
+        # Display the progress bar
+        self.pbar_container.pack()
+        self.pbar.pack()
+        self.pbar.start()

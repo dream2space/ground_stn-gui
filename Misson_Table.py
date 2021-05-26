@@ -7,10 +7,14 @@ class MissionTable(ttk.Frame):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
 
+        self.container = tk.Frame(self.parent)
+        self.container.pack()
+
         # Display currently pending missions
         column_id = (1, 2, 3, 4)
         column_names = ('Mission Start', 'Downlink Start', 'Count', 'Interval')
-        self.mission_pending_view = ttk.Treeview(self.parent, column=column_id, show='headings', height=3)
+        self.mission_pending_view = ttk.Treeview(
+            self.container, column=column_id, show='headings', height=3, selectmode='none')
         self.mission_pending_view.pack(padx=2, pady=2)
 
         # Setup column in treeview table for datetimes
@@ -27,7 +31,10 @@ class MissionTable(ttk.Frame):
 
     # Add a mission entry into table
     def update_mission_entry(self, mission_list):
-        pass
+        # Clear list
+        self.mission_pending_view.delete(*self.mission_pending_view.get_children())
+
+        # Add each entry into list
         iid = 0
         for mission in mission_list:
             self.mission_pending_view.insert(
