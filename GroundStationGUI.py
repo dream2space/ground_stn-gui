@@ -134,9 +134,6 @@ class MainApp(tk.Frame):
     # Checks regularly if housekeeping process is complete
     def hk_process_checking(self):
 
-        def hk_outcome_message_clear():
-            self.housekeeping_command.outcome_message.set("  ")
-
         if self.p1.is_alive():
             self.after(100, self.hk_process_checking)
         else:
@@ -164,21 +161,10 @@ class MainApp(tk.Frame):
                     subprocess.check_call(['xdg-open', '--', path])
 
                 # display success message
-                self.housekeeping_command.outcome_message.set(
-                    "Success!")
-                self.housekeeping_command.outcome_message_label["fg"] = 'green'
+                self.housekeeping_command.display_success_message()
             else:
                 # display fail message
-                self.housekeeping_command.outcome_message.set(
-                    "Failed!")
-                self.housekeeping_command.outcome_message_label["fg"] = 'red'
-
-            # Display message
-            self.housekeeping_command.outcome_message_label.pack(
-                side=tk.BOTTOM)
-
-            # Set task to clear the message
-            self.after(10000, hk_outcome_message_clear)
+                self.housekeeping_command.display_failed_message()
 
             # Undo flag
             self.is_hk_process_success = False

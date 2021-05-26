@@ -29,3 +29,26 @@ class HousekeepingDataFrame(tk.LabelFrame):
         self.outcome_message_label = tk.Label(
             self, textvariable=self.outcome_message)
         self.outcome_message_label.pack()
+
+    def display_success_message(self):
+        self.outcome_message.set("Success!")
+        self.outcome_message_label["fg"] = 'green'
+
+        # Display message
+        self.outcome_message_label.pack(side=tk.BOTTOM)
+
+        # Set task to clear the message
+        self.after(10000, self.hk_outcome_message_clear)
+
+    def display_failed_message(self):
+        self.outcome_message.set("Failed!")
+        self.outcome_message_label["fg"] = 'red'
+
+        # Display message
+        self.outcome_message_label.pack(side=tk.BOTTOM)
+
+        # Set task to clear the message
+        self.after(10000, self.hk_outcome_message_clear)
+
+    def hk_outcome_message_clear(self):
+        self.outcome_message.set("  ")
