@@ -6,6 +6,7 @@ class HousekeepingDataFrame(tk.LabelFrame):
     def __init__(self, parent, controller, pos, *args, **kwargs):
         tk.LabelFrame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+        self.controller = controller
         self.pack(side=pos, anchor=tk.NW, expand=1, fill="both")
 
         # Add line for Housekeeping data
@@ -52,3 +53,20 @@ class HousekeepingDataFrame(tk.LabelFrame):
 
     def hk_outcome_message_clear(self):
         self.outcome_message.set("  ")
+
+    # Show progress bar and hide start Housekeeping buton after clicked
+    def show_progress_bar(self):
+        # Hide button
+        self.start_hk_button.pack_forget()
+
+        # Display the progress bar
+        self.pbar_container.pack()
+        self.pbar.pack()
+        self.pbar.start()
+        self.after(100, self.controller.hk_process_checking)
+
+    # Stop progress bar
+    def stop_showing_progress_bar(self):
+        self.pbar.stop()
+        self.pbar_container.pack_forget()
+        self.start_hk_button.pack()

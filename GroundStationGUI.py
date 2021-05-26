@@ -121,15 +121,7 @@ class MainApp(tk.Frame):
             self.p1 = Process(target=get_HK_logs, daemon=True,
                               args=(self.pipe_beacon, self.port_ttnc, ))
         self.p1.start()
-
-        # Hide button
-        self.housekeeping_command.start_hk_button.pack_forget()
-
-        # Display the progress bar
-        self.housekeeping_command.pbar_container.pack()
-        self.housekeeping_command.pbar.pack()
-        self.housekeeping_command.pbar.start()
-        self.after(100, self.hk_process_checking)
+        self.housekeeping_command.show_progress_bar()
 
     # Checks regularly if housekeeping process is complete
     def hk_process_checking(self):
@@ -137,9 +129,7 @@ class MainApp(tk.Frame):
         if self.p1.is_alive():
             self.after(100, self.hk_process_checking)
         else:
-            self.housekeeping_command.pbar.stop()
-            self.housekeeping_command.pbar_container.pack_forget()
-            self.housekeeping_command.start_hk_button.pack()
+            self.housekeeping_command.stop_showing_progress_bar()
 
             if not IS_TESTING:
                 # Determine if telecommand obtaining is successful
