@@ -247,6 +247,12 @@ class Mission:
             self.mission_datetime = datetime.datetime.now()
             self.downlink_datetime = datetime.datetime.now()
 
+    def get_mission_datetime_string(self):
+        return self.mission_datetime.strftime("%d-%b-%Y %H:%M:%S")
+
+    def get_downlink_datetime_string(self):
+        return self.downlink_datetime.strftime("%d-%b-%Y %H:%M:%S")
+
 
 class TimestampPicker(tk.Frame):
     def __init__(self, parent):

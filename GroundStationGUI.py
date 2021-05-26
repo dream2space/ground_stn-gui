@@ -197,6 +197,7 @@ class MainApp(tk.Frame):
             self.mission_command.after(10000, self.mission_command.stop_mission_block)
 
             # Send CCSDS mission command to Cubesat
+            # TODO: Handle the CCSDS command
 
             # Add into pending mission list
             self.pending_mission_list.append(mission)
@@ -204,6 +205,7 @@ class MainApp(tk.Frame):
             print(self.pending_mission_list)
 
             # Display the pending mission into mission table
+            self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)
 
         else:
             # Input time is not valid
