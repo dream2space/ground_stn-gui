@@ -1,8 +1,10 @@
 import datetime
 import tkinter as tk
-from tkinter import ttk
 
 import tkcalendar
+
+from Mission import Mission
+from Timestamp_Picker import TimestampPicker
 
 
 class MissionWindow(tk.Toplevel):
@@ -181,136 +183,3 @@ class MissionWindow(tk.Toplevel):
 
     def handle_mission_success(self):
         self.destroy()
-
-
-class Mission:
-    def __init__(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
-        self._parse(mission_date, downlink_date, mission_time, downlink_time, image_count, interval)
-
-    def __str__(self):
-        _1 = f"mission date: {self.mission_datetime.strftime('%d/%m/%Y')} | mission time: {self.mission_datetime.strftime('%H:%M:%S')}\n"
-        _2 = f"downlink date: {self.downlink_datetime.strftime('%d/%m/%Y')} | downlink time: {self.downlink_datetime.strftime('%H:%M:%S')}\n"
-        _3 = f"image count: {self.image_count} | image interval: {self.interval}"
-        return _1 + _2 + _3
-
-    def __repr__(self) -> str:
-        _1 = f"\nmission date: {self.mission_datetime.strftime('%d/%m/%Y')} | mission time: {self.mission_datetime.strftime('%H:%M:%S')}\n"
-        _2 = f"downlink date: {self.downlink_datetime.strftime('%d/%m/%Y')} | downlink time: {self.downlink_datetime.strftime('%H:%M:%S')}\n"
-        _3 = f"image count: {self.image_count} | image interval: {self.interval}\n"
-        return _1 + _2 + _3
-
-    def _parse(self, mission_date, downlink_date, mission_time, downlink_time, image_count, interval):
-
-        # date format: yyyy/MM/dd
-        def _parse_date(date):
-            date_split = date.split('-')
-            return date_split
-
-        # time format: hh mm ss
-        def _parse_time(time):
-            time_split = time.split(' ')
-            return time_split
-
-        try:
-            parsed_mission_date = _parse_date(mission_date)
-            parsed_mission_time = _parse_time(mission_time)
-            mission_date_yyyy = int(parsed_mission_date[0])
-            mission_date_MM = int(parsed_mission_date[1])
-            mission_date_dd = int(parsed_mission_date[2])
-            mission_time_hh = int(parsed_mission_time[0])
-            mission_time_mm = int(parsed_mission_time[1])
-            mission_time_ss = int(parsed_mission_time[2])
-            self.mission_datetime = datetime.datetime(
-                year=mission_date_yyyy, month=mission_date_MM, day=mission_date_dd, hour=mission_time_hh,
-                minute=mission_time_mm, second=mission_time_ss)
-
-            parsed_downlink_date = _parse_date(downlink_date)
-            parsed_downlink_time = _parse_time(downlink_time)
-            downlink_date_yyyy = int(parsed_downlink_date[0])
-            downlink_date_MM = int(parsed_downlink_date[1])
-            downlink_date_dd = int(parsed_downlink_date[2])
-            downlink_time_hh = int(parsed_downlink_time[0])
-            downlink_time_mm = int(parsed_downlink_time[1])
-            downlink_time_ss = int(parsed_downlink_time[2])
-            self.downlink_datetime = datetime.datetime(
-                year=downlink_date_yyyy, month=downlink_date_MM, day=downlink_date_dd, hour=downlink_time_hh,
-                minute=downlink_time_mm, second=downlink_time_ss)
-
-            self.image_count = int(image_count)
-            self.interval = int(interval)
-
-        except ValueError:
-            # blanks found in datetime fields -> put dummy values
-            self.image_count = int(image_count)
-            self.interval = int(interval)
-
-            self.mission_datetime = datetime.datetime.now()
-            self.downlink_datetime = datetime.datetime.now()
-
-    def get_mission_datetime_string(self):
-        return self.mission_datetime.strftime("%d-%b-%Y %H:%M:%S")
-
-    def get_downlink_datetime_string(self):
-        return self.downlink_datetime.strftime("%d-%b-%Y %H:%M:%S")
-
-
-class TimestampPicker(tk.Frame):
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
-        self.pack()
-        self.parent = parent
-
-        # Timestamp list variables
-        hh_values = tuple()
-        for i in range(0, 24):
-            hh_values += ("{:02d}".format(i),)
-
-        mm_values = tuple()
-        for i in range(0, 60):
-            mm_values += ("{:02d}".format(i),)
-
-        ss_values = tuple()
-        for i in range(0, 60):
-            ss_values += ("{:02d}".format(i),)
-
-        # Setup hh container
-        self.downlink_start_time_hh = tk.Frame(self.parent)
-        self.downlink_start_time_hh.pack(side=tk.LEFT, padx=10, pady=3)
-        self.downlink_start_time_hh_label = tk.Label(
-            self.downlink_start_time_hh, text="hh")
-        self.downlink_start_time_hh_label.pack(side=tk.TOP)
-        self.downlink_start_time_hh_current_option = tk.StringVar()
-        self.downlink_start_time_select_hh = ttk.Combobox(
-            self.downlink_start_time_hh, width=4, textvariable=self.downlink_start_time_hh_current_option,
-            state='readonly', values=hh_values)
-        self.downlink_start_time_select_hh.pack(side=tk.BOTTOM)
-
-        # Setup mm container
-        self.downlink_start_time_mm = tk.Frame(self.parent)
-        self.downlink_start_time_mm.pack(side=tk.LEFT, padx=10, pady=3)
-        self.downlink_start_time_mm_label = tk.Label(
-            self.downlink_start_time_mm, text="mm")
-        self.downlink_start_time_mm_label.pack()
-        self.downlink_start_time_mm_current_option = tk.StringVar()
-        self.downlink_start_time_select_mm = ttk.Combobox(
-            self.downlink_start_time_mm, width=4, textvariable=self.downlink_start_time_mm_current_option,
-            state='readonly', values=mm_values)
-        self.downlink_start_time_select_mm.pack(side=tk.BOTTOM)
-
-        # Setup ss container
-        self.downlink_start_time_ss = tk.Frame(self.parent)
-        self.downlink_start_time_ss.pack(side=tk.RIGHT, padx=10, pady=3)
-        self.downlink_start_time_ss_label = tk.Label(
-            self.downlink_start_time_ss, text="ss")
-        self.downlink_start_time_ss_label.pack(side=tk.TOP)
-        self.downlink_start_time_ss_current_option = tk.StringVar()
-        self.downlink_start_time_select_ss = ttk.Combobox(
-            self.downlink_start_time_ss, width=4, textvariable=self.downlink_start_time_ss_current_option,
-            state='readonly', values=ss_values)
-        self.downlink_start_time_select_ss.pack(side=tk.BOTTOM)
-
-    def get_timestamp(self):
-        hh = self.downlink_start_time_hh_current_option.get()
-        mm = self.downlink_start_time_mm_current_option.get()
-        ss = self.downlink_start_time_ss_current_option.get()
-        return f"{hh} {mm} {ss}"  # return string
