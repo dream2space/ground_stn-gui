@@ -131,6 +131,7 @@ class MainApp(tk.Frame):
         self.housekeeping_command.pbar.start()
         self.after(100, self.hk_process_checking)
 
+    # Checks regularly if housekeeping process is complete
     def hk_process_checking(self):
 
         def hk_outcome_message_clear():
@@ -182,14 +183,18 @@ class MainApp(tk.Frame):
             # Undo flag
             self.is_hk_process_success = False
 
+    # Open mission window
     def open_mission_downlink_command_window(self):
         self.mission_window = MissionWindow(self.parent, self)
 
+    # Handle mission checking and scheduling after submited on mission window
     def handle_mission_scheduling(self):
         # Validate if (1) mission time is after current time, (2) downlink time after mission time
         def validate_mission_input(mission_input):
             print(mission_input)
-            if mission_input.mission_datetime > datetime.datetime.now() and mission_input.downlink_datetime > mission_input.mission_datetime:
+            is_mission_time_future = mission_input.mission_datetime > datetime.datetime.now()
+            is_downlink_after_mission = mission_input.downlink_datetime > mission_input.mission_datetime
+            if is_mission_time_future and is_downlink_after_mission:
                 return True
             else:
                 return False
