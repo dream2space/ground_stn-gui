@@ -22,18 +22,38 @@ class MissionDownlinkFrame(tk.LabelFrame):
                                 command=self.controller.open_mission_downlink_command_window)
         self.button.pack()
 
+        # Add progress bar
+        self.pbar_container = tk.Frame(self, pady=4)
+        self.pbar = ttk.Progressbar(self.pbar_container, mode='indeterminate', length=100)
+
         # Add a success message
         self.success_message = tk.StringVar()
         self.success_label = tk.Label(self, textvariable=self.success_message)
-        self.success_label.pack()
+        self.success_label.pack(side=tk.BOTTOM)
 
     def display_add_success_msg(self):
-        self.success_message.set("Success!")
+        self.success_message.set("Success! Sending command to Cubesat!")
         self.success_label['fg'] = 'green'
-        self.after(10000, self.clear_success_message)
 
     def clear_success_message(self):
         self.success_message.set(" ")
+
+    def show_progress_bar(self):
+        # Remove button
+        self.button.pack_forget()
+
+        # Show up progress bar
+        self.pbar_container.pack()
+        self.pbar.pack()
+        self.pbar.start()
+
+    # Stop progress bar and reinstate button
+    def stop_mission_block(self):
+        self.pbar.stop()
+        self.pbar.destroy()
+        self.pbar_container.pack_forget()
+        self.button.pack()
+        self.clear_success_message()
 
 
 class MissionTable(ttk.Treeview):

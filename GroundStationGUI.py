@@ -190,9 +190,11 @@ class MainApp(tk.Frame):
         if is_valid_input:
             # Close top window
             self.mission_window.handle_mission_success()
-            self.mission_command.display_add_success_msg()
 
-            # Disable and show mission loading screen
+            # Display success and show mission loading screen
+            self.mission_command.display_add_success_msg()
+            self.mission_command.show_progress_bar()
+            self.mission_command.after(4000, self.mission_command.stop_mission_block)
 
             # Send CCSDS mission command to Cubesat
 
