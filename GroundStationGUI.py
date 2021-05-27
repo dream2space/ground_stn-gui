@@ -219,8 +219,6 @@ class MainApp(tk.Frame):
             # Send CCSDS mission command to Cubesat
             if IS_TESTING:
                 self.mission_command_process = Process(target=sample_mission_command_process, daemon=True)  # Testing
-                self.mission_command_process = Process(
-                    target=process_mission_telecommand, daemon=True, args=(mission,))  # Testing
             else:
                 # TODO: Handle the CCSDS command
                 self.mission_command_process = Process(
