@@ -221,8 +221,8 @@ class MainApp(tk.Frame):
                 self.mission_command_process = Process(target=sample_mission_command_process, daemon=True)  # Testing
             else:
                 # TODO: Handle the CCSDS command
-                self.mission_command_process = Process(
-                    target=process_mission_telecommand, daemon=True, args=(mission,))  # Testing
+                self.mission_command_process = Process(target=process_mission_telecommand, daemon=True, args=(
+                    mission, self.pipe_beacon, self.port_ttnc,))  # Testing
             self.mission_command_process.start()
 
         else:

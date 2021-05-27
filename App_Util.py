@@ -177,11 +177,12 @@ def sample_mission_command_process():
 
 
 # Process to handle mission telecommand
-def process_mission_telecommand(mission_object):
+def process_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
+    # Setup serial object to reach ttnc transceiver
     def setup_serial(port):
         ttnc_ser = serial.Serial(port)
-        ttnc_ser.baudrate = 115200
+        ttnc_ser.baudrate = 9600
         ttnc_ser.timeout = 10
         return ttnc_ser
 
@@ -195,4 +196,21 @@ def process_mission_telecommand(mission_object):
         ccsds_params.TELECOMMAND_TYPE_MISSION_DOWNLINK, mission_start_time, mission_object.image_count,
         mission_object.interval, downlink_start_time)
 
-    print(ccsds_mission_telecommand)
+    # Stop beacon from using serial port via pipe
+    pipe.send("close_serial")
+    while pipe.poll() == "":
+        pass
+    print(f"process receive {pipe.recv()}")
+
+    # Start creating serial object
+    ttnc_serial = setup_serial(ttnc_serial_port)
+
+    # Send misison telecommand to Cubesat
+    print(f"telecommand is {ccsds_mission_telecommand}")
+    print(f"telecommand len is {len(ccsds_mission_telecommand)}")
+    ttnc_serial.write(ccsds_mission_telecommand)
+
+    # Return serial port to beacon process
+    print("done sending command")
+    ttnc_serial.close()
+    pipe.send("open_serial")
