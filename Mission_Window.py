@@ -168,17 +168,19 @@ class MissionWindow(tk.Toplevel):
         self.current_mission = Mission(mission_date, downlink_date, mission_time, downlink_time, image_count, interval)
         return self.current_mission
 
-    def display_error_message(self):
+    def display_error_message(self, num_current_missions):
         self.error_message_label['fg'] = 'red'
 
         is_future_mission = self.current_mission.mission_datetime > datetime.datetime.now()
         is_downlink_valid = self.current_mission.downlink_datetime > self.current_mission.mission_datetime
 
-        if not is_future_mission and not is_downlink_valid:
+        if num_current_missions >= 3:
+            self.error_message.set('Error! There should be not more than 3 pending missions!')
+        elif not is_future_mission and not is_downlink_valid:
             self.error_message.set('Error! Mission and Downlink Start time are not valid!')
-        if is_future_mission and not is_downlink_valid:
+        elif is_future_mission and not is_downlink_valid:
             self.error_message.set('Error! Downlink Start time should be after mission time!')
-        if not is_future_mission and is_downlink_valid:
+        elif not is_future_mission and is_downlink_valid:
             self.error_message.set('Error! Mission Start time has passed!')
 
     def handle_mission_success(self):

@@ -180,18 +180,19 @@ class MainApp(tk.Frame):
     # Handle mission checking and scheduling after submited on mission window
     def handle_mission_scheduling(self):
         # Validate if (1) mission time is after current time, (2) downlink time after mission time
-        def validate_mission_input(mission_input):
+        def validate_mission(mission_input):
             # print(mission_input)
             is_mission_time_future = mission_input.mission_datetime > datetime.datetime.now()
             is_downlink_after_mission = mission_input.downlink_datetime > mission_input.mission_datetime
-            if is_mission_time_future and is_downlink_after_mission:
+            num_mission = len(self.pending_mission_list)
+            if is_mission_time_future and is_downlink_after_mission and num_mission < 3:
                 return True
             else:
                 return False
 
         # Do input validation
         mission = self.mission_window.get_user_mission_input()
-        is_valid_input = validate_mission_input(mission)
+        is_valid_input = validate_mission(mission)
 
         if is_valid_input:
             # Close top window
@@ -219,4 +220,5 @@ class MainApp(tk.Frame):
 
         else:
             # Input time is not valid
-            self.mission_window.display_error_message()
+            num_current_missions = len(self.pending_mission_list)
+            self.mission_window.display_error_message(num_current_missions)

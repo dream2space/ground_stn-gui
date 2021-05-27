@@ -21,15 +21,13 @@ class HousekeepingDataFrame(tk.LabelFrame):
 
         # Progress bar
         self.pbar_container = tk.Frame(self, pady=4)
-        self.pbar_container.pack()
-        self.pbar = ttk.Progressbar(
-            self.pbar_container, mode='indeterminate', length=100)
+        self.pbar = ttk.Progressbar(self.pbar_container, mode='indeterminate', length=100)
 
         # Outcome message
         self.outcome_message = tk.StringVar()
         self.outcome_message_label = tk.Label(
             self, textvariable=self.outcome_message)
-        self.outcome_message_label.pack()
+        self.outcome_message_label.pack(side=tk.BOTTOM)
 
     def display_success_message(self):
         self.outcome_message.set("Success!")

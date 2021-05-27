@@ -2,12 +2,13 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 
-class MissionTable(ttk.Frame):
+class MissionTableFrame(tk.LabelFrame):
     def __init__(self, parent, *args, **kwargs):
-        ttk.Frame.__init__(self, parent, *args, **kwargs)
+        tk.LabelFrame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
+        self.pack()
 
-        self.container = tk.Frame(self.parent)
+        self.container = tk.Frame(self)
         self.container.pack()
 
         # Display currently pending missions

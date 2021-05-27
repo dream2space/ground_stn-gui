@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
-from Misson_Table import MissionTable
+from Misson_Table_Frame import MissionTableFrame
 
 
 class MissionDownlinkFrame(tk.LabelFrame):
@@ -12,7 +12,10 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.pack(side=pos, anchor=tk.SW, fill="both")
 
         # Display table for pending mission
-        self.pending_mission_table = MissionTable(self)
+        self.pending_mission_table = MissionTableFrame(self, text="Pending Missions", padx=3, pady=5)
+
+        # Display table for currently executing mission
+        self.current_mission_table = MissionTableFrame(self, text="Current Missions", padx=3, pady=5)
 
         # Add line for Mission and Downlink command
         self.label = tk.Label(
