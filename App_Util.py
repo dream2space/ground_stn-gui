@@ -174,3 +174,17 @@ def sample_mission_command_process():
     while i < max_val:
         print(i)
         i += 1
+
+
+# Process to handle mission telecommand
+def process_mission_telecommand(mission_object):
+    # Create CCSDS Encoder
+    encoder = CCSDS_Encoder()
+
+    # Create CCSDS Mission telecommand
+    mission_start_time = mission_object.mission_datetime.strftime("%d-%m-%Y-%H-%M-%S")
+    downlink_start_time = mission_object.downlink_datetime.strftime("%d-%m-%Y-%H-%M-%S")
+    ccsds_mission_telecommand = encoder.generate_mission_telecommand(
+        ccsds_params.TELECOMMAND_TYPE_MISSION_DOWNLINK, mission_start_time, mission_object.image_count, mission_object.interval, downlink_start_time)
+
+    print(ccsds_mission_telecommand)

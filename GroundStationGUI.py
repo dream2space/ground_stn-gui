@@ -9,8 +9,8 @@ from multiprocessing import Process
 import serial
 
 import App_Parameters as app_param
-from App_Util import (process_get_HK_logs, resource_path,
-                      sample_hk_command_process,
+from App_Util import (process_get_HK_logs, process_mission_telecommand,
+                      resource_path, sample_hk_command_process,
                       sample_mission_command_process)
 from Beacon_Panel import BeaconPanel
 from Housekeeping_DataFrame import HousekeepingDataFrame
@@ -219,9 +219,12 @@ class MainApp(tk.Frame):
             # Send CCSDS mission command to Cubesat
             if IS_TESTING:
                 self.mission_command_process = Process(target=sample_mission_command_process, daemon=True)  # Testing
+                self.mission_command_process = Process(
+                    target=process_mission_telecommand, daemon=True, args=(mission,))  # Testing
             else:
                 # TODO: Handle the CCSDS command
-                pass
+                self.mission_command_process = Process(
+                    target=process_mission_telecommand, daemon=True, args=(mission,))  # Testing
             self.mission_command_process.start()
 
         else:

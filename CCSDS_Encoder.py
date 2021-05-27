@@ -95,6 +95,7 @@ class CCSDS_Encoder():
 
         return header
 
+    # Format: DD-MM-YYYY-hh-mm-ss
     def _process_timestamp(self, timestamp):
         ret = bytearray(0)
         ts_list = [int(s) for s in timestamp.split('-')]
