@@ -177,7 +177,7 @@ def sample_mission_command_process():
 
 
 # Process to handle mission telecommand
-def process_mission_telecommand(mission_object, pipe, ttnc_serial_port):
+def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
     # Setup serial object to reach ttnc transceiver
     def setup_serial(port):

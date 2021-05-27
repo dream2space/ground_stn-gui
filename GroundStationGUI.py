@@ -9,7 +9,7 @@ from multiprocessing import Process
 import serial
 
 import App_Parameters as app_param
-from App_Util import (process_get_HK_logs, process_mission_telecommand,
+from App_Util import (process_get_HK_logs, process_send_mission_telecommand,
                       resource_path, sample_hk_command_process,
                       sample_mission_command_process)
 from Beacon_Panel import BeaconPanel
@@ -220,8 +220,7 @@ class MainApp(tk.Frame):
             if IS_TESTING:
                 self.mission_command_process = Process(target=sample_mission_command_process, daemon=True)  # Testing
             else:
-                # TODO: Handle the CCSDS command
-                self.mission_command_process = Process(target=process_mission_telecommand, daemon=True, args=(
+                self.mission_command_process = Process(target=process_send_mission_telecommand, daemon=True, args=(
                     mission, self.pipe_beacon, self.port_ttnc,))  # Testing
             self.mission_command_process.start()
 
