@@ -176,6 +176,18 @@ def sample_mission_command_process():
         i += 1
 
 
+# Sample process to run in place of Mission telecommand in testing mode
+def sample_downlink_process():
+    i = 0
+    max_val = 200000
+    print("start")
+    while i < max_val:
+        i += 1
+        if i % 1000 == 0:
+            print(i)
+    print("done")
+
+
 # Process to handle mission telecommand
 def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 

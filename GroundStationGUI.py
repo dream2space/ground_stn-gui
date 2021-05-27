@@ -5,12 +5,14 @@ import subprocess
 import sys
 import tkinter as tk
 from multiprocessing import Process
+from multiprocessing.context import ProcessError
 
 import serial
 
 import App_Parameters as app_param
 from App_Util import (process_get_HK_logs, process_send_mission_telecommand,
-                      resource_path, sample_hk_command_process,
+                      resource_path, sample_downlink_process,
+                      sample_hk_command_process,
                       sample_mission_command_process)
 from Beacon_Panel import BeaconPanel
 from Housekeeping_DataFrame import HousekeepingDataFrame
@@ -38,10 +40,16 @@ class MainApp(tk.Frame):
         # List of pending missions
         self.pending_mission_list = []
 
+        # List of executing missions
+        self.current_mission_list = []
+
         # Put all pages into container
         self.container = tk.Frame(self.parent)
         self.container.grid()
         self.make_start_page()
+
+        # Poll and check for missions to execute
+        self.mission_execution_check()
 
     # Initializing method to create Start Page
     def make_start_page(self):
@@ -228,3 +236,36 @@ class MainApp(tk.Frame):
             # Input time is not valid
             num_current_missions = len(self.pending_mission_list)
             self.mission_window.display_error_message(num_current_missions)
+
+    def mission_execution_check(self):
+        print(f"CHECK! {datetime.datetime.now()}")
+
+        num_mission = len(self.pending_mission_list)
+        print(self.pending_mission_list)
+        if num_mission != 0:
+            # Check top most mission item
+            # Start collection process if within 2 minutes of downlink
+            earliest_mission = self.pending_mission_list[0]
+            upcoming_downlink_datetime = earliest_mission.downlink_datetime
+
+            if upcoming_downlink_datetime - datetime.datetime.now() < datetime.timedelta(seconds=120):
+                print("less than 2 minutes to mission!!")
+                self.current_mission_list.append(earliest_mission)
+                del self.pending_mission_list[0]
+
+                if IS_TESTING:
+                    self.downlink_process = Process(target=sample_downlink_process, daemon=True)
+                    self.downlink_process.start()
+
+                # Render on the missions screens
+                self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)
+                self.mission_command.current_mission_table.update_mission_entry(self.current_mission_list)
+
+        try:
+            if len(self.current_mission_list) != 0 and not self.downlink_process.is_alive():
+                del self.current_mission_list[0]
+                self.mission_command.current_mission_table.update_mission_entry(self.current_mission_list)
+        except AttributeError:
+            pass
+
+        self.after(app_param.APP_DOWNLINK_PROCESS_CHECK_INTERVAL, self.mission_execution_check)
