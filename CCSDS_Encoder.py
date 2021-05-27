@@ -21,6 +21,25 @@ class CCSDS_Encoder():
         # Return appended packet
         return self._pad(header + packet_field)
 
+    def generate_mission_telecommand(
+            self, telecommand_type, timestamp_start_mission, num_images, interval, timestamp_start_downlink):
+        packet_field = bytearray(0)
+
+        # Create the other fields in packet first
+        packet_field = packet_field + telecommand_type.to_bytes(1, 'big')
+
+        # Mission related
+        packet_field = packet_field + self._process_timestamp(timestamp_start_mission)
+        packet_field = packet_field + num_images.to_bytes(1, 'big')
+        packet_field = packet_field + interval.to_bytes(2, 'big')
+        packet_field = packet_field + self._process_timestamp(timestamp_start_downlink)
+
+        # Create header
+        header = self._generate_packet_header(len(packet_field))
+
+        # Return appended packet
+        return self._pad(header + packet_field)
+
     def _pad(self, packet):
         """Pad with fake header"""
         while len(packet) < ccsds_params.TELECOMMAND_PACKET_LEN_BYTES:
