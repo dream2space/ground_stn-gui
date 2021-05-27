@@ -112,7 +112,7 @@ def beacon_collection(pipe_beacon):
 
 
 # Process to get housekeeping logs
-def get_HK_logs(pipe, ttnc_serial_port):
+def process_get_HK_logs(pipe, ttnc_serial_port):
 
     def setup_serial(port):
         ttnc_ser = serial.Serial(port)
@@ -155,8 +155,21 @@ def get_HK_logs(pipe, ttnc_serial_port):
     else:
         print("hk logs failed")
 
+# Sample process to run in place of HK telecommand in testing mode
 
-def sample_process():
+
+def sample_hk_command_process():
+    i = 0
+    max_val = 50000
+
+    while i < max_val:
+        print(i)
+        i += 1
+
+# Sample process to run in place of Mission telecommand in testing mode
+
+
+def sample_mission_command_process():
     i = 0
     max_val = 50000
 

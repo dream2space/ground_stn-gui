@@ -9,7 +9,9 @@ from multiprocessing import Process
 import serial
 
 import App_Parameters as app_param
-from App_Util import get_HK_logs, resource_path, sample_process
+from App_Util import (process_get_HK_logs, resource_path,
+                      sample_hk_command_process,
+                      sample_mission_command_process)
 from Beacon_Panel import BeaconPanel
 from Housekeeping_DataFrame import HousekeepingDataFrame
 from Mission_Downlink_DataFrame import MissionDownlinkFrame
@@ -116,12 +118,12 @@ class MainApp(tk.Frame):
     # Handles Housekeeping Process after button pressed
     def handle_hk_process_start(self):
         if IS_TESTING:
-            self.housekeeping_process = Process(target=sample_process, daemon=True)  # Testing
+            self.housekeeping_process = Process(target=sample_hk_command_process, daemon=True)  # Testing
         else:
             self.is_hk_process_success = False
             self.prev_file_number = len(os.listdir(
                 app_param.HOUSEKEEPING_DATA_FOLDER_FILEPATH))
-            self.housekeeping_process = Process(target=get_HK_logs, daemon=True,
+            self.housekeeping_process = Process(target=process_get_HK_logs, daemon=True,
                                                 args=(self.pipe_beacon, self.port_ttnc, ))
         self.housekeeping_process.start()
         self.housekeeping_command.show_progress_bar()
@@ -131,7 +133,6 @@ class MainApp(tk.Frame):
 
     # Checks regularly if housekeeping process is complete
     def hk_process_checking(self):
-
         # If process still alive, continute to check
         if self.housekeeping_process.is_alive():
             self.after(100, self.hk_process_checking)
@@ -216,7 +217,12 @@ class MainApp(tk.Frame):
             self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)
 
             # Send CCSDS mission command to Cubesat
-            # TODO: Handle the CCSDS command
+            if IS_TESTING:
+                self.mission_command_process = Process(target=sample_mission_command_process, daemon=True)  # Testing
+            else:
+                # TODO: Handle the CCSDS command
+                pass
+            self.mission_command_process.start()
 
         else:
             # Input time is not valid
