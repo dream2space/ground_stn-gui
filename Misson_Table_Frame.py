@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 
 
 class MissionTableFrame(tk.LabelFrame):
-    def __init__(self, parent, *args, **kwargs):
+    def __init__(self, parent, table_height, *args, **kwargs):
         tk.LabelFrame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
         self.pack()
@@ -15,7 +15,7 @@ class MissionTableFrame(tk.LabelFrame):
         column_id = (1, 2, 3, 4)
         column_names = ('Mission Start', 'Downlink Start', 'Count', 'Interval')
         self.mission_pending_view = ttk.Treeview(
-            self.container, column=column_id, show='headings', height=3, selectmode='none')
+            self.container, column=column_id, show='headings', selectmode='none', height=table_height)
         self.mission_pending_view.pack(padx=2, pady=2)
 
         # Setup column in treeview table for datetimes

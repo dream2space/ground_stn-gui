@@ -1,11 +1,15 @@
+import datetime
 import os
 import random
+import subprocess
 import sys
 import time
 
 import serial
+from reedsolo import ReedSolomonError
 
 import CCSDS_Parameters as ccsds_params
+import Mission_Parameters as mission_params
 from CCSDS_Decoder import CCSDS_Decoder
 from CCSDS_Encoder import CCSDS_Encoder
 from CCSDS_HK_Util import CCSDS_HK_Util
@@ -38,7 +42,7 @@ def beacon_collection(pipe_beacon):
         return ttnc_ser
 
     # Setup CCSDS Decoder
-    Decoder = CCSDS_Decoder(isBeacon=True)
+    Decoder = CCSDS_Decoder(isBeacon=True, isHK=False)
 
     while pipe_beacon.poll() == b"":
         pass
@@ -226,3 +230,129 @@ def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
     print("done sending command")
     ttnc_serial.close()
     pipe.send("open_serial")
+
+
+# Process to handle downlink
+def process_handle_downlink(payload_serial_port, pipe_beacon):
+
+    # Setup serial object to reach ttnc transceiver
+    def setup_serial(port):
+        ttnc_ser = serial.Serial(port)
+        ttnc_ser.baudrate = 115200
+        ttnc_ser.timeout = None  # Cannot set as nonblocking
+        return ttnc_ser
+
+    # Disable beacons
+    pipe_beacon.send("close_serial")
+    while pipe_beacon.poll() == "":
+        pass
+    print(f"process receive {pipe_beacon.recv()}")
+
+    # Create CCSDS Decoder
+    ccsds_decoder = CCSDS_Decoder(isBeacon=False, isHK=False)
+
+    # Setup payload serial port
+    payload_serial = setup_serial(payload_serial_port)
+
+    # Wait for start packet
+    print("Waiting for start")
+    start_packet = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
+
+    # Extract out useful data from padded packet
+    start_packet_data = start_packet[:13]
+    total_batch_expected = int.from_bytes(start_packet_data[10:], 'big')
+    print(f"Total batches: {total_batch_expected}")
+
+    recv_packets = []
+    is_packet_failed = False
+    is_last_packet = False
+    prev_success_packet_num = 0
+
+    # Receive all batches
+    transfer_start = datetime.datetime.now()
+    while True:
+        ser_bytes = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
+
+        # Exit loop after final batch
+        if ser_bytes == b"" and len(recv_packets) == total_batch_expected:
+            break
+
+        elif ser_bytes == b"" and len(recv_packets) < total_batch_expected:
+            # resend n/ack
+            return_val = b"nack\r\n"
+
+        ret = ccsds_decoder.quick_parse_downlink(ser_bytes)
+
+        # ---------------------------------------------------------------
+        # Decoding packet
+        # ---------------------------------------------------------------
+
+        # Failed to receive current packet
+        if ret['fail'] == True:
+            print(ret)
+            is_packet_failed = True
+
+        # Successfully received current packet
+        else:
+
+            # If packet is a resend
+            if ret['curr_batch'] == prev_success_packet_num:
+                is_packet_failed = False
+
+            # If new packet
+            else:
+                prev_success_packet_num = ret['curr_batch']
+
+                # Append received packet to list
+                recv_packets.append(ser_bytes)
+                print(f"Append - {ret}")
+
+                # Flag to indicate successfully received packet
+                is_packet_failed = False
+
+        # ---------------------------------------------------------------
+        # Handle Ack/Nack
+        # ---------------------------------------------------------------
+
+        # Send nack
+        if is_packet_failed:
+            return_val = b"nack\r\n"
+
+        # Send ack
+        else:
+            return_val = b"ack\r\n"
+
+        time.sleep(mission_params.TIME_BEFORE_ACK)
+        payload_serial.write(return_val)
+        print(f"Sent {return_val}")
+        print()
+
+        if ret['fail'] == False and ret['curr_batch']+1 == total_batch_expected:
+            print(f"last packet - {ret['curr_batch']}")
+            is_last_packet = True
+            # ser_payload.timeout = TIMEOUT_RX
+
+        if is_last_packet == True:
+            break
+
+    print(f"Collected {len(recv_packets)} packets")
+    transfer_end = datetime.datetime.now()
+    elapsed_time = transfer_end - transfer_start
+    print(f"Time elapsed: {elapsed_time}")
+
+    # Reassemble packets to image
+    with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out.gz", "wb") as enc_file:
+        for packet in recv_packets:
+            try:
+                enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
+            except ReedSolomonError:
+                print("Failed to decode as too many errors in packet")
+                return
+        enc_file.close()
+
+    os.chmod("decode.sh", 0o777)
+    subprocess.Popen("./decode.sh out out", shell=True)
+    print("Done!")
+
+    print("done sending command")
+    pipe_beacon.send("open_serial")

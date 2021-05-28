@@ -5,14 +5,13 @@ import subprocess
 import sys
 import tkinter as tk
 from multiprocessing import Process
-from multiprocessing.context import ProcessError
 
 import serial
 
 import App_Parameters as app_param
-from App_Util import (process_get_HK_logs, process_send_mission_telecommand,
-                      resource_path, sample_downlink_process,
-                      sample_hk_command_process,
+from App_Util import (process_get_HK_logs, process_handle_downlink,
+                      process_send_mission_telecommand, resource_path,
+                      sample_downlink_process, sample_hk_command_process,
                       sample_mission_command_process)
 from Beacon_Panel import BeaconPanel
 from Housekeeping_DataFrame import HousekeepingDataFrame
@@ -254,8 +253,12 @@ class MainApp(tk.Frame):
                 del self.pending_mission_list[0]
 
                 if IS_TESTING:
-                    self.downlink_process = Process(target=sample_downlink_process, daemon=True)
-                    self.downlink_process.start()
+                    self.downlink_process = Process(target=sample_downlink_process, daemon=True)  # Testing
+                else:
+                    self.downlink_process = Process(target=process_handle_downlink,
+                                                    daemon=True, args=(self.port_payload, self.pipe_beacon,))
+
+                self.downlink_process.start()
 
                 # Render on the missions screens
                 self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)

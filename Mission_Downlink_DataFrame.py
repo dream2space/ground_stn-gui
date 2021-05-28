@@ -12,10 +12,12 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.pack(side=pos, anchor=tk.SW, fill="both")
 
         # Display table for pending mission
-        self.pending_mission_table = MissionTableFrame(self, text="Pending Missions", padx=3, pady=5)
+        self.pending_mission_table = MissionTableFrame(
+            self, table_height=3, text="Missions Pending Downlink", padx=3, pady=5)
 
         # Display table for currently executing mission
-        self.current_mission_table = MissionTableFrame(self, text="Current Missions", padx=3, pady=5)
+        self.current_mission_table = MissionTableFrame(
+            self, table_height=1, text="Missions Currently in Downlink", padx=3, pady=5)
 
         # Add line for Mission and Downlink command
         self.label = tk.Label(

@@ -1,9 +1,11 @@
+import copy
 import multiprocessing
 import os
 import threading
 import tkinter as tk
 
 import App_Parameters as app_params
+import Mission_Parameters as mission_params
 from App_Util import beacon_collection
 from GroundStationGUI import MainApp
 
@@ -16,6 +18,10 @@ if __name__ == "__main__":
     # Check folder path to save CSV file
     if not os.path.exists(app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH):
         os.makedirs(app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH)
+
+    # Check folder path to save mission
+    if not os.path.exists(mission_params.GROUND_STN_MISSION_FOLDER_PATH):
+        os.makedirs(mission_params.GROUND_STN_MISSION_FOLDER_PATH)
 
     # Create pipes for beacon
     pipe_beacon, pipe_gui = multiprocessing.Pipe(True)
