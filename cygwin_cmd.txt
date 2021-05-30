@@ -1,0 +1,4 @@
+C:\cygwin64\bin\bash.exe
+C:\cygwin64\bin\gzip.exe
+C:\cygwin64\bin\base64.exe
+C:\cygwin64\bin\rm.exe
