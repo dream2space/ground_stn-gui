@@ -361,14 +361,21 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
 
     # For windows:
     # Assumes cygwin installed in correct filepath
-    subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d out", shell=True)
+    # TODO: Change the mission directory/filename
+    subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d mission/out.gz", shell=True)
     time.sleep(1)
 
-    with open('out', 'rb') as enc_file:
+    # TODO: Change the mission directory/filename
+    with open('mission/out', 'rb') as enc_file:
         bin_file = enc_file.read()
     enc_file.close()
-    with open('out1.jpg', 'wb') as output:
+    # TODO: Change the mission directory/filename
+    with open('mission/out.jpg', 'wb') as output:
         output.write(base64.b64decode(bin_file))
+
+    # Remove out file
+    # TODO: Change the mission directory/filename
+    subprocess.Popen(r"C:\cygwin64\bin\rm.exe mission/out", shell=True)
 
     print("done sending command")
     pipe_beacon.send("open_serial")
