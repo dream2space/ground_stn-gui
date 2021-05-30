@@ -1,3 +1,4 @@
+import base64
 import datetime
 import os
 import random
@@ -353,9 +354,21 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
                 return
         enc_file.close()
 
-    os.chmod("decode.sh", 0o777)
-    subprocess.Popen("./decode.sh out out", shell=True)
-    print("Done!")
+    # Works only in linux
+    # os.chmod("decode.sh", 0o777)
+    # subprocess.Popen("./decode.sh out out", shell=True)
+    # print("Done!")
+
+    # For windows:
+    # Assumes cygwin installed in correct filepath
+    subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d out", shell=True)
+    time.sleep(1)
+
+    with open('out', 'rb') as enc_file:
+        bin_file = enc_file.read()
+    enc_file.close()
+    with open('out1.jpg', 'wb') as output:
+        output.write(base64.b64decode(bin_file))
 
     print("done sending command")
     pipe_beacon.send("open_serial")
