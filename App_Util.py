@@ -327,10 +327,13 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
         print(f"Sent {return_val}")
         print()
 
+        # Needs this line to stop the last packet < 149 bytes
+        if ret['fail'] == False and ret['curr_batch'] == total_batch_expected - 2:
+            payload_serial.timeout = mission_params.TIMEOUT_TX * 0.75
+
         if ret['fail'] == False and ret['curr_batch']+1 == total_batch_expected:
             print(f"last packet - {ret['curr_batch']}")
             is_last_packet = True
-            # ser_payload.timeout = TIMEOUT_RX
 
         if is_last_packet == True:
             break

@@ -61,7 +61,7 @@ class CCSDS_Downlink_Decoder():
                 CCSDS_Packet[7:10], byteorder='big', signed=False)
             curr_chunk = int.from_bytes(
                 CCSDS_Packet[10:13], byteorder='big', signed=False)
-            return {"fail": False, "stop": False, "curr_batch": curr_batch, "curr_chunk": curr_chunk}
+            return {"fail": False, "stop": False, "curr_batch": curr_batch, "curr_chunk": curr_chunk, "len": len(CCSDS_Packet)}
 
         else:
             return {"fail": True}
