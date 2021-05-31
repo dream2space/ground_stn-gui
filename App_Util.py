@@ -238,10 +238,10 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
 
     # Setup serial object to reach ttnc transceiver
     def setup_serial(port):
-        ttnc_ser = serial.Serial(port)
-        ttnc_ser.baudrate = 115200
-        ttnc_ser.timeout = None  # Cannot set as nonblocking
-        return ttnc_ser
+        ser = serial.Serial(port)
+        ser.baudrate = 115200
+        ser.timeout = None  # Cannot set as nonblocking
+        return ser
 
     # Disable beacons
     pipe_beacon.send("close_serial")
@@ -255,6 +255,8 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
     # Setup payload serial port
     payload_serial = setup_serial(payload_serial_port)
 
+    # ---------------------------------------------------------------
+
     # Wait for start packet
     print("Waiting for start")
     start_packet = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
@@ -263,6 +265,9 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
     start_packet_data = start_packet[:13]
     total_batch_expected = int.from_bytes(start_packet_data[10:], 'big')
     print(f"Total batches: {total_batch_expected}")
+
+    # Update timeout of packets
+    payload_serial.timeout = 500  # Timeout after 500 sec
 
     recv_packets = []
     is_packet_failed = False
@@ -344,7 +349,10 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
     elapsed_time = transfer_end - transfer_start
     print(f"Time elapsed: {elapsed_time}")
 
+    # ---------------------------------------------------------------
+
     # Reassemble packets to image
+    # TODO: Change the mission directory/filename
     with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out.gz", "wb") as enc_file:
         for packet in recv_packets:
             try:
@@ -355,31 +363,47 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
         enc_file.close()
 
     # TODO: Check OS and prescribe decode steps
-
-    # Works only in linux
-    # os.chmod("decode.sh", 0o777)
-    # subprocess.Popen("./decode.sh out out", shell=True)
-    # print("Done!")
-
-    # For windows:
-    # Assumes cygwin installed in correct filepath
-    # TODO: Change the mission directory/filename
-    subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d mission/out.gz", shell=True)
-    time.sleep(1)
-
-    # TODO: Change the mission directory/filename
-    with open('mission/out', 'rb') as enc_file:
-        bin_file = enc_file.read()
-    enc_file.close()
-    # TODO: Change the mission directory/filename
-    with open('mission/out.jpg', 'wb') as output:
-        output.write(base64.b64decode(bin_file))
-
-    # Remove out file
-    # TODO: Change the mission directory/filename
-    subprocess.Popen(r"C:\cygwin64\bin\rm.exe mission/out", shell=True)
-
     # TODO: Indicate success/fail action
+
+    # For linux
+    if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        os.chmod("decode.sh", 0o777)
+        subprocess.Popen("./decode.sh out out", shell=True)
+
+    # For windows
+    elif sys.platform.startswith('win'):
+        # Assumes cygwin installed in correct filepath
+        is_cygwin_exist = os.path.isdir(r"C:\cygwin64\bin")
+        is_gzip_exist = os.path.exists(r"C:\cygwin64\bin\gzip.exe")
+        is_rm_exist = os.path.exists(r"C:\cygwin64\bin\rm.exe")
+
+        if is_cygwin_exist and is_gzip_exist and is_rm_exist:
+            # TODO: Change the mission directory/filename
+            # TODO: Handle error messages from processes
+            subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d mission/out.gz", shell=True)
+            time.sleep(1)
+
+            # TODO: Change the mission directory/filename
+            with open('mission/out', 'rb') as enc_file:
+                bin_file = enc_file.read()
+            enc_file.close()
+
+            # TODO: Change the mission directory/filename
+            with open('mission/out.jpg', 'wb') as output:
+                # TODO: Handle error messages from processes
+                output.write(base64.b64decode(bin_file))
+
+            # Remove out file
+            # TODO: Change the mission directory/filename
+            subprocess.Popen(r"C:\cygwin64\bin\rm.exe mission/out", shell=True)
+
+        # cygwin not exist
+        else:
+            pass
+
+    # For mac
+    elif sys.platform.startswith('darwin'):
+        pass
 
     print("done sending command")
     pipe_beacon.send("open_serial")
