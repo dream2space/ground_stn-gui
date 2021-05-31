@@ -9,13 +9,15 @@ from multiprocessing import Process
 import serial
 
 import App_Parameters as app_param
-from App_Util import (process_get_HK_logs, process_handle_downlink,
-                      process_send_mission_telecommand, resource_path,
-                      sample_downlink_process, sample_hk_command_process,
-                      sample_mission_command_process)
+from App_Util import (process_get_HK_logs, resource_path,
+                      sample_hk_command_process)
 from Beacon_Panel import BeaconPanel
 from Housekeeping_DataFrame import HousekeepingDataFrame
 from Mission_Downlink_DataFrame import MissionDownlinkFrame
+from Mission_Util import (process_handle_downlink,
+                          process_send_mission_telecommand,
+                          sample_downlink_process,
+                          sample_mission_command_process)
 from Mission_Window import MissionWindow
 from Start_Page import StartPage
 from Testing import IS_TESTING
