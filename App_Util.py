@@ -354,6 +354,8 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
                 return
         enc_file.close()
 
+    # TODO: Check OS and prescribe decode steps
+
     # Works only in linux
     # os.chmod("decode.sh", 0o777)
     # subprocess.Popen("./decode.sh out out", shell=True)
@@ -376,6 +378,8 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
     # Remove out file
     # TODO: Change the mission directory/filename
     subprocess.Popen(r"C:\cygwin64\bin\rm.exe mission/out", shell=True)
+
+    # TODO: Indicate success/fail action
 
     print("done sending command")
     pipe_beacon.send("open_serial")
