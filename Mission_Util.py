@@ -186,14 +186,14 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
         recv_image_packets_list.append(recv_packets_list)
 
         # Change timeout between images
-        payload_serial.timeout = mission_params.TIME_BETWEEN_IMAGES_PAYLOAD * 2
+        payload_serial.timeout = mission_params.TIME_BETWEEN_IMAGES_GROUND
 
     transfer_end = datetime.datetime.now()
     elapsed_time_sec = (transfer_end - transfer_start).total_seconds()
     data_rate_kbps = (total_bytes_recv*8/elapsed_time_sec)/(2**10)
     print(f"Collected {total_bytes_recv/(2 ** 10):.2f} KB")
     print(f"Time elapsed: {elapsed_time_sec:.2f} sec")
-    print(f"Downlink rate: {data_rate_kbps:.2f} kbps")
+    print(f"Downlink rate: {data_rate_kbps:.2f} Kbps")
 
     # ---------------------------------------------------------------
 
@@ -201,7 +201,7 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
     for recv_image_packets in recv_image_packets_list:
         # Reassemble packets to image
         # TODO: Save to specific mission folder later
-        with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out_{curr_image_count}.gz", "wb") as enc_file:
+        with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out.gz", "wb") as enc_file:
             for packet in recv_image_packets:
                 try:
                     enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
@@ -227,13 +227,13 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
             if is_cygwin_exist and is_gzip_exist and is_rm_exist:
                 # TODO: Handle error messages from processes
                 subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d mission/out.gz", shell=True)
-                time.sleep(1)
+                time.sleep(3)
 
-                with open('mission/out', 'rb') as enc_file:
+                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out', 'rb') as enc_file:
                     bin_file = enc_file.read()
                 enc_file.close()
 
-                with open('mission/out.jpg', 'wb') as output:
+                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out.jpg', 'wb') as output:
                     # TODO: Handle error messages from processes
                     output.write(base64.b64decode(bin_file))
 
