@@ -4,4 +4,6 @@ node_modules/*
 dist/*
 build/*
 *housekeeping_data
-mission*
+mission*jpg
+mission*gz
+mission*out*
