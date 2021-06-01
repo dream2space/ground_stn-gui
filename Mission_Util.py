@@ -227,7 +227,7 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
             if is_cygwin_exist and is_gzip_exist and is_rm_exist:
                 # TODO: Handle error messages from processes
                 subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d mission/out.gz", shell=True)
-                time.sleep(3)
+                time.sleep(1)
 
                 with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out', 'rb') as enc_file:
                     bin_file = enc_file.read()
