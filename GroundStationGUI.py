@@ -230,7 +230,7 @@ class MainApp(tk.Frame):
                 self.mission_command_process = Process(target=sample_mission_command_process, daemon=True)  # Testing
             else:
                 self.mission_command_process = Process(target=process_send_mission_telecommand, daemon=True, args=(
-                    mission, self.pipe_beacon, self.port_ttnc,))  # Testing
+                    mission, self.pipe_beacon, self.port_ttnc, ))  # Testing
             self.mission_command_process.start()
 
         else:
@@ -257,8 +257,8 @@ class MainApp(tk.Frame):
                 if IS_TESTING:
                     self.downlink_process = Process(target=sample_downlink_process, daemon=True)  # Testing
                 else:
-                    self.downlink_process = Process(target=process_handle_downlink,
-                                                    daemon=True, args=(self.port_payload, self.pipe_beacon,))
+                    self.downlink_process = Process(target=process_handle_downlink, daemon=True, args=(
+                        self.port_payload, earliest_mission.get_mission_name(),))
 
                 self.downlink_process.start()
 

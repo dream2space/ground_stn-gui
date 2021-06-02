@@ -77,7 +77,7 @@ def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
 
 # Process to handle downlink
-def process_handle_downlink(payload_serial_port, pipe_beacon):
+def process_handle_downlink(payload_serial_port, mission_name):
 
     # Setup serial object to reach ttnc transceiver
     def setup_serial(port):
@@ -91,6 +91,9 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
 
     # Setup payload serial port
     payload_serial = setup_serial(payload_serial_port)
+
+    # Create downlink folder
+    os.makedirs(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}")
 
     # ---------------------------------------------------------------
     # Receive all images
@@ -201,7 +204,7 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
     for recv_image_packets in recv_image_packets_list:
         # Reassemble packets to image
         # TODO: Save to specific mission folder later
-        with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out.gz", "wb") as enc_file:
+        with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
             for packet in recv_image_packets:
                 try:
                     enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
@@ -215,7 +218,7 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
         # For linux
         if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
             os.chmod("decode.sh", 0o777)
-            subprocess.Popen("./decode.sh out out", shell=True)
+            subprocess.Popen("./decode.sh out out", shell=True)  # TODO: fix filepath
 
         # For windows
         elif sys.platform.startswith('win'):
@@ -226,19 +229,19 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
 
             if is_cygwin_exist and is_gzip_exist and is_rm_exist:
                 # TODO: Handle error messages from processes
-                subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d mission/out.gz", shell=True)
+                subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d" + f" mission/{mission_name}/out.gz", shell=True)
                 time.sleep(1)
 
-                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out', 'rb') as enc_file:
+                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
                     bin_file = enc_file.read()
                 enc_file.close()
 
-                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/out.jpg', 'wb') as output:
+                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
                     # TODO: Handle error messages from processes
                     output.write(base64.b64decode(bin_file))
 
                 # Remove out file
-                subprocess.Popen(r"C:\cygwin64\bin\rm.exe mission/out", shell=True)
+                subprocess.Popen(r"C:\cygwin64\bin\rm.exe" + f" mission/{mission_name}/out", shell=True)
 
             # cygwin not exist
             else:
@@ -249,9 +252,9 @@ def process_handle_downlink(payload_serial_port, pipe_beacon):
             pass
 
         # Rename image file
-        if os.path.exists("mission/out.jpg"):
+        if os.path.exists(f"mission/{mission_name}/out.jpg"):
             try:
-                os.rename("mission/out.jpg", f"mission/out_{curr_image_count}.jpg")
+                os.rename(f"mission/{mission_name}/out.jpg", f"mission/{mission_name}/out_{curr_image_count}.jpg")
             except FileExistsError:
                 print("duplicate file found!")
                 continue

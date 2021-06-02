@@ -70,3 +70,6 @@ class Mission:
 
     def get_downlink_datetime_string(self):
         return self.downlink_datetime.strftime("%d-%b-%Y %H:%M:%S")
+
+    def get_mission_name(self):
+        return f'mission_{self.mission_datetime.strftime("%d-%b-%Y-%H-%M-%S")}_{self.image_count}_{self.interval}'
