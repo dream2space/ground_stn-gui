@@ -37,6 +37,11 @@ def sample_downlink_process():
     print("done")
 
 
+# Function to update records about Missions/Downlinks
+def update_mission_status():
+    pass
+
+
 # Process to handle mission telecommand
 def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
@@ -97,11 +102,15 @@ def process_handle_downlink(payload_serial_port, mission_name):
     os.makedirs(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}")
 
     # ---------------------------------------------------------------
+
+    # Status booleans of mission/downlink
+    is_timeout = False
+
     # Receive all images
     recv_image_packets_list = []
     total_bytes_recv = 0
     image_collected_count = 0
-    is_timeout = False
+
     transfer_start = datetime.datetime.now()
     while True:
         # Wait for start packet
@@ -179,8 +188,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
 
             time.sleep(mission_params.TIME_BEFORE_ACK)
             payload_serial.write(return_val)
-            print(f"Sent {return_val}")
-            print()
+            print(f"Sent {return_val}\n")
 
             # Needs this line to stop the last packet < 149 bytes
             if ret['fail'] == False and ret['curr_batch'] == total_batch_expected - 2:
@@ -196,7 +204,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
         # If timeout received, downlink has failed and stop process
         if is_timeout == True:
             print("Timeout reached, no packets received")
-            return
+            break
 
         # Append list of image packets found to main list
         recv_image_packets_list.append(recv_packets_list)
@@ -211,7 +219,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
     print(f"Time elapsed: {elapsed_time_sec:.2f} sec")
     print(f"Downlink rate: {data_rate_kbps:.2f} Kbps")
 
-    # ---------------------------------------------------------------
+    # --------------------------------------------------------------
 
     curr_image_count = 1
     for recv_image_packets in recv_image_packets_list:
@@ -229,6 +237,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
         # TODO: Indicate success/fail action
 
         # For linux
+        # TODO: Try this out in linux environment in WSL
         if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
             os.chmod("decode.sh", 0o777)
             subprocess.Popen("./decode.sh out out", shell=True)  # TODO: fix filepath
@@ -276,3 +285,5 @@ def process_handle_downlink(payload_serial_port, mission_name):
 
         # Increment image count
         curr_image_count += 1
+
+    # Update status of mission in records
