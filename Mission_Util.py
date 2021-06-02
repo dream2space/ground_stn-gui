@@ -100,6 +100,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
     recv_image_packets_list = []
     total_bytes_recv = 0
     image_collected_count = 0
+    is_timeout = False
     transfer_start = datetime.datetime.now()
     while True:
         # Wait for start packet
@@ -128,6 +129,12 @@ def process_handle_downlink(payload_serial_port, mission_name):
         # Receive all batches of image
         while True:
             ser_bytes = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
+
+            # Timeout and did not receive any more bytes
+            if ser_bytes == b"":
+                is_timeout = True
+                break
+
             ret = ccsds_decoder.quick_parse_downlink(ser_bytes)
             total_bytes_recv += len(ser_bytes)
 
@@ -184,6 +191,11 @@ def process_handle_downlink(payload_serial_port, mission_name):
 
             if is_last_packet == True:
                 break
+
+        # If timeout received, downlink has failed and stop process
+        if is_timeout == True:
+            print("Timeout reached, no packets received")
+            return
 
         # Append list of image packets found to main list
         recv_image_packets_list.append(recv_packets_list)
