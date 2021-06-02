@@ -1,2 +1,2 @@
-IS_TESTING = False
-# IS_TESTING = True
+# IS_TESTING = False
+IS_TESTING = True

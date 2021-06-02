@@ -42,6 +42,20 @@ class MissionDownlinkFrame(tk.LabelFrame):
         self.current_mission_table = MissionTableFrame(
             self, table_height=1, text="Missions Currently in Downlink", padx=3, pady=5)
 
+        # Label frame for completed missions
+        self.completed_missions_labelframe = tk.LabelFrame(self, text="Completed Missions / Downlinks", padx=3, pady=5)
+        self.completed_missions_labelframe.pack(fill="both", expand=True)
+
+        # Add label for completed Mission and Downlink section
+        self.completed_missions_label = tk.Label(
+            self.completed_missions_labelframe, text="View Completed Missions / Downlinks", pady=5)
+        self.completed_missions_label.pack()
+
+        # Add button to view Mission and Downlink
+        self.view_completed_missions_button = tk.Button(self.completed_missions_labelframe, text="Click here",
+                                                        command=self.controller.view_completed_missions)
+        self.view_completed_missions_button.pack()
+
     def display_add_success_msg(self):
         self.success_message.set("Success! Sending command to Cubesat!")
         self.success_label['fg'] = 'green'

@@ -274,3 +274,7 @@ class MainApp(tk.Frame):
             pass
 
         self.after(app_param.APP_DOWNLINK_PROCESS_CHECK_INTERVAL, self.mission_execution_check)
+
+    # Respond to button pressed when User wishes to view completed Missions/Downlink
+    def view_completed_missions(self):
+        pass
