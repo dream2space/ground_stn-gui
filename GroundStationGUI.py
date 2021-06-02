@@ -5,6 +5,7 @@ import subprocess
 import sys
 import tkinter as tk
 from multiprocessing import Process
+from tkinter import messagebox
 
 import serial
 
@@ -277,4 +278,7 @@ class MainApp(tk.Frame):
 
     # Respond to button pressed when User wishes to view completed Missions/Downlink
     def view_completed_missions(self):
-        pass
+
+        if not os.path.exists(f"{app_param.GROUND_STN_MISSION_LOG_FILEPATH}"):
+            messagebox.showerror(title="Dream2space Ground Station",
+                                 message="Mission records not found!\nTry to send a mission command.")

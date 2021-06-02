@@ -1,4 +1,5 @@
 import base64
+import binascii
 import datetime
 import os
 import subprocess
@@ -250,21 +251,26 @@ def process_handle_downlink(payload_serial_port, mission_name):
             is_rm_exist = os.path.exists(r"C:\cygwin64\bin\rm.exe")
 
             if is_cygwin_exist and is_gzip_exist and is_rm_exist:
-                # TODO: Handle error messages from processes
-                subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d" + f" mission/{mission_name}/out.gz", shell=True)
+                gzip_process = subprocess.Popen(
+                    r"C:\cygwin64\bin\gzip.exe -d" + f" mission/{mission_name}/out.gz", shell=True)
                 time.sleep(1)
+                print(gzip_process.returncode)  # Check the execution return code of process
 
                 with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
                     bin_file = enc_file.read()
                 enc_file.close()
 
                 with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
-                    # TODO: Handle error messages from processes
-                    output.write(base64.b64decode(bin_file))
+                    try:
+                        base64_dec = base64.b64decode(bin_file)
+                    except binascii.Error:
+                        print("Base64 decode error!")
+                    output.write(base64_dec)
 
                 # Remove out file
                 subprocess.Popen(r"C:\cygwin64\bin\rm.exe" +
                                  f" {app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out", shell=True)
+                print(gzip_process.returncode)  # Check the execution return code of process
 
             # cygwin not exist
             else:
