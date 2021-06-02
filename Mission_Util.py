@@ -8,6 +8,7 @@ import time
 import serial
 from reedsolo import ReedSolomonError
 
+import App_Parameters as app_params
 import CCSDS_Parameters as ccsds_params
 import Mission_Parameters as mission_params
 from CCSDS_Decoder import CCSDS_Decoder
@@ -93,7 +94,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
     payload_serial = setup_serial(payload_serial_port)
 
     # Create downlink folder
-    os.makedirs(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}")
+    os.makedirs(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}")
 
     # ---------------------------------------------------------------
     # Receive all images
@@ -216,7 +217,7 @@ def process_handle_downlink(payload_serial_port, mission_name):
     for recv_image_packets in recv_image_packets_list:
         # Reassemble packets to image
         # TODO: Save to specific mission folder later
-        with open(f"{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
+        with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
             for packet in recv_image_packets:
                 try:
                     enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
@@ -244,16 +245,17 @@ def process_handle_downlink(payload_serial_port, mission_name):
                 subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d" + f" mission/{mission_name}/out.gz", shell=True)
                 time.sleep(1)
 
-                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
+                with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
                     bin_file = enc_file.read()
                 enc_file.close()
 
-                with open(f'{mission_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
+                with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
                     # TODO: Handle error messages from processes
                     output.write(base64.b64decode(bin_file))
 
                 # Remove out file
-                subprocess.Popen(r"C:\cygwin64\bin\rm.exe" + f" mission/{mission_name}/out", shell=True)
+                subprocess.Popen(r"C:\cygwin64\bin\rm.exe" +
+                                 f" {app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out", shell=True)
 
             # cygwin not exist
             else:
@@ -264,9 +266,10 @@ def process_handle_downlink(payload_serial_port, mission_name):
             pass
 
         # Rename image file
-        if os.path.exists(f"mission/{mission_name}/out.jpg"):
+        if os.path.exists(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg"):
             try:
-                os.rename(f"mission/{mission_name}/out.jpg", f"mission/{mission_name}/out_{curr_image_count}.jpg")
+                os.rename(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg",
+                          f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out_{curr_image_count}.jpg")
             except FileExistsError:
                 print("duplicate file found!")
                 continue
