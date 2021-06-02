@@ -258,8 +258,11 @@ class MainApp(tk.Frame):
                 if IS_TESTING:
                     self.downlink_process = Process(target=sample_downlink_process, daemon=True)  # Testing
                 else:
-                    self.downlink_process = Process(target=process_handle_downlink, daemon=True, args=(
-                        self.port_payload, earliest_mission.get_mission_name(),))
+                    self.downlink_process = Process(
+                        target=process_handle_downlink, daemon=True,
+                        args=(self.port_payload, earliest_mission.get_mission_name(),
+                              earliest_mission.get_mission_datetime_string(),
+                              earliest_mission.get_downlink_datetime_string(),))
 
                 self.downlink_process.start()
 

@@ -8,6 +8,7 @@ import time
 
 import serial
 from reedsolo import ReedSolomonError
+from tabulate import tabulate
 
 import App_Parameters as app_params
 import CCSDS_Parameters as ccsds_params
@@ -84,7 +85,7 @@ def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
 
 # Process to handle downlink
-def process_handle_downlink(payload_serial_port, mission_name):
+def process_handle_downlink(payload_serial_port, mission_name, mission_datetime, mission_downlink):
 
     # Setup serial object to reach ttnc transceiver
     def setup_serial(port):
@@ -101,6 +102,9 @@ def process_handle_downlink(payload_serial_port, mission_name):
 
     # Create downlink folder
     os.makedirs(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}")
+
+    # Create record for each image status
+    image_status_record = []
 
     # ---------------------------------------------------------------
 
@@ -203,12 +207,15 @@ def process_handle_downlink(payload_serial_port, mission_name):
                 break
 
         # If timeout received, downlink has failed and stop process
+        # TODO: Refine later when handle nack fails
         if is_timeout == True:
             print("Timeout reached, no packets received")
+            image_status_record.append(False)  # Indicate image successful
             break
 
-        # Append list of image packets found to main list
+        # Append list of complete set image packets found to main list
         recv_image_packets_list.append(recv_packets_list)
+        image_status_record.append({"Image": image_collected_count, "Downlink": True})
 
         # Change timeout between images
         payload_serial.timeout = mission_params.TIME_BETWEEN_IMAGES_GROUND
@@ -223,7 +230,16 @@ def process_handle_downlink(payload_serial_port, mission_name):
     # --------------------------------------------------------------
 
     curr_image_count = 1
+    curr_idx = 0
+    is_first_run = True
     for recv_image_packets in recv_image_packets_list:
+
+        if not is_first_run:
+            # Increment image count
+            curr_image_count += 1
+            curr_idx += 1
+            is_first_run = False
+
         # Reassemble packets to image
         # TODO: Save to specific mission folder later
         with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
@@ -232,10 +248,12 @@ def process_handle_downlink(payload_serial_port, mission_name):
                     enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
                 except ReedSolomonError:
                     print("Failed to decode as too many errors in packet")
+                    image_status_record[curr_idx].update({"RS": False})
                     continue  # Skip to next image
             enc_file.close()
 
-        # TODO: Indicate success/fail action
+        # Indicate RS decode status success
+        image_status_record[curr_idx].update({"RS": True})
 
         # For linux
         # TODO: Try this out in linux environment in WSL
@@ -251,8 +269,8 @@ def process_handle_downlink(payload_serial_port, mission_name):
             is_rm_exist = os.path.exists(r"C:\cygwin64\bin\rm.exe")
 
             if is_cygwin_exist and is_gzip_exist and is_rm_exist:
-                gzip_process = subprocess.Popen(
-                    r"C:\cygwin64\bin\gzip.exe -d" + f" mission/{mission_name}/out.gz", shell=True)
+                gzip_process = subprocess.Popen(r"C:\cygwin64\bin\gzip.exe -d" +
+                                                f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz", shell=True)
                 time.sleep(1)
                 print(gzip_process.returncode)  # Check the execution return code of process
 
@@ -268,13 +286,16 @@ def process_handle_downlink(payload_serial_port, mission_name):
                     output.write(base64_dec)
 
                 # Remove out file
-                subprocess.Popen(r"C:\cygwin64\bin\rm.exe" +
-                                 f" {app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out", shell=True)
+                subprocess.Popen(
+                    r"C:\cygwin64\bin\rm.exe" +
+                    f" {os.getcwd()}\dream2space\mission\{mission_name}\out",  # pylint: disable=anomalous-backslash-in-string
+                    shell=True)
                 print(gzip_process.returncode)  # Check the execution return code of process
 
             # cygwin not exist
             else:
-                pass
+                image_status_record[curr_idx].update({"Decode": False})
+                continue
 
         # For mac
         elif sys.platform.startswith('darwin'):
@@ -287,9 +308,25 @@ def process_handle_downlink(payload_serial_port, mission_name):
                           f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out_{curr_image_count}.jpg")
             except FileExistsError:
                 print("duplicate file found!")
+                image_status_record[curr_idx].update({"Decode": False})
                 continue
 
-        # Increment image count
-        curr_image_count += 1
+        else:
+            image_status_record[curr_idx].update({"Decode": False})
+            continue
 
-    # Update status of mission in records
+        # Indicate successful decoding
+        image_status_record[curr_idx].update({"Decode": True})
+
+    # Create status table of mission in records
+    print(image_status_record)
+    # table = [["spam", 42], ["eggs", 451], ["bacon", 0]]
+    # headers = ["Mission Image #", "Downlink Status", "Decoding Status"]
+    # string_table_created = tabulate(table, headers=headers, tablefmt="pretty")
+
+    # If no mission created yet, create file (should not exist yet)
+    # if not os.path.exists(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/{mission_name}_status.txt"):
+    #     with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/{mission_name}_status.txt", "w") as status_file:
+    #         status_file.write(string_table_created)
+
+    # Update status of overall missions log
