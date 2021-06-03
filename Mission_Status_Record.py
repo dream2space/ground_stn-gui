@@ -34,7 +34,7 @@ class Mission_Status_Recorder():
         table_values = [list(x.values()) for x in self.image_status_record]
 
         # Create the log file
-        with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{self.mission_name}", 'w') as status_log:
+        with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{self.mission_name}/{self.mission_name}_status.txt", 'w') as status_log:
             to_print = f"Mission Name: {self.mission_name}\n"
             to_print += f"Mission Start time: {self.mission_start_time}\n"
             to_print += f"Mission Downlink time: {self.mission_downlink_time}\n"
