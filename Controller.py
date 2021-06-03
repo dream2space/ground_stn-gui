@@ -260,6 +260,13 @@ class Controller(tk.Frame):
 
         # If no mission created yet, not records found
         # Show popup warning
-        if not os.path.exists(f"{app_param.GROUND_STN_MISSION_LOG_FILEPATH}"):
+        if not os.path.exists(app_param.GROUND_STN_MISSION_LOG_FILEPATH):
             messagebox.showerror(title="Dream2space Ground Station",
                                  message="Mission records not found!\nTry to send a mission command.")
+
+        else:
+            if sys.platform.startswith('win'):
+                # Replace slash with backslash
+                os.startfile(app_param.GROUND_STN_MISSION_LOG_FILEPATH.replace("/", "\\"))
+            else:
+                os.startfile(app_param.GROUND_STN_MISSION_LOG_FILEPATH)

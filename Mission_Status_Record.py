@@ -65,7 +65,7 @@ class Mission_Status_Recorder():
         status_log.close()
 
     def update_overall_mission_status_log(self, mission_name):
-        header = "Mission Name,Mission Status"
+        header = "Mission Name,Mission Status\n"
 
         # Check overall status - success or failure
         outcome = ""
@@ -82,5 +82,5 @@ class Mission_Status_Recorder():
 
         # Append to csv
         with open(app_params.GROUND_STN_MISSION_LOG_FILEPATH, "a") as log:
-            log.write(f"{mission_name},{outcome}")
+            log.write(f"{mission_name},{outcome}\n")
         log.close()
