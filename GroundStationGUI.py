@@ -17,9 +17,7 @@ from Mission_Util import (process_handle_downlink,
                           sample_downlink_process,
                           sample_mission_command_process)
 from Testing import IS_TESTING
-from Tk_Beacon_Panel import BeaconPanel
-from Tk_Housekeeping_DataFrame import HousekeepingDataFrame
-from Tk_Mission_Downlink_DataFrame import MissionDownlinkFrame
+from Tk_Main_Page import MainPage
 from Tk_Mission_Window import MissionWindow
 from Tk_Start_Page import StartPage
 
@@ -103,27 +101,12 @@ class MainApp(tk.Frame):
 
             # Erase Start Page
             self.container.grid_forget()
-
-            # Generate Container to store new page
-            self.container = tk.Frame(
-                self.parent, width=app_param.APP_WIDTH, height=app_param.APP_HEIGHT)
+            self.container = tk.Frame(self.parent)
             self.container.pack()
 
-            # Generate Beacon page for left
-            self.beacon = BeaconPanel(self.container, self.pipe_beacon)
-            self.beacon.pack(side=tk.RIGHT, anchor=tk.NW, fill="both")
-
-            # Create container to store all subsections
-            self.command_panel_container = tk.Frame(self.container)
-            self.command_panel_container.pack(side=tk.LEFT, expand=1, fill="both", padx=10, pady=10)
-
-            # Create section to request for housekeeping data
-            self.housekeeping_command = HousekeepingDataFrame(
-                self.command_panel_container, self, tk.TOP, text="Housekeeping Command", padx=10, pady=8)
-
-            # Create section for mission and downlink
-            self.mission_command = MissionDownlinkFrame(
-                self.command_panel_container, self, tk.BOTTOM, text="Mission and Downlink Command", padx=10, pady=8)
+            # Generate Container to store new page
+            self.main_page = MainPage(parent=self.container, controller=self, beacon_pipe=self.pipe_beacon,
+                                      width=app_param.APP_WIDTH, height=app_param.APP_HEIGHT)
 
     # Handles Housekeeping Process after button pressed
     def handle_hk_process_start(self):
@@ -136,12 +119,12 @@ class MainApp(tk.Frame):
             self.housekeeping_process = Process(target=process_get_HK_logs, daemon=True,
                                                 args=(self.pipe_beacon, self.port_ttnc, ))
         self.housekeeping_process.start()
-        self.housekeeping_command.show_progress_bar()
 
-        # Disable mission function
-        self.mission_command.disable_mission_command()
+        # Disable mission and housekeeping commands
+        self.main_page.show_disable_command_after_hk_command()
 
     # Checks regularly if housekeeping process is complete
+
     def hk_process_checking(self):
         # If process still alive, continute to check
         if self.housekeeping_process.is_alive():
@@ -149,10 +132,7 @@ class MainApp(tk.Frame):
 
         # If process ended, inform user
         else:
-            self.housekeeping_command.stop_showing_progress_bar()
-
-            # Re-enable mission command
-            self.mission_command.stop_mission_block()
+            is_success = False
 
             if not IS_TESTING:
                 # Determine if telecommand obtaining is successful
@@ -174,12 +154,16 @@ class MainApp(tk.Frame):
                     subprocess.check_call(['xdg-open', '--', path])
 
                 # display success message
-                self.housekeeping_command.display_success_message()
+                is_success = True
 
             # Housekeeping data parsing failed
             else:
                 # display fail message
-                self.housekeeping_command.display_failed_message()
+                is_success = False
+
+            # Update screens
+            self.main_page.show_enable_command_after_hk_command()
+            self.main_page.show_status_after_hk_command(is_success)
 
             # Undo flag
             self.is_hk_process_success = False
@@ -209,22 +193,10 @@ class MainApp(tk.Frame):
             # Close top window
             self.mission_window.handle_mission_success()
 
-            # Display success and show mission loading screen
-            self.mission_command.display_add_success_msg()
-            self.mission_command.show_progress_bar()
-            self.mission_command.after(10000, self.mission_command.stop_mission_block)
-
-            # Disable housekeeping data function
-            self.housekeeping_command.disable_housekeeping_command()
-            self.housekeeping_command.after(10000, self.housekeeping_command.stop_showing_progress_bar)
-
             # Add into pending mission list
             self.pending_mission_list.append(mission)
             self.pending_mission_list.sort(key=lambda x: x.downlink_datetime)  # Sort on earliest downlink datetime
             print(self.pending_mission_list)
-
-            # Display the pending mission into mission table
-            self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)
 
             # Send CCSDS mission command to Cubesat
             if IS_TESTING:
@@ -233,6 +205,10 @@ class MainApp(tk.Frame):
                 self.mission_command_process = Process(target=process_send_mission_telecommand, daemon=True, args=(
                     mission, self.pipe_beacon, self.port_ttnc, ))  # Testing
             self.mission_command_process.start()
+
+            # Update screens
+            self.main_page.show_disable_command_after_mission_command()
+            self.main_page.update_pending_mission_table(self.pending_mission_list)
 
         else:
             # Input time is not valid
@@ -267,13 +243,13 @@ class MainApp(tk.Frame):
                 self.downlink_process.start()
 
                 # Render on the missions screens
-                self.mission_command.pending_mission_table.update_mission_entry(self.pending_mission_list)
-                self.mission_command.current_mission_table.update_mission_entry(self.current_mission_list)
+                self.main_page.update_pending_mission_table(self.pending_mission_list)
+                self.main_page.update_current_mission_table(self.current_mission_list)
 
         try:
             if len(self.current_mission_list) != 0 and not self.downlink_process.is_alive():
                 del self.current_mission_list[0]
-                self.mission_command.current_mission_table.update_mission_entry(self.current_mission_list)
+                self.main_page.update_current_mission_table(self.current_mission_list)
         except AttributeError:
             pass
 
