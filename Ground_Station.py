@@ -5,7 +5,7 @@ import tkinter as tk
 
 import App_Parameters as app_params
 from App_Util import beacon_collection
-from GroundStationGUI import MainApp
+from Controller import Controller
 
 # Start running GUI
 if __name__ == "__main__":
@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     # Initialize Tk GUI in main thread
     root = tk.Tk()
-    MainApp(root, pipe_gui)
+    Controller(root, pipe_gui)
 
     # Thread to read data
     beacon_thread = threading.Thread(

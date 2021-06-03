@@ -22,7 +22,7 @@ from Tk_Mission_Window import MissionWindow
 from Tk_Start_Page import StartPage
 
 
-class MainApp(tk.Frame):
+class Controller(tk.Frame):
     def __init__(self, parent, pipe_beacon):
         tk.Frame.__init__(self, parent)
         self.parent = parent
