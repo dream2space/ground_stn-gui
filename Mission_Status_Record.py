@@ -1,5 +1,3 @@
-import os
-
 from tabulate import tabulate
 
 import App_Parameters as app_params
