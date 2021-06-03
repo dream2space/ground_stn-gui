@@ -13,6 +13,8 @@ class MissionWindow(tk.Toplevel):
         self.resizable(False, False)
         self.title("Mission and Downlink")
 
+        self.grab_set()  # only allow window to react
+
         self.controller = controller
 
         # Container for mission and downlink widgets
