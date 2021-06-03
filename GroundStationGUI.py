@@ -12,16 +12,16 @@ import serial
 import App_Parameters as app_param
 from App_Util import (process_get_HK_logs, resource_path,
                       sample_hk_command_process)
-from Beacon_Panel import BeaconPanel
-from Housekeeping_DataFrame import HousekeepingDataFrame
-from Mission_Downlink_DataFrame import MissionDownlinkFrame
 from Mission_Util import (process_handle_downlink,
                           process_send_mission_telecommand,
                           sample_downlink_process,
                           sample_mission_command_process)
-from Mission_Window import MissionWindow
-from Start_Page import StartPage
 from Testing import IS_TESTING
+from Tk_Beacon_Panel import BeaconPanel
+from Tk_Housekeeping_DataFrame import HousekeepingDataFrame
+from Tk_Mission_Downlink_DataFrame import MissionDownlinkFrame
+from Tk_Mission_Window import MissionWindow
+from Tk_Start_Page import StartPage
 
 
 class MainApp(tk.Frame):

@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
-from Misson_Table_Frame import MissionTableFrame
+from Tk_Misson_Table_Frame import MissionTableFrame
 
 
 class MissionDownlinkFrame(tk.LabelFrame):

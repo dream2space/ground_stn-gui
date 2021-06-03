@@ -4,7 +4,7 @@ import tkinter as tk
 import tkcalendar
 
 from Mission import Mission
-from Timestamp_Picker import TimestampPicker
+from Tk_Timestamp_Picker import TimestampPicker
 
 
 class MissionWindow(tk.Toplevel):
