@@ -1,9 +1,18 @@
+import os
+
 from tabulate import tabulate
+
+import App_Parameters as app_params
 
 
 class Mission_Status_Recorder():
-    def __init__(self):
+    def __init__(self, mission_name, mission_datetime, mission_downlink_time):
         self.image_status_record = []
+        self.mission_name = mission_name
+        self.mission_start_time = mission_datetime
+        self.mission_downlink_time = mission_downlink_time
+
+        self.table_header = ['#', 'Downlink Status', 'Reed Solomon Decode Status', 'Unzip + Base64 Decode Status']
 
     def create_new_record(self, image_count):
         self.image_status_record.append({'#': image_count, 'Downlink Status': False,
@@ -22,4 +31,15 @@ class Mission_Status_Recorder():
         self.image_status_record[idx].update({'Unzip + Base64 Decode Status': is_success})
 
     def create_mission_status_log(self):
-        pass
+        table_values = [list(x.values()) for x in self.image_status_record]
+
+        # Create the log file
+        with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{self.mission_name}", 'w') as status_log:
+            to_print = f"Mission Name: {self.mission_name}\n"
+            to_print += f"Mission Start time: {self.mission_start_time}\n"
+            to_print += f"Mission Downlink time: {self.mission_downlink_time}\n"
+            to_print += '\n'
+            to_print += 'Mission Status:\n'
+            to_print += tabulate(table_values, headers=self.table_header, tablefmt="pretty")
+            status_log.write(to_print)
+        status_log.close()

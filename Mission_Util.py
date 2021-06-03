@@ -85,7 +85,7 @@ def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
 
 # Process to handle downlink
-def process_handle_downlink(payload_serial_port, mission_name, mission_datetime, mission_downlink):
+def process_handle_downlink(payload_serial_port, mission_name, mission_datetime, mission_downlink_time):
 
     # Setup serial object to reach ttnc transceiver
     def setup_serial(port):
@@ -106,7 +106,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
     # ---------------------------------------------------------------
 
     # Status templates list
-    mission_status_recorder = Mission_Status_Recorder()
+    mission_status_recorder = Mission_Status_Recorder(mission_name, mission_datetime, mission_downlink_time)
 
     # Status booleans of mission/downlink
     is_timeout = False
