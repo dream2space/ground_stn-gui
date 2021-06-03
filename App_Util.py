@@ -5,10 +5,10 @@ import time
 
 import serial
 
-import CCSDS.CCSDS_Parameters as ccsds_params
-from CCSDS.CCSDS_Decoder import CCSDS_Decoder
-from CCSDS.CCSDS_Encoder import CCSDS_Encoder
-from CCSDS.CCSDS_HK_Util import CCSDS_HK_Util
+import CCSDS_Parameters as ccsds_params
+from CCSDS_Decoder import CCSDS_Decoder
+from CCSDS_Encoder import CCSDS_Encoder
+from CCSDS_HK_Util import CCSDS_HK_Util
 from Testing import IS_TESTING
 
 

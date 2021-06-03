@@ -11,10 +11,10 @@ from reedsolo import ReedSolomonError
 from tabulate import tabulate
 
 import App_Parameters as app_params
-import CCSDS.CCSDS_Parameters as ccsds_params
+import CCSDS_Parameters as ccsds_params
 import Mission_Parameters as mission_params
-from CCSDS.CCSDS_Decoder import CCSDS_Decoder
-from CCSDS.CCSDS_Encoder import CCSDS_Encoder
+from CCSDS_Decoder import CCSDS_Decoder
+from CCSDS_Encoder import CCSDS_Encoder
 
 
 # Sample process to run in place of Mission telecommand in testing mode

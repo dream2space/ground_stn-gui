@@ -4,6 +4,7 @@ import threading
 import tkinter as tk
 
 import App_Parameters as app_params
+import Mission_Parameters as mission_params
 from App_Util import beacon_collection
 from GroundStationGUI import MainApp
 

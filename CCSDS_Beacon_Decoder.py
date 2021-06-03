@@ -1,4 +1,4 @@
-from CCSDS.CCSDS_Parsed_Beacon import CCSDS_Parsed_Beacon
+from CCSDS_Parsed_Beacon import CCSDS_Parsed_Beacon
 
 
 class CCSDS_Beacon_Decoder:
