@@ -315,3 +315,4 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
     mission_status_recorder.create_mission_status_log()
 
     # Update status of overall missions log
+    mission_status_recorder.update_overall_mission_status_log(mission_name=mission_name)
