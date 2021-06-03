@@ -8,13 +8,13 @@ import time
 
 import serial
 from reedsolo import ReedSolomonError
-from tabulate import tabulate
 
 import App_Parameters as app_params
 import CCSDS_Parameters as ccsds_params
 import Mission_Parameters as mission_params
 from CCSDS_Decoder import CCSDS_Decoder
 from CCSDS_Encoder import CCSDS_Encoder
+from Mission_Status_Record import Mission_Status_Recorder
 
 
 # Sample process to run in place of Mission telecommand in testing mode
@@ -105,6 +105,9 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
     # ---------------------------------------------------------------
 
+    # Status templates list
+    mission_status_recorder = Mission_Status_Recorder()
+
     # Status booleans of mission/downlink
     is_timeout = False
 
@@ -122,11 +125,15 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         # No more start packet
         if start_packet == b"":
             break
+
         # Start packet received
         else:
             payload_serial.timeout = 300  # Timeout after 300 sec if stuck
             image_collected_count += 1
             print(f"Start packet for image {image_collected_count} received")
+
+            # Add new records to status
+            mission_status_recorder.create_new_record(image_count=image_collected_count)
 
         # Extract out useful data from padded packet
         start_packet_data = start_packet[:13]
@@ -201,6 +208,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 is_last_packet = True
 
             if is_last_packet == True:
+                mission_status_recorder.update_downlink_status(image_count=image_collected_count, is_success=True)
                 break
 
         # If timeout received, downlink has failed and stop process
@@ -225,7 +233,6 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
     # --------------------------------------------------------------
 
     curr_image_count = 1
-    curr_idx = 0
     for recv_image_packets in recv_image_packets_list:
         print(f"handling image {curr_image_count}")
 
@@ -236,8 +243,10 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                     enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
                 except ReedSolomonError:
                     print("Failed to decode as too many errors in packet")
+                    mission_status_recorder.update_rs_decode_status(image_count=curr_image_count, is_success=False)
                     continue  # Skip to next image
             enc_file.close()
+        mission_status_recorder.update_rs_decode_status(image_count=curr_image_count, is_success=True)
 
         # For linux
         # TODO: Try this out in linux environment in WSL
@@ -296,19 +305,13 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         else:
             continue
 
+        # Update status of image decode as success
+        mission_status_recorder.update_unzip_base64_decode_status(image_count=curr_image_count, is_success=True)
+
         # Increment image count
         curr_image_count += 1
-        curr_idx += 1
 
-    # Create status table of mission in records
-    # print(image_status_record)
-    # table = [["spam", 42], ["eggs", 451], ["bacon", 0]]
-    # headers = ["Mission Image #", "Downlink Status", "Decoding Status"]
-    # string_table_created = tabulate(table, headers=headers, tablefmt="pretty")
-
-    # If no mission created yet, create file (should not exist yet)
-    # if not os.path.exists(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/{mission_name}_status.txt"):
-    #     with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/{mission_name}_status.txt", "w") as status_file:
-    #         status_file.write(string_table_created)
+    # Create status log for this mission
+    mission_status_recorder.create_mission_status_log()
 
     # Update status of overall missions log
