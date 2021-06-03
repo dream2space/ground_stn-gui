@@ -103,9 +103,6 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
     # Create downlink folder
     os.makedirs(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}")
 
-    # Create record for each image status
-    image_status_record = []
-
     # ---------------------------------------------------------------
 
     # Status booleans of mission/downlink
@@ -210,12 +207,10 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         # TODO: Refine later when handle nack fails
         if is_timeout == True:
             print("Timeout reached, no packets received")
-            image_status_record.append(False)  # Indicate image successful
             break
 
         # Append list of complete set image packets found to main list
         recv_image_packets_list.append(recv_packets_list)
-        image_status_record.append({"Image": image_collected_count, "Downlink": True})
 
         # Change timeout between images
         payload_serial.timeout = mission_params.TIME_BETWEEN_IMAGES_GROUND
@@ -235,7 +230,6 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         print(f"handling image {curr_image_count}")
 
         # Reassemble packets to image
-        # TODO: Save to specific mission folder later
         with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
             for packet in recv_image_packets:
                 try:
