@@ -19,7 +19,7 @@ class CCSDS_Parsed_Beacon:
 
         # Unpack eps
         self.temp = ret_eps['Temperature']
-        self.eps_reserved = ret_eps['Reserved']
+        self.adc = ret_eps['adc']
 
         # Unpack payload
         self.r1 = ret_payload['Reserved byte 1']

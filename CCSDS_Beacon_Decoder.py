@@ -81,10 +81,10 @@ class CCSDS_Beacon_Decoder:
         temp_int = int.from_bytes(
             eps_field[0:3], byteorder='big', signed=True)
         temp = temp_int / 100
-        reserved = int.from_bytes(
-            eps_field[3:6], byteorder='big', signed=True)
+        adc_value = int.from_bytes(
+            eps_field[3:5], byteorder='big', signed=True)
 
-        return {'Temperature': temp, 'Reserved': reserved}
+        return {'Temperature': temp, 'adc': adc_value}
 
     def _parse_payload_field(self, payload_field):
         r1 = payload_field[0]
