@@ -39,11 +39,6 @@ def sample_downlink_process():
     print("done")
 
 
-# Function to update records about Missions/Downlinks
-def update_mission_status():
-    pass
-
-
 # Process to handle mission telecommand
 def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 
