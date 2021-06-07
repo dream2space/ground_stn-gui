@@ -43,7 +43,7 @@ class CCSDS_HK_Util:
         file_name += datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 
         # Prepare header of CSV file
-        header = ["temp", 'adc', "gx", "gy", "gz"]
+        header = ["temp", 'vbatt', "gx", "gy", "gz"]
 
         # Open CSV file
         with open(f'{app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH}/{file_name}.csv', mode='a', newline="") as csv_file:
