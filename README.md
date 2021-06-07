@@ -22,6 +22,10 @@ This is how the initial beacon tickers work.
 
 ![Beacon GUI](images/beacon.gif)
 
+Then the housekeeping data panels were added.
+
+![Housekeeping data panels](images/gui-panel-no-mission.png)
+
 ## Software Architecture
 
 ## Info
