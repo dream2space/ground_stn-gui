@@ -26,7 +26,8 @@ class BeaconPanel(tk.Frame):
             gx = ls[1]
             gy = ls[2]
             gz = ls[3]
-            self.beacon_frame.update_beacon_values(temp, gx, gy, gz)
+            adc = ls[4]
+            self.beacon_frame.update_beacon_values(temp, gx, gy, gz, adc)
         self.parent.after(500, self.update_beacon_values)
 
 
@@ -39,6 +40,8 @@ class BeaconFrame(tk.LabelFrame):
         # Create variable to store beacon values
         self.temp = tk.StringVar()
         self.temp.set("0.00")
+        self.adc = tk.StringVar()
+        self.adc.set("0.00")
         self.gx = tk.StringVar()
         self.gx.set("0")
         self.gy = tk.StringVar()
@@ -48,12 +51,14 @@ class BeaconFrame(tk.LabelFrame):
 
         # Create label for beacon data header
         self.temperature_label = self._create_header_label("Temp")
+        self.adc_label = self._create_header_label("Vbatt")
         self.gx_label = self._create_header_label("GX")
         self.gy_label = self._create_header_label("GY")
         self.gz_label = self._create_header_label("GZ")
 
         # Create label to store beacon data
         self.temp_text = self._create_text_label(self.temp)
+        self.adc_text = self._create_text_label(self.adc)
         self.gx_text = self._create_text_label(self.gx)
         self.gy_text = self._create_text_label(self.gy)
         self.gz_text = self._create_text_label(self.gz)
@@ -61,22 +66,25 @@ class BeaconFrame(tk.LabelFrame):
         # Put the labels in grids with row/col
         self._arrange_grid()
 
-    def update_beacon_values(self, temp, gx, gy, gz):
+    def update_beacon_values(self, temp, gx, gy, gz, adc):
         def uncolor():
             self.temperature_label['bg'] = 'grey94'
             self.gx_label['bg'] = 'grey94'
             self.gy_label['bg'] = 'grey94'
             self.gz_label['bg'] = 'grey94'
+            self.adc_label['bg'] = 'grey94'
 
         self.temp.set(temp)
         self.gx.set(gx)
         self.gy.set(gy)
         self.gz.set(gz)
+        self.adc.set(adc)
 
         self.temperature_label['bg'] = 'yellow'
         self.gx_label['bg'] = 'yellow'
         self.gy_label['bg'] = 'yellow'
         self.gz_label['bg'] = 'yellow'
+        self.adc_label['bg'] = 'yellow'
         self.parent.after(1200, uncolor)
 
     def _create_header_label(self, header_text):
@@ -88,11 +96,13 @@ class BeaconFrame(tk.LabelFrame):
 
     def _arrange_grid(self):
         self.temperature_label.grid(row=0, column=0)
-        self.gx_label.grid(row=0, column=2)
-        self.gy_label.grid(row=0, column=4)
-        self.gz_label.grid(row=0, column=6)
+        self.adc_label.grid(row=0, column=2)
+        self.gx_label.grid(row=0, column=4)
+        self.gy_label.grid(row=0, column=6)
+        self.gz_label.grid(row=0, column=8)
 
         self.temp_text.grid(row=0, column=1)
-        self.gx_text.grid(row=0, column=3)
-        self.gy_text.grid(row=0, column=5)
-        self.gz_text.grid(row=0, column=7)
+        self.adc_text.grid(row=0, column=3)
+        self.gx_text.grid(row=0, column=5)
+        self.gy_text.grid(row=0, column=7)
+        self.gz_text.grid(row=0, column=9)

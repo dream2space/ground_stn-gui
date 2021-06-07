@@ -48,3 +48,6 @@ class CCSDS_Parsed_Beacon:
 
     def get_gyro(self):
         return {'gx': self.gx, 'gy': self.gy, 'gz': self.gz}
+
+    def get_adc(self):
+        return self.adc
