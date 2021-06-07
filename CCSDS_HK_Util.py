@@ -17,7 +17,6 @@ class CCSDS_HK_Util:
 
         # Slice out packet data
         hk_payload = packet[7:]
-        print(len(hk_payload))
 
         # Packet cannot be parsed correctly
         if len(hk_payload) != ccsds_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES * ccsds_params.CCSDS_OBC_HK_DATAPOINT_COUNT:
@@ -52,6 +51,7 @@ class CCSDS_HK_Util:
             writer.writeheader()
             for d in list_hk_obj:
                 writer.writerow(d.get_list())
+            csv_file.close()
 
     def _parse_each_hk(self, hk_slice, count):
         temp = int.from_bytes(
