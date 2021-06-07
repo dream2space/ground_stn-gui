@@ -17,6 +17,7 @@ class CCSDS_HK_Util:
 
         # Slice out packet data
         hk_payload = packet[7:]
+        print(len(hk_payload))
 
         # Packet cannot be parsed correctly
         if len(hk_payload) != ccsds_params.CCSDS_OBC_HK_DATAPOINT_LEN_BYTES * ccsds_params.CCSDS_OBC_HK_DATAPOINT_COUNT:
@@ -43,7 +44,7 @@ class CCSDS_HK_Util:
         file_name += datetime.now().strftime("%m-%d-%Y_%H-%M-%S")
 
         # Prepare header of CSV file
-        header = ["temp", "gx", "gy", "gz"]
+        header = ["temp", 'adc', "gx", "gy", "gz"]
 
         # Open CSV file
         with open(f'{app_params.HOUSEKEEPING_DATA_FOLDER_FILEPATH}/{file_name}.csv', mode='a', newline="") as csv_file:
@@ -55,8 +56,9 @@ class CCSDS_HK_Util:
     def _parse_each_hk(self, hk_slice, count):
         temp = int.from_bytes(
             hk_slice[0:3], byteorder='big', signed=True) / 100
-        gx = int.from_bytes(hk_slice[3:5], byteorder='big', signed=True)
-        gy = int.from_bytes(hk_slice[5:7], byteorder='big', signed=True)
-        gz = int.from_bytes(hk_slice[7:], byteorder='big', signed=True)
+        adc = int.from_bytes(hk_slice[3:5], byteorder='big', signed=True)
+        gx = int.from_bytes(hk_slice[5:7], byteorder='big', signed=True)
+        gy = int.from_bytes(hk_slice[7:9], byteorder='big', signed=True)
+        gz = int.from_bytes(hk_slice[9:], byteorder='big', signed=True)
 
-        return CCSDS_Parsed_HK(temp, gx, gy, gz, count)
+        return CCSDS_Parsed_HK(temp, adc, gx, gy, gz, count)

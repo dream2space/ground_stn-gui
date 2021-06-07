@@ -146,6 +146,7 @@ def process_get_HK_logs(pipe, ttnc_serial_port):
     hk_bytes = ttnc_serial.read(
         ccsds_params.CCSDS_OBC_TELEMETRY_LEN_BYTES)
     # print(f"hk bytes {hk_bytes}")
+    # print(f"len hk bytes {len(hk_bytes)}")
 
     print("done sending command")
     ttnc_serial.close()
