@@ -49,5 +49,14 @@ class CCSDS_Parsed_Beacon:
     def get_gyro(self):
         return {'gx': self.gx, 'gy': self.gy, 'gz': self.gz}
 
-    def get_adc(self):
-        return self.adc
+    def get_vbatt(self):
+        '''
+        Process and convert ADC value to vbatt
+        '''
+
+        def convert_adc_to_vbatt(adc):
+            max_vbatt = 8.4
+            max_adc = 1024
+            return adc / max_adc * max_vbatt
+
+        return convert_adc_to_vbatt(self.adc)

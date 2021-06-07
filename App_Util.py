@@ -108,7 +108,7 @@ def beacon_collection(pipe_beacon):
                 gx = f"{gyro['gx']}"
                 gy = f"{gyro['gy']}"
                 gz = f"{gyro['gz']}"
-                adc = f"{decoded_ccsds_beacon.get_adc():.2f}"
+                adc = f"{decoded_ccsds_beacon.get_vbatt():.2f}"
 
                 # print("beacon", temp, gx, gy, gz)
                 pipe_beacon.send([temp, gx, gy, gz, adc])
