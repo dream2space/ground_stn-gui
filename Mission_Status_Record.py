@@ -94,6 +94,7 @@ class Mission_Status_Recorder():
             outcome = "FAIL"
         else:
             outcome = "SUCCESS"
+        print(f"Mission outcome: {outcome}")
 
         # Create csv file if not already created
         if not os.path.exists(app_params.GROUND_STN_MISSION_LOG_FILEPATH):
