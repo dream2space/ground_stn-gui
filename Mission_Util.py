@@ -86,7 +86,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
     def setup_serial(port):
         ser = serial.Serial(port)
         ser.baudrate = 115200
-        ser.timeout = None  # Cannot set as nonblocking
+        ser.timeout = 60 * 3  # Set as 3 mins
         return ser
 
     # Create CCSDS Decoder
@@ -105,6 +105,8 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
     # Status booleans of mission/downlink
     is_timeout = False
+    is_downlink_complete = True
+    fail_count = 0
 
     # Receive all images
     recv_image_packets_list = []
@@ -119,6 +121,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
         # No more start packet
         if start_packet == b"":
+            is_downlink_complete = False
             break
 
         # Start packet received
@@ -185,6 +188,12 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
             # Send nack
             if is_packet_failed:
                 return_val = b"nack\r\n"
+                fail_count += 1
+
+                # Too many nack, timeout
+                if fail_count > 5:
+                    is_timeout = True
+                    break
 
             # Send ack
             else:
@@ -207,8 +216,8 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 break
 
         # If timeout received, downlink has failed and stop process
-        # TODO: Refine later when handle nack fails
         if is_timeout == True:
+            is_downlink_complete = False
             print("Timeout reached, no packets received")
             break
 
@@ -218,96 +227,100 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         # Change timeout between images
         payload_serial.timeout = mission_params.TIME_BETWEEN_IMAGES_GROUND
 
-    transfer_end = datetime.datetime.now()
-    elapsed_time_sec = (transfer_end - transfer_start).total_seconds()
-    data_rate_kbps = (total_bytes_recv*8/elapsed_time_sec)/(2**10)
-    print(f"Collected {total_bytes_recv/(2 ** 10):.2f} KB")
-    print(f"Time elapsed: {elapsed_time_sec:.2f} sec")
-    print(f"Downlink rate: {data_rate_kbps:.2f} Kbps")
+    if is_downlink_complete:
+        transfer_end = datetime.datetime.now()
+        elapsed_time_sec = (transfer_end - transfer_start).total_seconds()
+        data_rate_kbps = (total_bytes_recv*8/elapsed_time_sec)/(2**10)
+        print(f"Collected {total_bytes_recv/(2 ** 10):.2f} KB")
+        print(f"Time elapsed: {elapsed_time_sec:.2f} sec")
+        print(f"Downlink rate: {data_rate_kbps:.2f} Kbps")
 
     # --------------------------------------------------------------
 
-    curr_image_count = 1
-    for recv_image_packets in recv_image_packets_list:
-        print(f"handling image {curr_image_count}")
+    if is_downlink_complete:
+        curr_image_count = 1
+        for recv_image_packets in recv_image_packets_list:
+            print(f"handling image {curr_image_count}")
 
-        # Reassemble packets to image
-        with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
-            for packet in recv_image_packets:
-                try:
-                    enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
-                except ReedSolomonError:
-                    print("Failed to decode as too many errors in packet")
-                    mission_status_recorder.update_rs_decode_status(image_count=curr_image_count, is_success=False)
-                    continue  # Skip to next image
-            enc_file.close()
-        mission_status_recorder.update_rs_decode_status(image_count=curr_image_count, is_success=True)
-
-        # For linux
-        # TODO: Try this out in linux environment in WSL
-        if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-            os.chmod("decode.sh", 0o777)
-            subprocess.Popen("./decode.sh out out", shell=True)  # TODO: fix filepath
-
-        # For windows
-        elif sys.platform.startswith('win'):
-            # Assumes cygwin installed in correct filepath
-            is_cygwin_exist = os.path.isdir(r"C:\cygwin64\bin")
-            is_gzip_exist = os.path.exists(r"C:\cygwin64\bin\gzip.exe")
-            is_rm_exist = os.path.exists(r"C:\cygwin64\bin\rm.exe")
-
-            if is_cygwin_exist and is_gzip_exist and is_rm_exist:
-                subprocess.Popen(
-                    r"C:\cygwin64\bin\gzip.exe -d" +
-                    f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz",  # pylint: disable=anomalous-backslash-in-string
-                    shell=True)
-                time.sleep(5)
-
-                with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
-                    bin_file = enc_file.read()
-                enc_file.close()
-
-                with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
+            # Reassemble packets to image
+            with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.gz", "wb") as enc_file:
+                for packet in recv_image_packets:
                     try:
-                        base64_dec = base64.b64decode(bin_file)
-                    except binascii.Error:
-                        print("Base64 decode error!")
-                    output.write(base64_dec)
+                        enc_file.write(ccsds_decoder.parse_downlink_packet(packet))
+                    except ReedSolomonError:
+                        print("Failed to decode as too many errors in packet")
+                        mission_status_recorder.update_rs_decode_status(image_count=curr_image_count, is_success=False)
+                        continue  # Skip to next image
+                enc_file.close()
+            mission_status_recorder.update_rs_decode_status(image_count=curr_image_count, is_success=True)
 
-                # Remove out file
-                subprocess.Popen(
-                    r"C:\cygwin64\bin\rm.exe" +
-                    f" {os.getcwd()}\dream2space\mission\{mission_name}\out",  # pylint: disable=anomalous-backslash-in-string
-                    shell=True)
+            # For linux
+            # TODO: Try this out in linux environment in WSL
+            if sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+                os.chmod("decode.sh", 0o777)
+                subprocess.Popen("./decode.sh out out", shell=True)  # TODO: fix filepath
 
-            # cygwin not exist
+            # For windows
+            elif sys.platform.startswith('win'):
+                # Assumes cygwin installed in correct filepath
+                is_cygwin_exist = os.path.isdir(r"C:\cygwin64\bin")
+                is_gzip_exist = os.path.exists(r"C:\cygwin64\bin\gzip.exe")
+                is_rm_exist = os.path.exists(r"C:\cygwin64\bin\rm.exe")
+
+                if is_cygwin_exist and is_gzip_exist and is_rm_exist:
+                    subprocess.Popen(
+                        r"C:\cygwin64\bin\gzip.exe -d" +
+                        f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz",  # pylint: disable=anomalous-backslash-in-string
+                        shell=True)
+                    time.sleep(5)
+
+                    with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
+                        bin_file = enc_file.read()
+                    enc_file.close()
+
+                    with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
+                        try:
+                            base64_dec = base64.b64decode(bin_file)
+                        except binascii.Error:
+                            print("Base64 decode error!")
+                        output.write(base64_dec)
+
+                    # Remove out file
+                    subprocess.Popen(
+                        r"C:\cygwin64\bin\rm.exe" +
+                        f" {os.getcwd()}\dream2space\mission\{mission_name}\out",  # pylint: disable=anomalous-backslash-in-string
+                        shell=True)
+
+                # cygwin not exist
+                else:
+                    continue
+
+            # For mac
+            elif sys.platform.startswith('darwin'):
+                pass
+
+            # Rename image file
+            if os.path.exists(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg"):
+                try:
+                    os.rename(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg",
+                              f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out_{curr_image_count}.jpg")
+                except FileExistsError:
+                    print("duplicate file found!")
+                    continue
+
             else:
                 continue
 
-        # For mac
-        elif sys.platform.startswith('darwin'):
-            pass
+            # Update status of image decode as success
+            mission_status_recorder.update_unzip_base64_decode_status(image_count=curr_image_count, is_success=True)
 
-        # Rename image file
-        if os.path.exists(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg"):
-            try:
-                os.rename(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg",
-                          f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out_{curr_image_count}.jpg")
-            except FileExistsError:
-                print("duplicate file found!")
-                continue
+            # Increment image count
+            curr_image_count += 1
 
-        else:
-            continue
-
-        # Update status of image decode as success
-        mission_status_recorder.update_unzip_base64_decode_status(image_count=curr_image_count, is_success=True)
-
-        # Increment image count
-        curr_image_count += 1
-
-    # Create status log for this mission
+    # Create status log for mission
     mission_status_recorder.create_mission_status_log()
+    print("Done mission logging")
 
     # Update status of overall missions log
     mission_status_recorder.update_overall_mission_status_log(mission_name=mission_name)
+    print("Done overall logging")

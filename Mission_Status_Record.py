@@ -47,22 +47,43 @@ class Mission_Status_Recorder():
             self.has_failure = True
 
     def create_mission_status_log(self):
+
         table_values = [list(x.values()) for x in self.image_status_record]
 
-        # Create the log file
-        with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{self.mission_name}/{self.mission_name}_status.txt", 'w') as status_log:
-            to_print = ""
+        # If mission has timeout and failed
+        if len(table_values) == 0:
 
-            status = [["Mission Name", self.mission_name],
-                      ["Mission Start time", self.mission_start_time],
-                      ["Mission Downlink time", self.mission_downlink_time]]
-            to_print += tabulate(status, tablefmt="pretty")
+            # Set failure flag to indicate record fail
+            self.has_failure = True
 
-            to_print += '\n'
-            to_print += 'Mission Status:\n'
-            to_print += tabulate(table_values, headers=self.table_header, tablefmt="pretty")
-            status_log.write(to_print)
-        status_log.close()
+            with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{self.mission_name}/{self.mission_name}_status.txt", 'w') as status_log:
+                to_print = ""
+
+                status = [["Mission Name", self.mission_name],
+                          ["Mission Start time", self.mission_start_time],
+                          ["Mission Downlink time", self.mission_downlink_time]]
+                to_print += tabulate(status, tablefmt="pretty")
+                to_print += '\n'
+                to_print += 'Mission Status:\n'
+                to_print += 'MISSION FAILED - TIMEOUT'
+                status_log.write(to_print)
+            status_log.close()
+
+        else:
+            # Create the log file
+            with open(f"{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{self.mission_name}/{self.mission_name}_status.txt", 'w') as status_log:
+                to_print = ""
+
+                status = [["Mission Name", self.mission_name],
+                          ["Mission Start time", self.mission_start_time],
+                          ["Mission Downlink time", self.mission_downlink_time]]
+                to_print += tabulate(status, tablefmt="pretty")
+
+                to_print += '\n'
+                to_print += 'Mission Status:\n'
+                to_print += tabulate(table_values, headers=self.table_header, tablefmt="pretty")
+                status_log.write(to_print)
+            status_log.close()
 
     def update_overall_mission_status_log(self, mission_name):
         header = "Mission Name,Mission Status\n"
