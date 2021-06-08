@@ -174,20 +174,37 @@ class Controller(tk.Frame):
 
     # Handle mission checking and scheduling after submited on mission window
     def handle_mission_scheduling(self):
-        # Validate if (1) mission time is after current time, (2) downlink time after mission time
-        def validate_mission(mission_input):
+
+        def validate_mission(mission_input, pending_mission_list, current_mission_list):
             # print(mission_input)
+
+            # Validate if (1) mission time is after current time, (2) downlink time after mission time
             is_mission_time_future = mission_input.mission_datetime > datetime.datetime.now()
             is_downlink_after_mission = mission_input.downlink_datetime > mission_input.mission_datetime
             num_mission = len(self.pending_mission_list)
-            if is_mission_time_future and is_downlink_after_mission and num_mission < 3:
+
+            # Generate a complete list of current and pending missions
+            merge_list = pending_mission_list+current_mission_list
+
+            # Validate if (1) new mission is not less than 15 sec before or after a mission
+            # (2) new downlink is not less than 10 mins before or after a downlink
+            is_new_mission_allowed = True
+            for mission in merge_list:
+                if abs(mission.mission_datetime - mission_input.mission_datetime).total_seconds() <= 15:
+                    is_new_mission_allowed = False
+                    break
+                if abs(mission.downlink_datetime - mission_input.downlink_datetime).total_seconds() <= 3 * 3 * 60:
+                    is_new_mission_allowed = False
+                    break
+
+            if is_new_mission_allowed and is_mission_time_future and is_downlink_after_mission and num_mission < 3:
                 return True
             else:
                 return False
 
         # Do input validation
         mission = self.mission_window.get_user_mission_input()
-        is_valid_input = validate_mission(mission)
+        is_valid_input = validate_mission(mission, self.pending_mission_list, self.current_mission_list)
 
         if is_valid_input:
             # Close top window
