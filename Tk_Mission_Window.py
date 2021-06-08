@@ -184,6 +184,8 @@ class MissionWindow(tk.Toplevel):
             self.error_message.set('Error! Downlink Start time should be after mission time!')
         elif not is_future_mission and is_downlink_valid:
             self.error_message.set('Error! Mission Start time has passed!')
+        else:
+            self.error_message.set('Error! Mission and/or Downlink time too close to previous Missions!')
 
     def handle_mission_success(self):
         self.destroy()
