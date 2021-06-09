@@ -285,5 +285,8 @@ class Controller(tk.Frame):
             if sys.platform.startswith('win'):
                 # Replace slash with backslash
                 os.startfile(app_param.GROUND_STN_MISSION_LOG_FILEPATH.replace("/", "\\"))
+
+                path = os.path.relpath(app_param.GROUND_STN_MISSION_FOLDER_PATH)
+                os.startfile(path)
             else:
                 os.startfile(app_param.GROUND_STN_MISSION_LOG_FILEPATH)
