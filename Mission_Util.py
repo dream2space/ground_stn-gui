@@ -121,7 +121,6 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
         # No more start packet
         if start_packet == b"":
-            is_downlink_complete = False
             break
 
         # Start packet received

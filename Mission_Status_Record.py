@@ -88,6 +88,8 @@ class Mission_Status_Recorder():
     def update_overall_mission_status_log(self, mission_name):
         header = "Mission Name,Mission Status\n"
 
+        # TODO: Need to run overall check again for failure
+
         # Check overall status - success or failure
         outcome = ""
         if self.has_failure:
