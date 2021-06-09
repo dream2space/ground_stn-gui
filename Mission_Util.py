@@ -200,8 +200,8 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
             time.sleep(mission_params.TIME_BEFORE_ACK)
             payload_serial.write(return_val)
-            print(f"Sent {return_val}\n")
-            print(f"Current fail count: {fail_count}")
+            print(f"Sent {return_val}")
+            print(f"Current fail count: {fail_count}\n")
 
             # Needs this line to stop the last packet < 149 bytes
             if ret['fail'] == False and ret['curr_batch'] == total_batch_expected - 2:
