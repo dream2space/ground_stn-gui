@@ -63,5 +63,10 @@ class CCSDS_Downlink_Decoder():
                 CCSDS_Packet[10:13], byteorder='big', signed=False)
             return {"fail": False, "stop": False, "curr_batch": curr_batch, "curr_chunk": curr_chunk, "len": len(CCSDS_Packet)}
 
+        elif telemetry_packet_type == mission_params.TELEMETRY_PACKET_TYPE_DOWNLINK_START:
+            start_packet_data = CCSDS_Packet[:13]
+            total_batch_expected = int.from_bytes(start_packet_data[10:], 'big')
+            return {"fail": False, "stop":False, "start": True, "total_batch": total_batch_expected}
+
         else:
             return {"fail": True}

@@ -115,32 +115,30 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
     transfer_start = datetime.datetime.now()
     while True:
-        # Wait for start packet
-        print("Waiting for start packet")
-        start_packet = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
 
-        # No more start packet
-        if start_packet == b"":
+        has_next_start, start_packet = _mission_receive_start_packet(payload_serial)
+
+        # If no new Start Packet, leave loop
+        if not has_next_start:
             break
 
-        # Start packet received
-        else:
-            payload_serial.timeout = 300  # Timeout after 300 sec if stuck
-            image_collected_count += 1
-            print(f"Start packet for image {image_collected_count} received")
+        image_collected_count += 1
+        print(f"Start packet for image {image_collected_count} received")
 
-            # Add new records to status
-            mission_status_recorder.create_new_record(image_count=image_collected_count)
+        # Add new records to status
+        mission_status_recorder.create_new_record(image_count=image_collected_count)
 
         # Extract out useful data from padded packet
-        start_packet_data = start_packet[:13]
-        total_batch_expected = int.from_bytes(start_packet_data[10:], 'big')
-        print(f"Total batches: {total_batch_expected} for image {image_collected_count}")
+        ret_start = CCSDS_Decoder.quick_parse_downlink(start_packet)
+        print(f"Total batches: {ret_start['total_batch']} for image {image_collected_count}")
 
         recv_packets_list = []
         is_packet_failed = False
         is_last_packet = False
         prev_success_packet_num = 0
+
+        # Timeout after 300 sec if stuck
+        payload_serial.timeout = 300
 
         # Receive all batches of image
         while True:
@@ -330,3 +328,31 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
     # Update status of overall missions log
     mission_status_recorder.update_overall_mission_status_log(mission_name=mission_name)
     print("Done overall logging")
+
+
+# Handles receiving/checking of start packet
+# Returns True if Start Packet, False if not valid
+def _mission_receive_start_packet(payload_serial):
+
+    # Boolean to check if start is correct size
+    has_next_start = True
+
+    # Wait for start packet
+    print("Waiting for start packet")
+    start_packet = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
+
+    # If no start packet received
+    if start_packet == b"" or len(start_packet) != mission_params.TOTAL_PACKET_LENGTH:
+        print("No new start packet!")
+        has_next_start = False
+        start_packet = None
+
+    # Start packet received correctly
+    else:
+        print("Start packet received!")
+        has_next_start = True
+
+    return (has_next_start, start_packet)
+
+
+
