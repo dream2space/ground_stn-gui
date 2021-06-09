@@ -148,7 +148,6 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
             # Timeout and did not receive any more bytes
             if ser_bytes == b"":
-                is_timeout = True
                 break
 
             ret = ccsds_decoder.quick_parse_downlink(ser_bytes)
@@ -168,6 +167,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 # If packet is a resend
                 if ret['curr_batch'] == prev_success_packet_num:
                     is_packet_failed = False
+                    fail_count = 0  # Reset the fail count
 
                 # If new packet
                 else:
@@ -226,6 +226,12 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
         # Change timeout between images
         payload_serial.timeout = mission_params.TIME_BETWEEN_IMAGES_GROUND
+
+    # Check if start cmd received or failed
+    if len(recv_image_packets_list) >= 0:
+        is_downlink_complete = True
+    else:
+        is_downlink_complete = False
 
     if is_downlink_complete:
         transfer_end = datetime.datetime.now()
