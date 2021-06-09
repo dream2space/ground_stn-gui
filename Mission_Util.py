@@ -129,7 +129,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         mission_status_recorder.create_new_record(image_count=image_collected_count)
 
         # Extract out useful data from padded packet
-        ret_start = CCSDS_Decoder.quick_parse_downlink(start_packet)
+        ret_start = ccsds_decoder.quick_parse_downlink(start_packet)
         total_batch_expected = ret_start['total_batch']
         print(f"Total batches: {ret_start['total_batch']} for image {image_collected_count}")
 
@@ -360,4 +360,3 @@ def _mission_receive_start_packet(payload_serial):
 # Returns True if continue, False if timeout and stop packet
 def _mission_receive_batch_packet():
     pass
-
