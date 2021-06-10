@@ -125,7 +125,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
         # Start packet received
         else:
-            payload_serial.timeout = 300  # Timeout after 300 sec if stuck
+            payload_serial.timeout = 20  # Timeout after 20 sec if stuck
             image_collected_count += 1
             print(f"Start packet for image {image_collected_count} received")
 
@@ -133,9 +133,17 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
             mission_status_recorder.create_new_record(image_count=image_collected_count)
 
         # Extract out useful data from padded packet
-        start_packet_data = start_packet[:13]
-        total_batch_expected = int.from_bytes(start_packet_data[10:], 'big')
-        print(f"Total batches: {total_batch_expected} for image {image_collected_count}")
+        start_ret = ccsds_decoder.quick_parse_downlink(start_packet)
+
+        if start_ret['fail'] == True:
+            print("Received bad start packet")
+            mission_status_recorder.update_downlink_status(image_count=image_collected_count, is_success=False)
+            flag_proceed_downlink = False
+            is_downlink_complete = False
+        else:
+            flag_proceed_downlink = True
+            total_batch_expected = start_ret['total_batch']
+            print(f"Total batches: {total_batch_expected} for image {image_collected_count}")
 
         recv_packets_list = []
         is_packet_failed = False
@@ -143,7 +151,7 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
         prev_success_packet_num = 0
 
         # Receive all batches of image
-        while True:
+        while flag_proceed_downlink:
             ser_bytes = payload_serial.read(mission_params.TOTAL_PACKET_LENGTH)
 
             # Timeout and did not receive any more bytes
@@ -162,6 +170,8 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 print(f"Failed packet - {ret}")
                 is_packet_failed = True
                 fail_count += 1
+                payload_serial.flushInput()
+                payload_serial.flush()
 
             # Successfully received current packet
             else:
@@ -188,10 +198,9 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
             # Allocate nack to send
             if is_packet_failed:
                 return_val = b"nack\r\n"
-                fail_count += 1
 
                 # Too many nack, timeout
-                if fail_count > 5:
+                if fail_count >= 4:
                     is_timeout = True
                     break
 
@@ -202,28 +211,33 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
             # Sending Ack/Nack
             time.sleep(mission_params.TIME_BEFORE_ACK)
             payload_serial.write(return_val)
+            if ret['fail'] == False:
+                print(f"Batch {ret['curr_batch']} out of {total_batch_expected} batches")
             print(f"Sent {return_val}")
             print(f"Current fail count: {fail_count}\n")
 
-            # Is this packet the second last packet?
-            # If yes, reduce the timeout to capture the last packet quickly
-            # Needs this line to stop the last packet < 149 bytes
-            is_next_last_packet = ret['curr_batch'] == total_batch_expected - 2
-            if ret['fail'] == False and is_next_last_packet:
-                payload_serial.timeout = mission_params.TIMEOUT_LAST_PACKET
+            if ret['fail'] == False:
+                # Is this packet the second last packet?
+                # If yes, reduce the timeout to capture the last packet quickly
+                # Needs this line to stop the last packet < 149 bytes
+                is_next_last_packet = (ret['curr_batch'] == total_batch_expected - 1)
+                if is_next_last_packet:
+                    print(f"Reduce timeout for last packet at batch {ret['curr_batch']}\n")
+                    payload_serial.timeout = mission_params.TIMEOUT_LAST_PACKET
 
-            # Is this packet the last packet?
-            # If it is last packet, print out, update status and exit inner loop
-            is_last_packet = ret['curr_batch'] == total_batch_expected - 1
-            if ret['fail'] == False and is_last_packet:
-                print(f"last packet - {ret['curr_batch']}\n")
-                mission_status_recorder.update_downlink_status(image_count=image_collected_count, is_success=True)
-                break
+                # Is this packet the last packet?
+                # If it is last packet, print out, update status and exit inner loop
+                is_last_packet = (ret['curr_batch'] == total_batch_expected)
+                if is_last_packet:
+                    print(f"last packet - batch {ret['curr_batch']} of {total_batch_expected} batches\n")
+                    mission_status_recorder.update_downlink_status(image_count=image_collected_count, is_success=True)
+                    break
 
         # If timeout received, downlink has failed and stop process
         if is_timeout == True:
+            print("Timeout reached, downlink failed received")
+            mission_status_recorder.update_downlink_status(image_count=image_collected_count, is_success=False)
             is_downlink_complete = False
-            print("Timeout reached, no packets received")
             break
 
         # Append list of complete set image packets found to main list

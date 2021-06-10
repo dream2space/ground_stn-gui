@@ -66,7 +66,8 @@ class CCSDS_Downlink_Decoder():
         elif telemetry_packet_type == mission_params.TELEMETRY_PACKET_TYPE_DOWNLINK_START:
             start_packet_data = CCSDS_Packet[:13]
             total_batch_expected = int.from_bytes(start_packet_data[10:], 'big')
-            return {"fail": False, "stop":False, "start": True, "total_batch": total_batch_expected}
+            # Tune the received number down by 1 to be consistent with packet values
+            return {"fail": False, "stop": False, "start": True, "total_batch": total_batch_expected-1}
 
         else:
             return {"fail": True}
