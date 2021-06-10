@@ -83,10 +83,10 @@ def process_send_mission_telecommand(mission_object, pipe, ttnc_serial_port):
 def process_handle_downlink(payload_serial_port, mission_name, mission_datetime, mission_downlink_time):
 
     # Setup serial object to reach ttnc transceiver
-    def setup_serial(port):
+    def setup_serial(port, timeout=60*5):
         ser = serial.Serial(port)
         ser.baudrate = 115200
-        ser.timeout = 60 * 3  # Set as 3 mins
+        ser.timeout = timeout  # Set as 3 mins
         return ser
 
     # Create CCSDS Decoder
@@ -170,8 +170,9 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 print(f"Failed packet - {ret}")
                 is_packet_failed = True
                 fail_count += 1
-                payload_serial.flushInput()
-                payload_serial.flush()
+                payload_serial.close()
+                time.sleep(0.01)
+                payload_serial = setup_serial(payload_serial_port, timeout=20)
 
             # Successfully received current packet
             else:
@@ -183,6 +184,8 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 # If new packet
                 else:
                     prev_success_packet_num = ret['curr_batch']
+
+                    fail_count = 0  # Reset the fail count
 
                     # Append received packet to list
                     recv_packets_list.append(ser_bytes)
