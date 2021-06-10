@@ -1,6 +1,5 @@
 node_modules/*
 *pycache*
-*vscode*
 dist/*
 build/*
 *housekeeping_data
