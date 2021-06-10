@@ -47,3 +47,7 @@ The backup command is:
 ```bash
 pyinstaller --onefile -w -i "assets/satellite.ico" Ground_Station.py
 ```
+
+## Downlink Notes
+
+This note is for downlink mission implementation.
