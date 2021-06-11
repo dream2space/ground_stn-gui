@@ -22,6 +22,13 @@ Contents
   - [Step 3: Connect the TTnC transceiver to the Computer](#step-3-connect-the-ttnc-transceiver-to-the-computer)
   - [Step 4: Connect the Payload transceiver to the Computer](#step-4-connect-the-payload-transceiver-to-the-computer)
   - [Step 5: Open up the Ground Station app](#step-5-open-up-the-ground-station-app)
+- [Configuring the Ground Station app](#configuring-the-ground-station-app)
+  - [Step 1: Select the TTnC COM port](#step-1-select-the-ttnc-com-port)
+  - [Step 2: Select the Payload COM port](#step-2-select-the-payload-com-port)
+  - [Step 3: Confirm and Start running app](#step-3-confirm-and-start-running-app)
+- [Ground Station Beacon Panel](#ground-station-beacon-panel)
+- [Ground Station Housekeeping Data Panel](#ground-station-housekeeping-data-panel)
+- [Ground Station Mission Panel](#ground-station-mission-panel)
 
 ## Prerequisites (For Windows)
 
@@ -171,3 +178,20 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 
 | ⚠️ | **Do not delete the folder while the app is running!** |
 | - | ------------------------------------------------------ |
+
+## Configuring the Ground Station app
+
+| ⚠️ | **It is recommended to setup the transceivers and COM ports in the previous step before opening the app.** |
+| - | ----------------------------------------------------------------------------------------------------------- |
+
+### Step 1: Select the TTnC COM port
+
+### Step 2: Select the Payload COM port
+
+### Step 3: Confirm and Start running app
+
+## Ground Station Beacon Panel
+
+## Ground Station Housekeeping Data Panel
+
+## Ground Station Mission Panel
