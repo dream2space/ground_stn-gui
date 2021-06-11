@@ -90,4 +90,22 @@ Click on the `Ground_Station.exe` under the `Assets` section to download it.
 
 ### Step 2: Setup the Ground Station transceivers
 
-The Ground Station has 2 transceivers that work at 433 MHz to communicate with the TT&C and the Payload of the Dream2space cubesat respectively.
+The Ground Station has two 433 MHz transceivers to communicate with the TT&C and the Payload of the Dream2space cubesat respectively.
+
+This is how a transceiver looks like:
+
+<img src="images/transceiver-front-back.png" alt="Transceiver" width="80%"/>
+
+The transceiver uses the Universal asynchronous receiver-transmitter (UART) protocol to send data to and from the computer and a USB-UART bridge to connect the transceiver to the computer's USB ports.
+
+This is how a USB-UART bridge looks like:
+
+<img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="80%"/>
+
+Ensure tha both the transcievers are connected to a USB-UART bridge as shown in the schematic below:
+
+[comment]: <> (TODO: Schematic of the USB-UART bridge and transceiver)
+
+An example of the transceiver connected to the USB-UART bridge is shown below:
+
+<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="80%"/>
