@@ -12,7 +12,7 @@ Contents
 - [Prerequisites (For Windows)](#prerequisites-for-windows)
   - [Step 1: Visit the Cygwin website](#step-1-visit-the-cygwin-website)
   - [Step 2: Download Cygwin installer](#step-2-download-cygwin-installer)
-  - [Step 3: Install Cyg](#step-3-install-cyg)
+  - [Step 3: Install Cygwin](#step-3-install-cygwin)
 - [Getting Started](#getting-started)
 
 ## Prerequisites (For Windows)
@@ -35,7 +35,7 @@ The Cygwin page should look like this:
 
 Click on the link `setup-x86_64.exe` to download the Cygwin installer, as shown in the **<span style="color: lime">green</span>** box in the screenshot above.
 
-### Step 3: Install Cyg
+### Step 3: Install Cygwin
 
 Proceed to install Cygwin using the installer.
 
