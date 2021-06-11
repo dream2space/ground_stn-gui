@@ -162,3 +162,10 @@ Double click on the icon to launch the app.
 If the app has launched successfully, the Start Page (as shown in screenshot below) will appear.
 
 <img src="images/app-start-page.png" alt="App Start Page" width="50%"/>
+
+A `dream2space` folder will also be created in the same folder to store data collected from the app.
+
+<img src="images/downloads-folder-after-open.png" alt="App Start Page" />
+
+| ⚠️ | **Do not delete the folder while the app is running!** |
+| - | ------------------------------------------------------ |
