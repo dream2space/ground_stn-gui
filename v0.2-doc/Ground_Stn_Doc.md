@@ -19,6 +19,8 @@ Contents
 - [Getting Started](#getting-started)
   - [Step 1: Download the Ground Station app](#step-1-download-the-ground-station-app)
   - [Step 2: Setup the Ground Station transceivers](#step-2-setup-the-ground-station-transceivers)
+  - [Step 3: Connect the TT&C transceiver to the Computer](#step-3-connect-the-ttc-transceiver-to-the-computer)
+  - [Step 4: Connect the Payload transceiver to the Computer](#step-4-connect-the-payload-transceiver-to-the-computer)
 
 ## Prerequisites (For Windows)
 
@@ -114,3 +116,33 @@ Ensure that the pin connections are done as shown in the table below:
 An example of the transceiver connected to the USB-UART bridge is shown below:
 
 <img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="50%"/>
+
+### Step 3: Connect the TT&C transceiver to the Computer
+
+| ⚠️ | **The sequence of plugging in the USB-UART bridges is important. Do try to follow the sequence.** |
+| - | ------------------------------------------------------------------------------------------------ |
+
+The computer identifies the USB-UART bridges as virtual `COM` ports and each bridge is assigned a unique `COM` port number upon plugging in the USB.
+
+The Ground Station app needs to know `COM` port number for the TT&C and Payload transceiver to read and write to the respective transceivers.
+
+The TT&C transceiver comes with a label on the transceiver, as shown in the image below.
+
+<img src="images/ttnc-transceiver-bridge.jpg" alt="USB-UART bridge connected to TT&C transceiver"/>
+
+Plug in the TT&C transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
+
+Note down the `COM` port for the TT&C transceiver's USB-UART bridge.
+
+### Step 4: Connect the Payload transceiver to the Computer
+
+| ⚠️ | **The sequence of plugging in the USB-UART bridges is important. Do try to follow the sequence.** |
+| - | ------------------------------------------------------------------------------------------------ |
+
+The payload transceiver comes with a label on the transceiver, as shown in the image below.
+
+<img src="images/payload-transceiver-bridge.jpg" alt="USB-UART bridge connected to payload transceiver"/>
+
+Plug in the Payload transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
+
+Note down the `COM` port for the Payload transceiver's USB-UART bridge.
