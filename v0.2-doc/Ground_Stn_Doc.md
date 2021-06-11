@@ -127,9 +127,11 @@ Ensure that the pin connections are done as shown in the table below:
 | `TX`            | `RX`        |
 | `RX`            | `TX`        |
 
+<div class= "container" markdown="1">
 An example of the transceiver connected to the USB-UART bridge is shown below:
 
 <img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="50%"/>
+</div>
 
 </div>
 
@@ -146,7 +148,7 @@ The Ground Station app needs to know `COM` port number for the TT&C and Payload 
 
 The TT&C transceiver comes with a label on the transceiver, as shown in the image below.
 
-<div class="container"><img src="images/ttnc-transceiver-bridge.jpg" alt="USB-UART bridge connected to TT&C transceiver" width="50%"/></div>
+<img src="images/ttnc-transceiver-bridge.jpg" alt="USB-UART bridge connected to TT&C transceiver" width="50%"/>
 
 Plug in the TT&C transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
 
