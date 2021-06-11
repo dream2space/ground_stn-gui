@@ -4,3 +4,4 @@ dist/*
 build/*
 *housekeeping_data
 dream2space
+*.html
