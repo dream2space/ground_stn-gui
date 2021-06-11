@@ -109,14 +109,18 @@ Click on the `Ground_Station.exe` under the `Assets` section to download it.
 The Ground Station has two 433 MHz transceivers to communicate with the TT&C and the Payload of the Dream2space cubesat respectively.
 
 <div class= "container" markdown="1">
-This is how a transceiver looks like: <br>
+
+This is how a transceiver looks like:
+
 <img src="images/transceiver-front-back.png" alt="Transceiver" width="50%"/>
 </div>
 
 The transceiver uses the Universal asynchronous receiver-transmitter (UART) protocol to send data to and from the computer and a USB-UART bridge to connect the transceiver to the computer's USB ports.
 
 <div class= "container" markdown="1">
-This is how a USB-UART bridge looks like:<br>
+
+This is how a USB-UART bridge looks like:
+
 <img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="50%"/>
 </div>
 
@@ -130,7 +134,9 @@ Ensure that the pin connections are done as shown in the table below:
 | `RX`            | `TX`        |
 
 <div class= "container" markdown="1">
-An example of the transceiver connected to the USB-UART bridge is shown below: <br>
+
+An example of the transceiver connected to the USB-UART bridge is shown below:
+
 <img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="40%"/>
 </div>
 
