@@ -10,6 +10,8 @@ This step is needed if you are using a computer that runs on a **Windows** opera
 
 The Ground Station app requires an additional software **Cygwin** to run.
 
+### Step 1: Visit the Cygwin website
+
 To download Cygwin, click the link [here](https://www.cygwin.com/).
 
 Link to download Cygwin: <https://www.cygwin.com/>
@@ -18,7 +20,11 @@ The Cygwin page should look like this:
 
 ![Cygwin Download Page](images/cygwin-download.png)
 
+### Step 2: Download Cygwin installer
+
 Click on the link `setup-x86_64.exe` to download the Cygwin installer, as shown in the **<span style="color: lime">green</span>** box in the screenshot above.
+
+### Step 3: Install Cygwin
 
 Proceed to install Cygwin using the installer.
 
