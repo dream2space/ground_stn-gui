@@ -21,6 +21,7 @@ Contents
   - [Step 2: Setup the Ground Station transceivers](#step-2-setup-the-ground-station-transceivers)
   - [Step 3: Connect the TTnC transceiver to the Computer](#step-3-connect-the-ttnc-transceiver-to-the-computer)
   - [Step 4: Connect the Payload transceiver to the Computer](#step-4-connect-the-payload-transceiver-to-the-computer)
+    - [Step 5: Open up the Ground Station app](#step-5-open-up-the-ground-station-app)
 
 ## Prerequisites (For Windows)
 
@@ -146,3 +147,18 @@ The payload transceiver comes with a label on the transceiver, as shown in the i
 Plug in the Payload transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
 
 Note down the `COM` port for the Payload transceiver's USB-UART bridge.
+
+#### Step 5: Open up the Ground Station app
+
+| ⚠️ | **This is the recommended way to open up the GUI exe. Other methods may cause errors.** |
+| - | --------------------------------------------------------------------------------------- |
+
+Navigate to the folder containing the downloaded GUI exe, as shown in the folder below.
+
+<img src="images/downloads-folder.png" alt="Downloads folder with GUI exe" width="50%"/>
+
+Double click on the icon to launch the app.
+
+If the app has launched successfully, the Start Page (as shown in screenshot below) will appear.
+
+<img src="images/app-start-page.png" alt="App Start Page" width="50%"/>
