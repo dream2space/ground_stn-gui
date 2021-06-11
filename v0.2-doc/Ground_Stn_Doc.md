@@ -1,6 +1,7 @@
 # Dream2space Cubesat Ground Station
 <!-- markdownlint-disable MD033 -->
-<!--TODO: Break down into smaller steps per header-->
+
+[comment]: <> (TODO: Break down into smaller steps per header)
 
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
 
@@ -25,6 +26,8 @@ This step is needed if you are using a computer that runs on a **Windows** opera
 
 The Ground Station app requires an additional software **Cygwin** to run.
 
+<div class= "container" markdown="1">
+
 ### Step 1: Visit the Cygwin website
 
 To download Cygwin, click the link [here](https://www.cygwin.com/).
@@ -35,9 +38,13 @@ The Cygwin page should look like this:
 
 <img src="images/cygwin-download.png" alt="Cygwin Download Page"/>
 
+</div>
+
 ### Step 2: Download Cygwin installer
 
 Click on the link `setup-x86_64.exe` to download the Cygwin installer, as shown in the **<span style="color: lime">green</span>** box in the screenshot above.
+
+<div class= "container" markdown="1">
 
 ### Step 3: Install Cygwin
 
@@ -47,7 +54,9 @@ When prompted to choose Installation Directory, ensure that the Root Directory i
 
 The step and the correct Root Directory is shown in the **<span style="color: lime">green</span>** box in the screenshot below.
 
-<img src="images/cygwin-save-location.png" alt="Cygwin Root Install Directory" width="60%"/>
+<img src="images/cygwin-save-location.png" alt="Cygwin Root Install Directory" width="55%"/>
+
+</div>
 
 ## Getting Started
 
@@ -55,9 +64,13 @@ The step and the correct Root Directory is shown in the **<span style="color: li
 
 To begin, download the Ground Station app.
 
-Download the latest version of the Ground Station app `Ground_Stn.exe` from the `Releases` page [here](https://github.com/dream2space/dream2space-ground_station/releases). <!--TODO: Update to a direct link to the exact releases-->
+Download the latest version of the Ground Station app `Ground_Stn.exe` from the `Releases` page [here](https://github.com/dream2space/dream2space-ground_station/releases).
 
-Link to download Ground Station app: <https://github.com/dream2space/dream2space-ground_station/releases/> <!--TODO: Update to a direct link to the exact releases-->
+[comment]: <> (TODO: Update to a direct link to the exact releases)
+
+Link to download Ground Station app: <https://github.com/dream2space/dream2space-ground_station/releases/>
+
+[comment]: <> (TODO: Update to a direct link to the exact releases)
 
 The `Releases` page should look like this:
 
@@ -68,7 +81,8 @@ You can find the latest version of the Ground Station app and the Version tag in
 | Executable Name      | Version Number |
 | -------------------- | -------------- |
 | `Ground_Station.exe` | `v-hk-logs`    |
-<!--TODO: Correct the version number to match the screenshot/latest version-->
+
+[comment]: <> (TODO: Correct the version number to match the screenshot/latest version)
 
 Click on the `Ground_Station.exe` under the `Assets` section to download it.
 

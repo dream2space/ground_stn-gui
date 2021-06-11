@@ -43,24 +43,33 @@ blockquote {
 }
 
 h1, h2, h3 {
-	font-weight: bolder;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 
+h1, h2 {
+    font-weight: bolder;
+}
+
 h2 {
     break-before: always;
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    page-break-inside: avoid; /* or 'auto' */
 }
 
 img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-table, img {
-    break-inside: avoid;
-}
-
-p {
-    break-inside: avoid;
+    margin-bottom: 50px;
 }
