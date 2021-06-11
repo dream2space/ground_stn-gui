@@ -20,6 +20,14 @@ The Cygwin page should look like this:
 
 Click on the link `setup-x86_64.exe` to download the Cygwin installer, as shown in the **<span style="color: lime">green</span>** box in the screenshot above.
 
+Proceed to install Cygwin using the installer.
+
+When prompted to choose Installation Directory, ensure that the Root Directory is `C:\cygwin64`.
+
+The step and the correct Root Directory is shown in the **<span style="color: lime">green</span>** box in the screenshot below.
+
+![Cygwin Root Install Directory](images/cygwin-save-location.png)
+
 ## Getting Started
 
 To begin, download the Ground Station app.
