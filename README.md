@@ -36,10 +36,6 @@ Click [here](docs/design-journey.md) to view the Design journey.
 
 ### Software Architecture
 
-#### Info
-
-How to run a long running process alongside Tkinter GUI: [here](https://zetcode.com/articles/tkinterlongruntask/)
-
 ### Production in Windows OS
 
 To create EXE for production in Windows, type the following command into Windows Powershell:
@@ -57,3 +53,7 @@ pyinstaller --onefile -w -i "assets/satellite.ico" Ground_Station.py
 ### Downlink Notes
 
 This note is for downlink mission implementation.
+
+### Useful Guides
+
+How to run a long running process alongside Tkinter GUI: [here](https://zetcode.com/articles/tkinterlongruntask/)
