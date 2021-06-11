@@ -19,7 +19,7 @@ Contents
 - [Getting Started](#getting-started)
   - [Step 1: Download the Ground Station app](#step-1-download-the-ground-station-app)
   - [Step 2: Setup the Ground Station transceivers](#step-2-setup-the-ground-station-transceivers)
-  - [Step 3: Connect the TT&C transceiver to the Computer](#step-3-connect-the-ttc-transceiver-to-the-computer)
+  - [Step 3: Connect the TTnC transceiver to the Computer](#step-3-connect-the-ttnc-transceiver-to-the-computer)
   - [Step 4: Connect the Payload transceiver to the Computer](#step-4-connect-the-payload-transceiver-to-the-computer)
 
 ## Prerequisites (For Windows)
@@ -117,7 +117,7 @@ An example of the transceiver connected to the USB-UART bridge is shown below:
 
 <img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="50%"/>
 
-### Step 3: Connect the TT&C transceiver to the Computer
+### Step 3: Connect the TTnC transceiver to the Computer
 
 | ⚠️ | **The sequence of plugging in the USB-UART bridges is important. Do try to follow the sequence.** |
 | - | ------------------------------------------------------------------------------------------------ |
