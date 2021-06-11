@@ -3,17 +3,14 @@
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
 
 <img src="images/gui-front.png" alt="Ground Station Start Page" width="60%"/>
-<br>
 
 The Dream2space GUI Ground Station supports Beacon receiving, as well as sending Mission and Housekeeping commands.
 
 <img src="images/gui-panel.png" alt="Ground Station Dashboard" width="90%"/>
-<br>
 
 You can issue mission commands entirely from a GUI interface with great ease.
 
 <img src="images/gui-mission_window_horizontal.png" alt="Ground Station Mission Window" width="90%"/>
-<br>
 
 Contents
 ========
