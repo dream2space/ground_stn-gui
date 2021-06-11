@@ -128,9 +128,11 @@ Ensure that the pin connections are done as shown in the table below:
 | `RX`            | `TX`        |
 
 <div class= "container" markdown="1">
-An example of the transceiver connected to the USB-UART bridge is shown below:
 
-<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="50%"/>
+An example of the transceiver connected to the USB-UART bridge is shown below: <br>
+
+<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="40%"/>
+
 </div>
 
 </div>
