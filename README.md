@@ -17,8 +17,7 @@ Contents
 
  * [Why?](#why)
  * [Installation and Usage](#installation-and-usage)
- * [Design Journey](#design-journey)
- * [Developers' Guide](#developers-guide)
+ * [Contribute](#contribute)
 
 ## Why?
 
@@ -28,32 +27,8 @@ The [command line ground station](https://github.com/huiminlim/ground_stn) was b
 
 Click [here](v0.2-doc/Ground_Stn_Doc.md) to view the Installation and Usage guide.
 
-## Design Journey
+## Contribute
 
-Click [here](docs/design-journey.md) to view the Design journey.
+To understand Dream2space's Ground Station and contribute to the development, visit [here](docs/developer-guide.md) to learn more.
 
-## Developers' Guide
-
-### Software Architecture
-
-### Production in Windows OS
-
-To create EXE for production in Windows, type the following command into Windows Powershell:
-
-```bash
-pyinstaller Ground_Station.spec
-```
-
-The backup command is:
-
-```bash
-pyinstaller --onefile -w -i "assets/satellite.ico" Ground_Station.py
-```
-
-### Downlink Notes
-
-This note is for downlink mission implementation.
-
-### Useful Guides
-
-How to run a long running process alongside Tkinter GUI: [here](https://zetcode.com/articles/tkinterlongruntask/)
+To view the design journey and considerations, visit [here](docs/design-journey.md) to learn more.
