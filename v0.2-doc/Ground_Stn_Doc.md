@@ -4,6 +4,17 @@
 
 This document covers the usage of the Ground Station app to interact with the dream2space Cubesat.
 
+<!-- markdownlint-disable MD025 MD003 -->
+Contents
+========
+<!-- markdownlint-enable MD025 MD003 -->
+
+- [Prerequisites (For Windows)](#prerequisites-for-windows)
+  - [Step 1: Visit the Cygwin website](#step-1-visit-the-cygwin-website)
+  - [Step 2: Download Cygwin installer](#step-2-download-cygwin-installer)
+  - [Step 3: Install Cyg](#step-3-install-cyg)
+- [Getting Started](#getting-started)
+
 ## Prerequisites (For Windows)
 
 This step is needed if you are using a computer that runs on a **Windows** operating system.
@@ -24,7 +35,7 @@ The Cygwin page should look like this:
 
 Click on the link `setup-x86_64.exe` to download the Cygwin installer, as shown in the **<span style="color: lime">green</span>** box in the screenshot above.
 
-### Step 3: Install Cygwin
+### Step 3: Install Cyg
 
 Proceed to install Cygwin using the installer.
 
