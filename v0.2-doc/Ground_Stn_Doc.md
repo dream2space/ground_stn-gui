@@ -74,7 +74,9 @@ Link to download Ground Station app: <https://github.com/dream2space/dream2space
 
 The `Releases` page should look like this:
 
-![Ground Station exe releases](images/ground_stn_exe_releases.png)  <!--TODO: Fix to correct image and rename to replace-->
+![Ground Station exe releases](images/ground_stn_exe_releases.png
+
+[comment]: <> (TODO: Fix to correct image and rename to replace)
 
 You can find the latest version of the Ground Station app and the Version tag in the table below.
 
