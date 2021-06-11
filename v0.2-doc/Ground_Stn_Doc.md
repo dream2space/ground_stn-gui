@@ -94,13 +94,13 @@ The Ground Station has two 433 MHz transceivers to communicate with the TT&C and
 
 This is how a transceiver looks like:
 
-<img src="images/transceiver-front-back.png" alt="Transceiver" width="80%"/>
+<img src="images/transceiver-front-back.png" alt="Transceiver" width="50%"/>
 
 The transceiver uses the Universal asynchronous receiver-transmitter (UART) protocol to send data to and from the computer and a USB-UART bridge to connect the transceiver to the computer's USB ports.
 
 This is how a USB-UART bridge looks like:
 
-<img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="80%"/>
+<img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="50%"/>
 
 Ensure tha both the transcievers are connected to a USB-UART bridge as shown in the schematic below:
 
@@ -108,4 +108,4 @@ Ensure tha both the transcievers are connected to a USB-UART bridge as shown in 
 
 An example of the transceiver connected to the USB-UART bridge is shown below:
 
-<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="80%"/>
+<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="50%"/>
