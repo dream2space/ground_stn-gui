@@ -70,6 +70,8 @@ The step and the correct Root Directory is shown in the **<span style="color: li
 
 ## Getting Started
 
+<div class= "container" markdown="1">
+
 ### Step 1: Download the Ground Station app
 
 To begin, download the Ground Station app.
@@ -98,6 +100,10 @@ You can find the latest version of the Ground Station app and the Version tag in
 
 Click on the `Ground_Station.exe` under the `Assets` section to download it.
 
+</div>
+
+<div class= "container" markdown="1">
+
 ### Step 2: Setup the Ground Station transceivers
 
 The Ground Station has two 433 MHz transceivers to communicate with the TT&C and the Payload of the Dream2space cubesat respectively.
@@ -125,6 +131,10 @@ An example of the transceiver connected to the USB-UART bridge is shown below:
 
 <img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="50%"/>
 
+</div>
+
+<div class= "container" markdown="1">
+
 ### Step 3: Connect the TTnC transceiver to the Computer
 
 | ⚠️ | **The sequence of plugging in the USB-UART bridges is important. Do try to follow the sequence.** |
@@ -142,6 +152,10 @@ Plug in the TT&C transceiver's USB-UART bridge into the computer. The computer s
 
 Note down the `COM` port for the TT&C transceiver's USB-UART bridge.
 
+</div>
+
+<div class= "container" markdown="1">
+
 ### Step 4: Connect the Payload transceiver to the Computer
 
 | ⚠️ | **The sequence of plugging in the USB-UART bridges is important. Do try to follow the sequence.** |
@@ -154,6 +168,10 @@ The payload transceiver comes with a label on the transceiver, as shown in the i
 Plug in the Payload transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
 
 Note down the `COM` port for the Payload transceiver's USB-UART bridge.
+
+</div>
+
+<div class= "container" markdown="1">
 
 ### Step 5: Open up the Ground Station app
 
@@ -178,6 +196,8 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 
 | ⚠️ | **Do not delete the folder while the app is running!** |
 | - | ------------------------------------------------------ |
+
+</div>
 
 ## Configuring the Ground Station app
 
