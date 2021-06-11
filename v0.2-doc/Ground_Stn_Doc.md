@@ -102,9 +102,14 @@ This is how a USB-UART bridge looks like:
 
 <img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="50%"/>
 
-Ensure tha both the transcievers are connected to a USB-UART bridge as shown in the schematic below:
+Ensure that the pin connections are done as shown in the table below:
 
-[comment]: <> (TODO: Schematic of the USB-UART bridge and transceiver)
+| USB-UART bridge | Transceiver |
+| --------------- | ----------- |
+| `5V`            | `Vcc`       |
+| `GND`           | `GND`       |
+| `TX`            | `RX`        |
+| `RX`            | `TX`        |
 
 An example of the transceiver connected to the USB-UART bridge is shown below:
 
