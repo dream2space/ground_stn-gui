@@ -76,7 +76,7 @@ The step and the correct Root Directory is shown in the **<span style="color: li
 
 To begin, download the Ground Station app.
 
-Download the latest version of the Ground Station app `Ground_Stn.exe` from the `Releases` page [here](https://github.com/dream2space/dream2space-ground_station/releases).
+Download the latest version of the Ground Station app `Ground_Station.exe` from the `Releases` page [here](https://github.com/dream2space/dream2space-ground_station/releases).
 
 [comment]: <> (TODO: Update to a direct link to the exact releases)
 
