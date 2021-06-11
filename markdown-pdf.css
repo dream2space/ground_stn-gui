@@ -39,7 +39,7 @@ blockquote {
 :not(pre):not(.hljs)>code {
     color: #c0392b;
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 h1, h2, h3 {
