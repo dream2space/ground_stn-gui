@@ -155,7 +155,7 @@ Note down the `COM` port for the Payload transceiver's USB-UART bridge.
 
 Navigate to the folder containing the downloaded GUI exe, as shown in the folder below.
 
-<img src="images/downloads-folder.png" alt="Downloads folder with GUI exe" width="50%"/>
+<img src="images/downloads-folder.png" alt="Downloads folder with GUI exe"/>
 
 Double click on the icon to launch the app.
 
