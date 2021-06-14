@@ -64,27 +64,23 @@ The step and the correct Root Directory is shown in the **<span style="color: li
 
 To begin, download the Ground Station app.
 
-Download the latest version of the Ground Station app `Ground_Station.exe` from the `Releases` page [here](https://github.com/dream2space/dream2space-ground_station/releases).
+Download the latest version of the Ground Station app `Ground_Station.exe` from the `Releases` page [here](https://github.com/dream2space/dream2space-ground_station/releases/tag/v1.0).
 
-[comment]: <> (TODO: Update to a direct link to the exact releases)
-
-Link to download Ground Station app: <https://github.com/dream2space/dream2space-ground_station/releases/>
-
-[comment]: <> (TODO: Update to a direct link to the exact releases)
+Link to download Ground Station app: <https://github.com/dream2space/dream2space-ground_station/releases/tag/v1.0>
 
 The `Releases` page should look like this:
 
-![Ground Station exe releases](images/ground_stn_exe_releases.png
-
-[comment]: <> (TODO: Fix to correct image and rename to replace)
+![Ground Station exe releases](images/ground_stn_exe_releases.png)
 
 You can find the latest version of the Ground Station app and the Version tag in the table below.
 
 | Executable Name      | Version Number |
 | -------------------- | -------------- |
-| `Ground_Station.exe` | `v-hk-logs`    |
+| `Ground_Station.exe` | `v1.0`         |
 
-[comment]: <> (TODO: Correct the version number to match the screenshot/latest version)
+Scroll down to view the download link of the `Ground_Station.exe` app.
+
+![Download app](ground_stn_exe_releases-dow.png)
 
 Click on the `Ground_Station.exe` under the `Assets` section to download it.
 
