@@ -167,26 +167,52 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 
 ## Configuring the Ground Station app
 
-| ⚠️ | **It is recommended to setup the transceivers and COM ports in the previous step before opening the app.** |
-| - | ----------------------------------------------------------------------------------------------------------- |
+| 💡 | TIP! |
+| -- | ---- |
 
 <img src="images/app-start-refresh.png" alt="Serial port refresh" width="50%"/>
 
+If you cannot spot the COM ports noted down previously, try clicking on the **🔄 Refresh** button.
+
+The **🔄 Refresh** button is boxed in **<span style="color: lime">green</span>** in the screenshot above.
+
 ### Step 1: Select the TTnC COM port
+
+To view the list of COM ports available for selection as the TT&C transceiver's port, click on the dropdown menu.
+
+The dropdown menu is boxed in **<span style="color: lime">green</span>** in the screenshot below.
 
 <img src="images/app-start-select-ttnc-port.png" alt="Show ttnc serial port" width="50%"/>
 
+The list of discovered COM ports will be displayed.
+
 <img src="images/app-start-find-ttnc-port.png" alt="Select ttnc serial port" width="50%"/>
+
+Select the COM port that you have noted down after plugging in the TT&C transceiver's USB-UART bridge.
 
 ### Step 2: Select the Payload COM port
 
+To view the list of COM ports available for selection as the Payload transceiver's port, click on the dropdown menu.
+
+The dropdown menu is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-start-select-payload-port.png" alt="Show payload serial port" width="50%"/>
+
+The list of discovered COM ports will be displayed.
 
 <img src="images/app-start-find-payload-port.png" alt="Select payload serial port" width="50%"/>
 
+Select the COM port that you have noted down after plugging in the Payload transceiver's USB-UART bridge.
+
 ### Step 3: Confirm and Start running app
 
+After selecting COM ports for the TT&C and Payload transceivers, click on the Start button to proceed.
+
+The Start button is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-start-confirm-port.png" alt="Confirm ports selected" width="50%"/>
+
+After which, the app will display the Ground Station main page as shown below.
 
 <img src="images/app-start-start-success.png" alt="Ports selection success" width="90%"/>
 
