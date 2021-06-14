@@ -31,6 +31,11 @@ Contents
   - [Step 1: Send the Housekeeping Command](#step-1-send-the-housekeeping-command)
   - [Step 2: Navigate to location where logs are saved](#step-2-navigate-to-location-where-logs-are-saved)
 - [Ground Station Mission Panel](#ground-station-mission-panel)
+  - [Step 1: Send a Mission Command](#step-1-send-a-mission-command)
+  - [Step 2: Waiting for Mission to be executed](#step-2-waiting-for-mission-to-be-executed)
+  - [Step 3: Waiting for Downlink to be completed](#step-3-waiting-for-downlink-to-be-completed)
+  - [Step 4: Viewing status of Missions](#step-4-viewing-status-of-missions)
+  - [Step 4: Viewing Mission status and images](#step-4-viewing-mission-status-and-images)
 
 ## Prerequisites (For Windows)
 
@@ -288,19 +293,33 @@ Click on the CSV file and the CSV file will contain the Housekeeping data receiv
 
 ## Ground Station Mission Panel
 
+The Ground Station is capable of sending Mission commands to the Dream2space Cubesat to capture images and transmitting them down to the Ground Station for storage.
+
+The steps below show how to send a Mission command and receive images via downlink from the Dream2space Cubesat.
+
+### Step 1: Send a Mission Command
+
 <img src="images/app-mission-button.png" alt="Mission command button" width="90%"/>
 
 <img src="images/app-mission-window.png" alt="Mission command window" width="90%"/>
 
 <img src="images/app-mission-window-submit.png" alt="Mission command submit button" width="90%"/>
 
+### Step 2: Waiting for Mission to be executed
+
 <img src="images/app-mission-sending-cmd.png" alt="Mission command sending" width="90%"/>
 
+### Step 3: Waiting for Downlink to be completed
+
 <img src="images/app-mission-downlink-standby.png" alt="Downlink standby" width="90%"/>
+
+### Step 4: Viewing status of Missions
 
 <img src="images/app-mission-view-completed.png" alt="Mission view completed button" width="90%"/>
 
 <img src="images/app-mission-view-overall-status.png" alt="View overall status of missions" width="90%"/>
+
+### Step 4: Viewing Mission status and images
 
 <img src="images/app-mission-view-location.png" alt="Mission saved location" width="90%"/>
 
