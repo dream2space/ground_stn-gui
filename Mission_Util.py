@@ -176,23 +176,27 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
             # Successfully received current packet
             else:
-                # If packet is a resend
-                if ret['curr_batch'] == prev_success_packet_num:
-                    is_packet_failed = False
-                    fail_count = 0  # Reset the fail count
+                try:
+                    # If packet is a resend
+                    if ret['curr_batch'] == prev_success_packet_num:
+                        is_packet_failed = False
+                        fail_count = 0  # Reset the fail count
 
-                # If new packet
-                else:
-                    prev_success_packet_num = ret['curr_batch']
+                    # If new packet
+                    else:
+                        prev_success_packet_num = ret['curr_batch']
 
-                    fail_count = 0  # Reset the fail count
+                        fail_count = 0  # Reset the fail count
 
-                    # Append received packet to list
-                    recv_packets_list.append(ser_bytes)
-                    print(f"Append - {ret}")
+                        # Append received packet to list
+                        recv_packets_list.append(ser_bytes)
+                        print(f"Append - {ret}")
 
-                    # Flag to indicate successfully received packet
-                    is_packet_failed = False
+                        # Flag to indicate successfully received packet
+                        is_packet_failed = False
+
+                except (KeyError, ValueError):
+                    is_packet_failed = True
 
             # ---------------------------------------------------------------
             # Handle Ack/Nack
