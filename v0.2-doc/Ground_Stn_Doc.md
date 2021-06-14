@@ -98,7 +98,11 @@ This is how a USB-UART bridge looks like:
 
 <img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="50%"/>
 
-Ensure that the pin connections are done as shown in the table below:
+An example of the transceiver connected to the USB-UART bridge that you have receive is shown below:
+
+<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="40%"/>
+
+Double check that the pin connections are done as shown in the table below:
 
 | USB-UART bridge | Transceiver |
 | --------------- | ----------- |
@@ -106,10 +110,6 @@ Ensure that the pin connections are done as shown in the table below:
 | `GND`           | `GND`       |
 | `TX`            | `RX`        |
 | `RX`            | `TX`        |
-
-An example of the transceiver connected to the USB-UART bridge is shown below:
-
-<img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="40%"/>
 
 ### Step 3: Connect the TTnC transceiver to the Computer
 
