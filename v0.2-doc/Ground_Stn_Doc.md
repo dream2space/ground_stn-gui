@@ -192,6 +192,8 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 
 <img src="images/app-start-confirm-port.png" alt="App Start Page" width="50%"/>
 
+<img src="images/app-start-start-success.png" alt="App Start Page" width="50%"/>
+
 ## Ground Station Beacon Panel
 
 ## Ground Station Housekeeping Data Panel
