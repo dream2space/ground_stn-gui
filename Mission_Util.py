@@ -306,22 +306,31 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                         shell=True)
                     time.sleep(5)
 
-                    with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
-                        bin_file = enc_file.read()
-                    enc_file.close()
+                    try:
+                        with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out', 'rb') as enc_file:
+                            bin_file = enc_file.read()
+                        enc_file.close()
 
-                    with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
-                        try:
-                            base64_dec = base64.b64decode(bin_file)
-                        except binascii.Error:
-                            print("Base64 decode error!")
-                        output.write(base64_dec)
+                        with open(f'{app_params.GROUND_STN_MISSION_FOLDER_PATH}/{mission_name}/out.jpg', 'wb') as output:
+                            try:
+                                base64_dec = base64.b64decode(bin_file)
+                            except binascii.Error:
+                                print("Base64 decode error!")
+                            output.write(base64_dec)
 
-                    # Remove out file
-                    subprocess.Popen(
-                        r"C:\cygwin64\bin\rm.exe" +
-                        f" {os.getcwd()}\dream2space\mission\{mission_name}\out",  # pylint: disable=anomalous-backslash-in-string
-                        shell=True)
+                        # Remove out file
+                        subprocess.Popen(
+                            r"C:\cygwin64\bin\rm.exe" +
+                            f" {os.getcwd()}\dream2space\mission\{mission_name}\out",  # pylint: disable=anomalous-backslash-in-string
+                            shell=True)
+
+                    except FileNotFoundError:
+                        print("File cannot be gzip decoded!")
+                        # Remove out file
+                        subprocess.Popen(
+                            r"C:\cygwin64\bin\rm.exe" +
+                            f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz",  # pylint: disable=anomalous-backslash-in-string
+                            shell=True)
 
                 # cygwin not exist
                 else:
