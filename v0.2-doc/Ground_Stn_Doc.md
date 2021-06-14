@@ -174,28 +174,40 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 | ⚠️ | **It is recommended to setup the transceivers and COM ports in the previous step before opening the app.** |
 | - | ----------------------------------------------------------------------------------------------------------- |
 
-<img src="images/app-start-refresh.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-refresh.png" alt="Serial port refresh" width="50%"/>
 
 ### Step 1: Select the TTnC COM port
 
-<img src="images/app-start-select-ttnc-port.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-select-ttnc-port.png" alt="Show ttnc serial port" width="50%"/>
 
-<img src="images/app-start-find-ttnc-port.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-find-ttnc-port.png" alt="Select ttnc serial port" width="50%"/>
 
 ### Step 2: Select the Payload COM port
 
-<img src="images/app-start-select-payload-port.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-select-payload-port.png" alt="Show payload serial port" width="50%"/>
 
-<img src="images/app-start-find-payload-port.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-find-payload-port.png" alt="Select payload serial port" width="50%"/>
 
 ### Step 3: Confirm and Start running app
 
-<img src="images/app-start-confirm-port.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-confirm-port.png" alt="Confirm ports selected" width="50%"/>
 
-<img src="images/app-start-start-success.png" alt="App Start Page" width="50%"/>
+<img src="images/app-start-start-success.png" alt="Ports selection success" width="90%"/>
 
 ## Ground Station Beacon Panel
 
+<img src="images/app-beacon-refresh.png" alt="Refresh ports" width="90%"/>
+
 ## Ground Station Housekeeping Data Panel
+
+<img src="images/app-hk-button.png" alt="Housekeeping request button" width="90%"/>
+
+<img src="images/app-hk-start.png" alt="Send housekeeping command" width="90%"/>
+
+<img src="images/app-hk-success.png" alt="Housekeeping command success" width="90%"/>
+
+<img src="images/app-hk-success-log-location.png" alt="Housekeeping logs location"/>
+
+<img src="images/app-hk-logs.png" alt="Housekeeping logs csv" width="60%"/>
 
 ## Ground Station Mission Panel
