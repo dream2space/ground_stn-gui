@@ -80,7 +80,7 @@ You can find the latest version of the Ground Station app and the Version tag in
 
 Scroll down to view the download link of the `Ground_Station.exe` app.
 
-![Download app](ground_stn_exe_releases-dow.png)
+![Download app](images/ground_stn_exe_releases-dow.png)
 
 Click on the `Ground_Station.exe` under the `Assets` section to download it.
 
