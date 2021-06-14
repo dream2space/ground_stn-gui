@@ -122,7 +122,7 @@ The Ground Station app needs to know `COM` port number for the TT&C and Payload 
 
 The TT&C transceiver comes with a label on the transceiver, as shown in the image below.
 
-<img src="images/ttnc-transceiver-bridge.jpg" alt="USB-UART bridge connected to TT&C transceiver" width="50%"/>
+<img src="images/ttnc-transceiver-bridge.jpg" alt="USB-UART bridge connected to TT&C transceiver" width="80%"/>
 
 Plug in the TT&C transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
 
@@ -135,7 +135,7 @@ Note down the `COM` port for the TT&C transceiver's USB-UART bridge.
 
 The payload transceiver comes with a label on the transceiver, as shown in the image below.
 
-<img src="images/payload-transceiver-bridge.jpg" alt="USB-UART bridge connected to payload transceiver" width="50%"/>
+<img src="images/payload-transceiver-bridge.jpg" alt="USB-UART bridge connected to payload transceiver" width="80%"/>
 
 Plug in the Payload transceiver's USB-UART bridge into the computer. The computer should detect the USB `COM` port and the `COM` port can be found using the Device Manager.
 
@@ -162,7 +162,7 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 
 <img src="images/downloads-folder-after-open.png" alt="App Start Page" />
 
-| ⚠️ | **Do not delete the folder while the app is running!** |
+| ⚠️ | **Do not delete that folder while the app is running!** |
 | - | ------------------------------------------------------ |
 
 ## Configuring the Ground Station app
