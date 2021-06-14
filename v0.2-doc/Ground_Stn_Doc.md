@@ -174,11 +174,23 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 | ⚠️ | **It is recommended to setup the transceivers and COM ports in the previous step before opening the app.** |
 | - | ----------------------------------------------------------------------------------------------------------- |
 
+<img src="images/app-start-refresh.png" alt="App Start Page" width="50%"/>
+
 ### Step 1: Select the TTnC COM port
+
+<img src="images/app-start-select-ttnc-port.png" alt="App Start Page" width="50%"/>
+
+<img src="images/app-start-find-ttnc-port.png" alt="App Start Page" width="50%"/>
 
 ### Step 2: Select the Payload COM port
 
+<img src="images/app-start-select-payload-port.png" alt="App Start Page" width="50%"/>
+
+<img src="images/app-start-find-payload-port.png" alt="App Start Page" width="50%"/>
+
 ### Step 3: Confirm and Start running app
+
+<img src="images/app-start-confirm-port.png" alt="App Start Page" width="50%"/>
 
 ## Ground Station Beacon Panel
 
