@@ -28,6 +28,8 @@ Contents
   - [Step 3: Confirm and Start running app](#step-3-confirm-and-start-running-app)
 - [Ground Station Beacon Panel](#ground-station-beacon-panel)
 - [Ground Station Housekeeping Data Panel](#ground-station-housekeeping-data-panel)
+  - [Step 1: Send the Housekeeping Command](#step-1-send-the-housekeeping-command)
+  - [Step 2: Navigate to location where logs are saved](#step-2-navigate-to-location-where-logs-are-saved)
 - [Ground Station Mission Panel](#ground-station-mission-panel)
 
 ## Prerequisites (For Windows)
@@ -232,13 +234,55 @@ The Beacon panel display will blink in **<span style="background: yellow">yellow
 
 ## Ground Station Housekeeping Data Panel
 
+The Ground Station is capable of sending commands to the Dream2space Cubesat to retrieve Housekeeping data stored onboard.
+
+Housekeeping data refers to sensor data collected by the On-board Computer (OBC).
+
+The steps below show how to retrieve Housekeeping data from the Dream2space Cubesat.
+
+### Step 1: Send the Housekeeping Command
+
+To send a Housekeeping command, click on the button to request for Housekeeping data.
+
+The button is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-hk-button.png" alt="Housekeeping request button" width="90%"/>
+
+After the Housekeeping command request button is clicked, the Housekeeping command will be sent to the Dream2space Cubeat.
+
+While the command is being sent, the progress bar will be shown.
+
+To ensure that the Housekeeping command is sent without disruption, all commands sending will be disabled.
 
 <img src="images/app-hk-start.png" alt="Send housekeeping command" width="90%"/>
 
+Once the Ground Station receives a response from the Dream2space Cubesat **successfully** (after approximately 5 seconds), the Housekeeping Data panel will indicate with a success message.
+
+Upon seeing the success message, proceed to Step 2.
+
+The success message is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-hk-success.png" alt="Housekeeping command success" width="90%"/>
 
+If the progress bar still appears after 10 seconds, the operation is likely to have failed and an error message will be shown.
+
+The error message is boxed in **<span style="color: red">red</span>** in the screenshot below.
+
+<img src="images/app-hk-failed.png" alt="Housekeeping command failed" width="60%"/>
+
+To retrieve Housekeeping data, send the Housekeeping command again as described in Step 1.
+
+### Step 2: Navigate to location where logs are saved
+
+After the response containing Housekeeping data is successfully received by the Ground Station, the Ground Station will process, save into Comma Separated Values (CSV) log files and pop up the Explorer window showing the folder containing the CSV file.
+
+The CSV file is saved in the `dream2space/housekeeping_data` folder.
+
+For instance, the screenshot below shows the Explorer window popped up after a successful Housekeeping data retrieval operation.
+
 <img src="images/app-hk-success-log-location.png" alt="Housekeeping logs location"/>
+
+Click on the CSV file and the CSV file will contain the Housekeeping data received, as shown in the screenshot below.
 
 <img src="images/app-hk-logs.png" alt="Housekeeping logs csv" width="60%"/>
 
