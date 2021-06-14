@@ -220,7 +220,15 @@ After which, the app will display the Ground Station main page as shown below.
 
 ## Ground Station Beacon Panel
 
+Every minute, the Dream2space Cubesat will send beacons to advertise its presence.
+
+The Ground Station will pick up the beacons to display it in the Beacon panel of the Ground Station.
+
+The Beacon panel is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-beacon-refresh.png" alt="Refresh ports" width="90%"/>
+
+The Beacon panel display will blink in yellow to indicate a new beacon has arrived in the Ground Station.
 
 ## Ground Station Housekeeping Data Panel
 
