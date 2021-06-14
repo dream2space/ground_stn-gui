@@ -211,3 +211,23 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 <img src="images/app-hk-logs.png" alt="Housekeeping logs csv" width="60%"/>
 
 ## Ground Station Mission Panel
+
+<img src="images/app-mission-button.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-window.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-window-submit.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-sending-cmd.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-downlink-standby.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-view-completed.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-view-overall-status.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-view-location.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-view-mission-folder.png" alt="Mission command button" width="90%"/>
+
+<img src="images/app-mission-view-mission-status.png" alt="Mission command button" width="90%"/>
