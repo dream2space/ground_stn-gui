@@ -214,20 +214,20 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 
 <img src="images/app-mission-button.png" alt="Mission command button" width="90%"/>
 
-<img src="images/app-mission-window.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-window.png" alt="Mission command window" width="90%"/>
 
-<img src="images/app-mission-window-submit.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-window-submit.png" alt="Mission command submit button" width="90%"/>
 
-<img src="images/app-mission-sending-cmd.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-sending-cmd.png" alt="Mission command sending" width="90%"/>
 
-<img src="images/app-mission-downlink-standby.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-downlink-standby.png" alt="Downlink standby" width="90%"/>
 
-<img src="images/app-mission-view-completed.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-view-completed.png" alt="Mission view completed button" width="90%"/>
 
-<img src="images/app-mission-view-overall-status.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-view-overall-status.png" alt="View overall status of missions" width="90%"/>
 
-<img src="images/app-mission-view-location.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-view-location.png" alt="Mission saved location" width="90%"/>
 
-<img src="images/app-mission-view-mission-folder.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-view-mission-folder.png" alt="View mission folder" width="90%"/>
 
-<img src="images/app-mission-view-mission-status.png" alt="Mission command button" width="90%"/>
+<img src="images/app-mission-view-mission-status.png" alt="View mission status" width="90%"/>
