@@ -228,7 +228,7 @@ The Beacon panel is boxed in **<span style="color: lime">green</span>** in the s
 
 <img src="images/app-beacon-refresh.png" alt="Refresh ports" width="90%"/>
 
-The Beacon panel display will blink in yellow to indicate a new beacon has arrived in the Ground Station.
+The Beacon panel display will blink in **<span style="background: yellow">yellow</span>** to indicate a new beacon has arrived in the Ground Station.
 
 ## Ground Station Housekeeping Data Panel
 
