@@ -331,6 +331,8 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                             r"C:\cygwin64\bin\rm.exe" +
                             f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz",  # pylint: disable=anomalous-backslash-in-string
                             shell=True)
+                        mission_status_recorder.update_unzip_base64_decode_status(
+                            image_count=curr_image_count, is_success=False)
 
                 # cygwin not exist
                 else:

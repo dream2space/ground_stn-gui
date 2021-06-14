@@ -92,7 +92,7 @@ class Mission_Status_Recorder():
 
         # Check overall status - success or failure
         outcome = ""
-        if self.has_failure:
+        if self.has_failure == True:
             outcome = "FAIL"
         else:
             outcome = "SUCCESS"

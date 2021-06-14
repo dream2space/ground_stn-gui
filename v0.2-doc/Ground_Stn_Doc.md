@@ -231,3 +231,7 @@ The folder is boxed in **<span style="color: lime">green</span>** in the the scr
 <img src="images/app-mission-view-mission-folder.png" alt="View mission folder" width="90%"/>
 
 <img src="images/app-mission-view-mission-status.png" alt="View mission status" width="90%"/>
+
+<img src="images/app-mission-view-overall-status-fail.png" alt="View overall status of missions with fail" width="90%"/>
+
+<img src="images/app-mission-view-mission-status-fail.png" alt="View mission status with fail" width="90%"/>
