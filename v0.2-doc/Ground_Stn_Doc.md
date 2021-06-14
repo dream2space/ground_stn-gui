@@ -98,7 +98,7 @@ This is how a USB-UART bridge looks like:
 
 <img src="images/usb-uart-bridge.png" alt="USB-UART bridge" width="50%"/>
 
-An example of the transceiver connected to the USB-UART bridge that you have receive is shown below:
+An example of the transceiver connected to the USB-UART bridge that you have received is shown below:
 
 <img src="images/transceiver-bridge-connected.jpg" alt="USB-UART bridge connected to transceiver" width="40%"/>
 
