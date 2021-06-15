@@ -103,7 +103,9 @@ This is how a transceiver looks like:
 
 <img src="images/transceiver-front-back.png" alt="Transceiver" width="50%"/>
 
-The transceiver uses the Universal asynchronous receiver-transmitter (UART) protocol to send data to and from the computer and a USB-UART bridge to connect the transceiver to the computer's USB ports.
+The transceiver uses the Universal asynchronous receiver-transmitter (UART) protocol to send data to and from the transceiver.
+
+As most computers are unable to communicate via UART directly, a USB-UART bridge to connect the transceiver to the computer's USB ports.
 
 This is how a USB-UART bridge looks like:
 
