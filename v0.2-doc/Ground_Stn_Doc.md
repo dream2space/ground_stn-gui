@@ -178,7 +178,7 @@ If the app has launched successfully, the Start Page, as shown in screenshot bel
 
 A `dream2space` folder will also be created in the same folder to store data collected from the app.
 
-The folder is boxed in **<span style="color: lime">green</span>** in the the screenshot below.
+The folder is boxed in **<span style="color: lime">green</span>** in the screenshot below.
 
 <img src="images/downloads-folder-after-open.png" alt="App Start Page" />
 
