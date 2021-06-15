@@ -5,6 +5,8 @@
 
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
 
+The Ground Station app is currently on available on Windows Operating System.
+
 <img src="../images/gui-front.png" alt="Ground Station Start Page" width="50%"/>
 
 <!-- markdownlint-disable MD025 MD003 -->
@@ -12,7 +14,7 @@ Contents
 ========
 <!-- markdownlint-enable MD025 MD003 -->
 
-- [Prerequisites (For Windows)](#prerequisites-for-windows)
+- [Prerequisites](#prerequisites)
   - [Step 1: Visit the Cygwin website](#step-1-visit-the-cygwin-website)
   - [Step 2: Download Cygwin installer](#step-2-download-cygwin-installer)
   - [Step 3: Install Cygwin](#step-3-install-cygwin)
@@ -37,7 +39,7 @@ Contents
   - [Step 4: Viewing status of Missions](#step-4-viewing-status-of-missions)
   - [Step 4: Viewing Mission status and images](#step-4-viewing-mission-status-and-images)
 
-## Prerequisites (For Windows)
+## Prerequisites
 
 This step is needed if you are using a computer that runs on a **Windows** operating system.
 
