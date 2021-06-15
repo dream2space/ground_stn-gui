@@ -1,8 +1,6 @@
 # Dream2space Cubesat Ground Station
 <!-- markdownlint-disable MD033 -->
 
-[comment]: <> (TODO: Break down into smaller steps per header)
-
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
 
 The Ground Station app is currently on available on Windows Operating System.
