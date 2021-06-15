@@ -124,6 +124,9 @@ Double check that the pin connections are done as shown in the table below:
 | `TX`            | `RX`        |
 | `RX`            | `TX`        |
 
+| 💡 | This table is also a handy reference if connections are removed by mistake! |
+| -- | --------------------------------------------------------------------------- |
+
 ### Step 3: Connect the TTnC transceiver to the Computer
 
 | ⚠️ | **The sequence of plugging in the USB-UART bridges is important. Do try to follow the sequence.** |
