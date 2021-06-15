@@ -55,6 +55,8 @@ Link to download Cygwin: <https://www.cygwin.com/>
 
 The Cygwin page should look like this:
 
+<img src="images/cygwin-download.png" alt="Cygwin Page" width="80%"/>
+
 ### Step 2: Download Cygwin installer
 
 Click on the link `setup-x86_64.exe` to download the Cygwin installer, as shown in the **<span style="color: lime">green</span>** box in the screenshot above.
