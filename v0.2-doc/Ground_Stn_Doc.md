@@ -411,7 +411,7 @@ An example of a mission record in the `Missions Currently in Downlink` panel is 
 
 <img src="images/app-mission-downlink-standby.png" alt="Downlink standby" width="90%"/>
 
-The mission record will remain there until the completion of downlink, decoding and processing of images collected (if successful).
+The mission record will remain there until the completion of downlink, error correction and decoding and of images collected (if successful).
 
 ### Step 8: Viewing status of Missions
 
@@ -424,6 +424,13 @@ The button is boxed in **<span style="color: lime">green</span>** in the screens
 <img src="images/app-mission-view-completed.png" alt="Mission view completed button" width="90%"/>
 
 Clicking on the button opens up a CSV file containing the status records of all missions executed.
+
+The table below describes what it means for an operation to be successful or have failed:
+
+| Status    | Meaning                                                                                                                   |
+| --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `SUCCESS` | All the process (Downlink, Error correction with Reed-Solomon, Decoding/Processing of images) are completed successfully. |
+| `FAILED`  | One of the above mentioned processes have failed.                                                                         |
 
 The screenshot below shows an example if the status if the mission was successful.
 
@@ -443,13 +450,13 @@ For example, the folder with the mission previously executed is boxed in **<span
 
 <img src="images/app-mission-view-location.png" alt="Mission saved location" width="90%"/>
 
-If the mission was successful, the decoded and processed images will be found in the folder.
+If the mission was successful, the recovered images will be found in the folder.
 
 A text file log of the detailed mission status will also be found in the folder.
 
 <img src="images/app-mission-view-mission-folder.png" alt="View mission folder" width="90%"/>
 
-Opening the text log file will show the status of each process that the Ground Station undertakes to recieve, decode and process the image.
+Opening the text log file will show the status of each process that the Ground Station undertakes to recieve, perform error correction and decode the image.
 
 <img src="images/app-mission-view-mission-status.png" alt="View mission status" width="65%"/>
 
