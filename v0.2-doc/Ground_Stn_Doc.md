@@ -335,11 +335,33 @@ The Submit button is boxed in **<span style="color: lime">green</span>** in the 
 
 ### Step 2: Waiting for Mission to be executed
 
+After the Submit button is clicked, the Mission command will be sent to the Dream2space Cubeat.
+
+While the command is being sent, the progress bar will be shown.
+
+To ensure that the Housekeeping command is sent without disruption, all commands sending will be disabled.
+
 <img src="images/app-mission-sending-cmd.png" alt="Mission command sending" width="90%"/>
+
+After the mission command is sent, a mission record is kept in the `Missions Pending Downlink` panel.
+
+The record will be stored here until 2 minutes before the Downlink time of the Mission.
+
+An example of a mission record in the `Missions Pending Downlink` panel is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
+<img src="images/app-mission-sending-cmd-record.png" alt="Mission record" width="90%"/>
 
 ### Step 3: Waiting for Downlink to be completed
 
+When a mission is 2 minutes away from its Downlink time, the Ground Station will enter standby mode to wait for the downlink of images.
+
+When this happens, the mission record will be shifted from the `Missions Pending Downlink` panel to the `Missions Currently in Downlink` panel.
+
+An example of a mission record in the `Missions Currently in Downlink` panel is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-mission-downlink-standby.png" alt="Downlink standby" width="90%"/>
+
+The mission record will remain there until the completion of downlink, decoding and processing of images collected (if successful).
 
 ### Step 4: Viewing status of Missions
 
