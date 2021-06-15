@@ -403,12 +403,12 @@ A text file log of the detailed mission status will also be found in the folder.
 
 Opening the text log file will show the status of each process that the Ground Station undertakes to recieve, decode and process the image.
 
-<img src="images/app-mission-view-mission-status.png" alt="View mission status" width="90%"/>
+<img src="images/app-mission-view-mission-status.png" alt="View mission status" width="65%"/>
 
 This is important in the scenario to find out what is wrong in the downlink process.
 
 For example, the logs below show that the decoding of the images using Base64 has failed.
 
-<img src="images/app-mission-view-mission-status-fail.png" alt="View mission status with fail" width="90%"/>
+<img src="images/app-mission-view-mission-status-fail.png" alt="View mission status with fail" width="65%"/>
 
 This is useful for debugging and troubleshooting the connections and transmission between the Cubesat and the Ground Station.
