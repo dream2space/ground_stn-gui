@@ -334,6 +334,8 @@ There are some rules that the Mission Start date and time needs to adhere to:
 
   3. The Mission Start time must not be less than 15 seconds before or after an already scheduled Mission.
 
+  4. There can only be at most 3 incomplete missions at any time.
+
 The `Mission Start Date` and `Mission Start Time` panels are boxed in **<span style="color: lime">green</span>** in the screenshot below.
 
 <img src="images/app-mission-window-mission-start.png" alt="Input Mission start date and time" width="90%"/>
@@ -422,8 +424,6 @@ The button is boxed in **<span style="color: lime">green</span>** in the screens
 <img src="images/app-mission-view-completed.png" alt="Mission view completed button" width="90%"/>
 
 Clicking on the button opens up a CSV file containing the status records of all missions executed.
-
-.... about what is success or fail ....
 
 The screenshot below shows an example if the status if the mission was successful.
 
