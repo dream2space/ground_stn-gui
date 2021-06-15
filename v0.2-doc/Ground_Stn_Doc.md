@@ -299,11 +299,39 @@ The steps below show how to send a Mission command and receive images via downli
 
 ### Step 1: Send a Mission Command
 
+Click on the button to send a Mission/Downlink command.
+
+The button is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-mission-button.png" alt="Mission command button" width="90%"/>
+
+A Mission command window will pop up, as shown in the screenshot below.
 
 <img src="images/app-mission-window.png" alt="Mission command window" width="90%"/>
 
+Fill in the Mission Start date and time in the `Mission Start Date` and `Mission Start Time` panels.
+
+The `Mission Start Date` and `Mission Start Time` panels are boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
+<img src="images/app-mission-window-mission-start.png" alt="Input Mission start date and time" width="90%"/>
+
+Fill in the number of image to be taken in the mission in the `Mission Image Count` panel and the interval between each image in the `Mission Image Interval` panel.
+
+The `Mission Image Count` and `Mission Image Interval` panels are boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
+<img src="images/app-mission-window-mission-params.png" alt="Input mission parameters" width="90%"/>
+
+Fill in the Mission Start date and time in the `Mission Start Date` and `Mission Start Time` panels.
+
+The `Mission Start Date` and `Mission Start Time` panels are boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
+<img src="images/app-mission-window-downlink-start.png" alt="Input Downlink start date and time" width="90%"/>
+
+To send the mission command, click on the Submit button.
+
 <img src="images/app-mission-window-submit.png" alt="Mission command submit button" width="90%"/>
+
+The Submit button is boxed in **<span style="color: lime">green</span>** in the screenshot below.
 
 ### Step 2: Waiting for Mission to be executed
 
