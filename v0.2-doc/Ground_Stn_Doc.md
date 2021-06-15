@@ -329,9 +329,9 @@ The `Mission Start Date` and `Mission Start Time` panels are boxed in **<span st
 
 To send the mission command, click on the Submit button.
 
-<img src="images/app-mission-window-submit.png" alt="Mission command submit button" width="90%"/>
-
 The Submit button is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
+<img src="images/app-mission-window-submit.png" alt="Mission command submit button" width="90%"/>
 
 ### Step 2: Waiting for Mission to be executed
 
@@ -365,18 +365,50 @@ The mission record will remain there until the completion of downlink, decoding 
 
 ### Step 4: Viewing status of Missions
 
+After the completion of downlink, the mission record will be removed from the `Missions Currently in Downlink` panel.
+
+To view the overall status of the mission, click on the button to view completed mission/downlink operations.
+
+The button is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
 <img src="images/app-mission-view-completed.png" alt="Mission view completed button" width="90%"/>
+
+Clicking on the button opens up a CSV file containing the status records of all missions executed.
+
+.... about what is success or fail ....
+
+The screenshot below shows an example if the status if the mission was successful.
 
 <img src="images/app-mission-view-overall-status.png" alt="View overall status of missions" width="90%"/>
 
-### Step 4: Viewing Mission status and images
-
-<img src="images/app-mission-view-location.png" alt="Mission saved location" width="90%"/>
-
-<img src="images/app-mission-view-mission-folder.png" alt="View mission folder" width="90%"/>
-
-<img src="images/app-mission-view-mission-status.png" alt="View mission status" width="90%"/>
+The screenshot below shows an example if the status if the mission has failed.
 
 <img src="images/app-mission-view-overall-status-fail.png" alt="View overall status of missions with fail" width="90%"/>
 
+### Step 4: Viewing Mission status and images
+
+Clicking on the button also opens up an explorer to view the list of folders where mission images are stored in.
+
+Click on the folder containing the executed mission to view the contents.
+
+For example, the folder with the mission previously executed is boxed in **<span style="color: lime">green</span>** in the screenshot below.
+
+<img src="images/app-mission-view-location.png" alt="Mission saved location" width="90%"/>
+
+If the mission was successful, the decoded and processed images will be found in the folder.
+
+A text file log of the detailed mission status will also be found in the folder.
+
+<img src="images/app-mission-view-mission-folder.png" alt="View mission folder" width="90%"/>
+
+Opening the text log file will show the status of each process that the Ground Station undertakes to recieve, decode and process the image.
+
+<img src="images/app-mission-view-mission-status.png" alt="View mission status" width="90%"/>
+
+This is important in the scenario to find out what is wrong in the downlink process.
+
+For example, the logs below show that the decoding of the images using Base64 has failed.
+
 <img src="images/app-mission-view-mission-status-fail.png" alt="View mission status with fail" width="90%"/>
+
+This is useful for debugging and troubleshooting the connections and transmission between the Cubesat and the Ground Station.
