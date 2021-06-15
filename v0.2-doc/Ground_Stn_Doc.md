@@ -273,7 +273,7 @@ If the progress bar still appears after 10 seconds, the operation is likely to h
 
 The error message is boxed in **<span style="color: red">red</span>** in the screenshot below.
 
-<img src="images/app-hk-failed.png" alt="Housekeeping command failed" width="60%"/>
+<img src="images/app-hk-failed.png" alt="Housekeeping command failed" width="90%"/>
 
 To retrieve Housekeeping data, send the Housekeeping command again as described in Step 1.
 
