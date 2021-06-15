@@ -33,11 +33,15 @@ Contents
   - [Step 1: Send the Housekeeping Command](#step-1-send-the-housekeeping-command)
   - [Step 2: Navigate to location where logs are saved](#step-2-navigate-to-location-where-logs-are-saved)
 - [Ground Station Mission Panel](#ground-station-mission-panel)
-  - [Step 1: Send a Mission Command](#step-1-send-a-mission-command)
-  - [Step 2: Waiting for Mission to be executed](#step-2-waiting-for-mission-to-be-executed)
-  - [Step 3: Waiting for Downlink to be completed](#step-3-waiting-for-downlink-to-be-completed)
-  - [Step 4: Viewing status of Missions](#step-4-viewing-status-of-missions)
-  - [Step 4: Viewing Mission status and images](#step-4-viewing-mission-status-and-images)
+  - [Step 1: Open Mission Command window](#step-1-open-mission-command-window)
+  - [Step 2: Fill in Mission Start date and time](#step-2-fill-in-mission-start-date-and-time)
+  - [Step 3: Fill in Mission images and interval](#step-3-fill-in-mission-images-and-interval)
+  - [Step 4: Fill in Downlink Start date and time](#step-4-fill-in-downlink-start-date-and-time)
+  - [Step 5: Send the Mission command](#step-5-send-the-mission-command)
+  - [Step 6: Waiting for Mission to be executed](#step-6-waiting-for-mission-to-be-executed)
+  - [Step 7: Waiting for Downlink to be completed](#step-7-waiting-for-downlink-to-be-completed)
+  - [Step 8: Viewing status of Missions](#step-8-viewing-status-of-missions)
+  - [Step 9: Viewing Mission status and images](#step-9-viewing-mission-status-and-images)
 
 ## Prerequisites
 
@@ -306,7 +310,7 @@ The Ground Station is capable of sending Mission commands to the Dream2space Cub
 
 The steps below show how to send a Mission command and receive images via downlink from the Dream2space Cubesat.
 
-### Step 1: Send a Mission Command
+### Step 1: Open Mission Command window
 
 Click on the button to send a Mission/Downlink command.
 
@@ -318,11 +322,23 @@ A Mission command window will pop up, as shown in the screenshot below.
 
 <img src="images/app-mission-window.png" alt="Mission command window" width="90%"/>
 
+### Step 2: Fill in Mission Start date and time
+
 Fill in the Mission Start date and time in the `Mission Start Date` and `Mission Start Time` panels.
+
+There are some rules that the Mission Start date and time needs to adhere to:
+
+  1. The Mission Start date and time must be in the future.
+
+  2. It is recommended to be at least 2 minutes from the current time.
+
+  3. The Mission Start time must not be less than 15 seconds before or after an already scheduled Mission.
 
 The `Mission Start Date` and `Mission Start Time` panels are boxed in **<span style="color: lime">green</span>** in the screenshot below.
 
 <img src="images/app-mission-window-mission-start.png" alt="Input Mission start date and time" width="90%"/>
+
+### Step 3: Fill in Mission images and interval
 
 Fill in the number of image to be taken in the mission in the `Mission Image Count` panel and the interval between each image in the `Mission Image Interval` panel.
 
@@ -330,11 +346,34 @@ The `Mission Image Count` and `Mission Image Interval` panels are boxed in **<sp
 
 <img src="images/app-mission-window-mission-params.png" alt="Input mission parameters" width="90%"/>
 
-Fill in the Mission Start date and time in the `Mission Start Date` and `Mission Start Time` panels.
+In each field, there are some allowed values that these mission parameters are allowed to take.
+
+The table below shows the values allowed for the `Mission Image Count` and the `Mission Image Interval` field.
+
+| Field                    | Units | Min    | Max    |
+| ------------------------ | ----- | ------ | ------ |
+| `Mission Image Count`    | N/A   | `1`    | `3`    |
+| `Mission Image Interval` | ms    | `1000` | `5000` |
+
+Use the arrows to select the values to input for each mission parameter.
+
+### Step 4: Fill in Downlink Start date and time
+
+Fill in the Downlink Start date and time in the `Downlink Start Date` and `Downlink Start Time` panels.
+
+There are some rules that the Downlink Start date and time needs to adhere to:
+
+  1. The Downlink Start date and time must be in the future.
+
+  2. The Downlink Start date and time must be after the Mission Start date and time.
+
+  3. The Downlink Start date and time must not be less than 10 minutes before or after an already scheduled Downlink.
 
 The `Mission Start Date` and `Mission Start Time` panels are boxed in **<span style="color: lime">green</span>** in the screenshot below.
 
 <img src="images/app-mission-window-downlink-start.png" alt="Input Downlink start date and time" width="90%"/>
+
+### Step 5: Send the Mission command
 
 To send the mission command, click on the Submit button.
 
@@ -342,7 +381,7 @@ The Submit button is boxed in **<span style="color: lime">green</span>** in the 
 
 <img src="images/app-mission-window-submit.png" alt="Mission command submit button" width="90%"/>
 
-### Step 2: Waiting for Mission to be executed
+### Step 6: Waiting for Mission to be executed
 
 After the Submit button is clicked, the Mission command will be sent to the Dream2space Cubeat.
 
@@ -360,7 +399,7 @@ An example of a mission record in the `Missions Pending Downlink` panel is boxed
 
 <img src="images/app-mission-sending-cmd-record.png" alt="Mission record" width="90%"/>
 
-### Step 3: Waiting for Downlink to be completed
+### Step 7: Waiting for Downlink to be completed
 
 When a mission is 2 minutes away from its Downlink time, the Ground Station will enter standby mode to wait for the downlink of images.
 
@@ -372,7 +411,7 @@ An example of a mission record in the `Missions Currently in Downlink` panel is 
 
 The mission record will remain there until the completion of downlink, decoding and processing of images collected (if successful).
 
-### Step 4: Viewing status of Missions
+### Step 8: Viewing status of Missions
 
 After the completion of downlink, the mission record will be removed from the `Missions Currently in Downlink` panel.
 
@@ -394,7 +433,7 @@ The screenshot below shows an example if the status if the mission has failed.
 
 <img src="images/app-mission-view-overall-status-fail.png" alt="View overall status of missions with fail" width="90%"/>
 
-### Step 4: Viewing Mission status and images
+### Step 9: Viewing Mission status and images
 
 Clicking on the button also opens up an explorer to view the list of folders where mission images are stored in.
 
