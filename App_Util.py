@@ -111,12 +111,12 @@ def beacon_collection(pipe_beacon):
 
                 temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
                 adcs = decoded_ccsds_beacon.get_adcs_data()
-                gx = f"{adcs['gx']}"
-                gy = f"{adcs['gy']}"
-                gz = f"{adcs['gz']}"
-                ax = f"{adcs['ax']}"
-                ay = f"{adcs['ay']}"
-                az = f"{adcs['az']}"
+                gx = f"{adcs['gx']:.3f}"
+                gy = f"{adcs['gy']:.3f}"
+                gz = f"{adcs['gz']:.3f}"
+                ax = f"{adcs['ax']:.3f}"
+                ay = f"{adcs['ay']:.3f}"
+                az = f"{adcs['az']:.3f}"
                 adc = f"{decoded_ccsds_beacon.get_vbatt():.2f}"
 
                 print("beacon", temp, gx, gy, gz, ax, ay, az)

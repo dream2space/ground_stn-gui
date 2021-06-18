@@ -10,12 +10,14 @@ class CCSDS_Parsed_Beacon:
         self.tx_power = ret_ttnc['Transmit Power']
 
         # Unpack adcs
-        self.gx = ret_adcs['gx']
-        self.gy = ret_adcs['gy']
-        self.gz = ret_adcs['gz']
-        self.ax = ret_adcs['ax']
-        self.ay = ret_adcs['ay']
-        self.az = ret_adcs['az']
+        list_gyro = self.get_rotation(ret_adcs['gx'], ret_adcs['gy'], ret_adcs['gz'])
+        list_accel = self.get_accel(ret_adcs['ax'], ret_adcs['ay'], ret_adcs['az'])
+        self.gx = list_gyro[0]
+        self.gy = list_gyro[1]
+        self.gz = list_gyro[2]
+        self.ax = list_accel[0]
+        self.ay = list_accel[1]
+        self.az = list_accel[2]
 
         # Unpack eps
         self.temp = ret_eps['Temperature']
@@ -60,3 +62,27 @@ class CCSDS_Parsed_Beacon:
             return adc / max_adc * max_vbatt
 
         return convert_adc_to_vbatt(self.adc)
+
+    def get_accel(self, raw_x, raw_y, raw_z):
+        '''
+        Process and convert raw accelerometer value to converted value
+        '''
+
+        def convert_raw_accel(raw_acc):
+            max_int = 32768  # 16 bit signed integer data bits
+            g2 = 2 * 9.8
+            return raw_acc / max_int * g2
+
+        return [convert_raw_accel(raw_x), convert_raw_accel(raw_y), convert_raw_accel(raw_z)]
+
+    def get_rotation(self, raw_x, raw_y, raw_z):
+        '''
+        Process and convert raw gyroscope value to converted value
+        '''
+
+        def convert_raw_gyro(raw_g):
+            max_int = 32768  # 16 bit signed integer data bits
+            rotation_per_sec = 250
+            return raw_g/max_int * rotation_per_sec
+
+        return [convert_raw_gyro(raw_x), convert_raw_gyro(raw_y), convert_raw_gyro(raw_z)]
