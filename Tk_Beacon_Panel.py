@@ -27,6 +27,9 @@ class BeaconPanel(tk.Frame):
             gy = ls[2]
             gz = ls[3]
             adc = ls[4]
+            ax = ls[5]
+            ay = ls[6]
+            az = ls[7]
             self.beacon_frame.update_beacon_values(temp, gx, gy, gz, adc)
         self.parent.after(500, self.update_beacon_values)
 

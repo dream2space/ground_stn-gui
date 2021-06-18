@@ -13,9 +13,9 @@ class CCSDS_Parsed_Beacon:
         self.gx = ret_adcs['gx']
         self.gy = ret_adcs['gy']
         self.gz = ret_adcs['gz']
-        self.mx = ret_adcs['mx']
-        self.my = ret_adcs['my']
-        self.mz = ret_adcs['mz']
+        self.ax = ret_adcs['ax']
+        self.ay = ret_adcs['ay']
+        self.az = ret_adcs['az']
 
         # Unpack eps
         self.temp = ret_eps['Temperature']
@@ -46,8 +46,8 @@ class CCSDS_Parsed_Beacon:
     def get_temp(self):
         return self.temp
 
-    def get_gyro(self):
-        return {'gx': self.gx, 'gy': self.gy, 'gz': self.gz}
+    def get_adcs_data(self):
+        return {'gx': self.gx, 'gy': self.gy, 'gz': self.gz, 'ax': self.ax, 'ay': self.ay, 'az': self.az}
 
     def get_vbatt(self):
         '''

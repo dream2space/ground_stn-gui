@@ -64,17 +64,17 @@ class CCSDS_Beacon_Decoder:
         gz = int.from_bytes(adcs_field[4:6], byteorder='big', signed=True)
 
         # Decode mx
-        mx = int.from_bytes(adcs_field[6:8], byteorder='big', signed=True)
+        ax = int.from_bytes(adcs_field[6:8], byteorder='big', signed=True)
 
         # Decode my
-        my = int.from_bytes(adcs_field[8:10], byteorder='big', signed=True)
+        ay = int.from_bytes(adcs_field[8:10], byteorder='big', signed=True)
 
         # Decode mz
-        mz = int.from_bytes(
+        az = int.from_bytes(
             adcs_field[10:12], byteorder='big', signed=True)
 
         ret_adcs = {'gx': gx, 'gy': gy, 'gz': gz,
-                    'mx': mx, 'my': my, 'mz': mz}
+                    'ax': ax, 'ay': ay, 'az': az}
         return ret_adcs
 
     def _parse_eps_field(self, eps_field):

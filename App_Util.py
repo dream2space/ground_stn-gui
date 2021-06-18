@@ -57,7 +57,10 @@ def beacon_collection(pipe_beacon):
     gy = 0
     gz = 0
     adc = 0
-    pipe_beacon.send([temp, gx, gy, gz, adc])
+    ax = 0
+    ay = 0
+    az = 0
+    pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az])
 
     isStopBeacon = False
     while True:
@@ -67,10 +70,13 @@ def beacon_collection(pipe_beacon):
             gx = f"{random.randint(-50, 50)}"
             gy = f"{random.randint(-50, 50)}"
             gz = f"{random.randint(-50, 50)}"
+            ax = f"{random.randint(-50, 50)}"
+            ay = f"{random.randint(-50, 50)}"
+            az = f"{random.randint(-50, 50)}"
             adc = f"{random.randrange(2, 8)}"
-            print("beacon", temp, gx, gy, gz, adc)
+            print("beacon", temp, gx, gy, gz, adc, ax, ay, az)
             time.sleep(10)
-            pipe_beacon.send([temp, gx, gy, gz, adc])
+            pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az])
             continue
 
         # If receive signal to close serial port
@@ -104,14 +110,17 @@ def beacon_collection(pipe_beacon):
                     continue
 
                 temp = f"{decoded_ccsds_beacon.get_temp():.2f}"
-                gyro = decoded_ccsds_beacon.get_gyro()
-                gx = f"{gyro['gx']}"
-                gy = f"{gyro['gy']}"
-                gz = f"{gyro['gz']}"
+                adcs = decoded_ccsds_beacon.get_adcs_data()
+                gx = f"{adcs['gx']}"
+                gy = f"{adcs['gy']}"
+                gz = f"{adcs['gz']}"
+                ax = f"{adcs['ax']}"
+                ay = f"{adcs['ay']}"
+                az = f"{adcs['az']}"
                 adc = f"{decoded_ccsds_beacon.get_vbatt():.2f}"
 
-                # print("beacon", temp, gx, gy, gz)
-                pipe_beacon.send([temp, gx, gy, gz, adc])
+                print("beacon", temp, gx, gy, gz, ax, ay, az)
+                pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az])
 
 
 # Process to get housekeeping logs
