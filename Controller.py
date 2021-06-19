@@ -213,7 +213,7 @@ class Controller(tk.Frame):
             # Add into pending mission list
             self.pending_mission_list.append(mission)
             self.pending_mission_list.sort(key=lambda x: x.downlink_datetime)  # Sort on earliest downlink datetime
-            print(self.pending_mission_list)
+            # print(self.pending_mission_list)
 
             # Send CCSDS mission command to Cubesat
             if IS_TESTING:
@@ -233,10 +233,10 @@ class Controller(tk.Frame):
             self.mission_window.display_error_message(num_current_missions)
 
     def mission_execution_check(self):
-        print(f"CHECK! {datetime.datetime.now()}")
+        # print(f"CHECK! {datetime.datetime.now()}")
 
         num_mission = len(self.pending_mission_list)
-        print(self.pending_mission_list)
+        # print(self.pending_mission_list)
         if num_mission != 0:
             # Check top most mission item
             # Start collection process if within 2 minutes of downlink
@@ -244,7 +244,7 @@ class Controller(tk.Frame):
             upcoming_downlink_datetime = earliest_mission.downlink_datetime
 
             if upcoming_downlink_datetime - datetime.datetime.now() < datetime.timedelta(seconds=120):
-                print("less than 2 minutes to mission!!")
+                print(f"less than 2 minutes to mission!!")
                 self.current_mission_list.append(earliest_mission)
                 del self.pending_mission_list[0]
 

@@ -30,12 +30,8 @@ class CCSDS_Parsed_Beacon:
         self.r4 = ret_payload['Reserved byte 4']
 
         # Unpack timestamp
-        self.ts_DD = ret_timestamp['DD']
-        self.ts_MM = ret_timestamp['MM']
-        self.ts_YYYY = ret_timestamp['YYYY']
-        self.ts_hh = ret_timestamp['hh']
-        self.ts_mm = ret_timestamp['mm']
-        self.ts_ss = ret_timestamp['ss']
+        self.ts_date = ret_timestamp['date']
+        self.ts_time = ret_timestamp['time']
 
     def __str__(self):
         ret = ""
@@ -86,3 +82,9 @@ class CCSDS_Parsed_Beacon:
             return raw_g/max_int * rotation_per_sec
 
         return [convert_raw_gyro(raw_x), convert_raw_gyro(raw_y), convert_raw_gyro(raw_z)]
+
+    def get_timestamp_date(self):
+        return self.ts_date
+
+    def get_timestamp_time(self):
+        return self.ts_time

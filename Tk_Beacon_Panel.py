@@ -30,7 +30,9 @@ class BeaconPanel(tk.Frame):
             ax = ls[5]
             ay = ls[6]
             az = ls[7]
-            self.beacon_frame.update_beacon_values(temp, gx, gy, gz, adc, ax, ay, az)
+            ts_date = ls[8]
+            ts_time = ls[9]
+            self.beacon_frame.update_beacon_values(temp, gx, gy, gz, adc, ax, ay, az, ts_date, ts_time)
         self.parent.after(500, self.update_beacon_values)
 
 
@@ -70,7 +72,7 @@ class BeaconFrame(tk.LabelFrame):
         self.timestamp_data_container = tk.Frame(self)
         self.timestamp_data_container.pack(anchor=tk.NW, pady=2)
         self.timestamp_date_label = self._create_header_label(self.timestamp_data_container, "Date")
-        self.timestamp_time_label = self._create_header_label(self.timestamp_data_container, "Time")
+        self.timestamp_time_label = self._create_header_label(self.timestamp_data_container, "UTC Time")
         self.timestamp_date_text = self._create_text_label(self.timestamp_data_container, self.timestamp_date)
         self.timestamp_time_text = self._create_text_label(self.timestamp_data_container, self.timestamp_time)
         self._arrange_timestamp_grid()
@@ -109,7 +111,7 @@ class BeaconFrame(tk.LabelFrame):
         self.az_text = self._create_text_label(self.adcs_data_container, self.az)
         self._arrange_adcs_grid()
 
-    def update_beacon_values(self, temp, gx, gy, gz, adc, ax, ay, az):
+    def update_beacon_values(self, temp, gx, gy, gz, adc, ax, ay, az, ts_date, ts_time):
         def uncolor():
             self.temperature_label['bg'] = 'grey94'
             self.gx_label['bg'] = 'grey94'
@@ -130,6 +132,8 @@ class BeaconFrame(tk.LabelFrame):
         self.ax.set(ax)
         self.ay.set(ay)
         self.az.set(az)
+        self.timestamp_date.set(ts_date)
+        self.timestamp_time.set(ts_time)
 
         self.temperature_label['bg'] = 'yellow'
         self.gx_label['bg'] = 'yellow'
@@ -144,7 +148,7 @@ class BeaconFrame(tk.LabelFrame):
         self.parent.after(1200, uncolor)
 
     def _create_header_label(self, parent, header_text):
-        return tk.Label(parent, width=8, text=header_text, borderwidth=1, relief="groove")
+        return tk.Label(parent, width=10, text=header_text, borderwidth=1, relief="groove")
 
     def _create_text_label(self, parent, text_container):
         return tk.Label(parent, width=10, textvariable=text_container,

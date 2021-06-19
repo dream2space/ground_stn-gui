@@ -49,7 +49,7 @@ def beacon_collection(pipe_beacon):
     # Setup ttnc port serial object
     if not IS_TESTING:
         ttnc_ser = setup_serial(ttnc_serial_port)
-        print("first setup serial done")
+        # print("first setup serial done")
 
     # Setup ttnc serial port
     temp = 0
@@ -60,7 +60,9 @@ def beacon_collection(pipe_beacon):
     ax = 0
     ay = 0
     az = 0
-    pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az])
+    ts_date = 0
+    ts_time = 0
+    pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az, ts_date, ts_time])
 
     isStopBeacon = False
     while True:
@@ -74,21 +76,23 @@ def beacon_collection(pipe_beacon):
             ay = f"{random.randint(-50, 50)}"
             az = f"{random.randint(-50, 50)}"
             adc = f"{random.randrange(2, 8)}"
-            print("beacon", temp, gx, gy, gz, adc, ax, ay, az)
+            ts_date = "00/00/00"
+            ts_time = "00:00:00"
+            # print("beacon", temp, gx, gy, gz, adc, ax, ay, az)
             time.sleep(10)
-            pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az])
+            pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az, ts_date, ts_time])
             continue
 
         # If receive signal to close serial port
         if pipe_beacon.poll() == True:
             recv = pipe_beacon.recv()
-            print(f"beacon process {recv}")
+            # print(f"beacon process {recv}")
 
             if recv == "close_serial":
                 ttnc_ser.close()
                 pipe_beacon.send("done")
                 isStopBeacon = True
-                print("close serial")
+                # print("close serial")
 
             if recv == "open_serial":
                 ttnc_ser = setup_serial(ttnc_serial_port)
@@ -117,10 +121,12 @@ def beacon_collection(pipe_beacon):
                 ax = f"{adcs['ax']:.3f}"
                 ay = f"{adcs['ay']:.3f}"
                 az = f"{adcs['az']:.3f}"
+                ts_date = decoded_ccsds_beacon.get_timestamp_date()
+                ts_time = decoded_ccsds_beacon.get_timestamp_time()
                 adc = f"{decoded_ccsds_beacon.get_vbatt():.2f}"
 
-                print("beacon", temp, gx, gy, gz, ax, ay, az)
-                pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az])
+                # print("beacon", temp, gx, gy, gz, ax, ay, az)
+                pipe_beacon.send([temp, gx, gy, gz, adc, ax, ay, az, ts_date, ts_time])
 
 
 # Process to get housekeeping logs

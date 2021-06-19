@@ -97,14 +97,18 @@ class CCSDS_Beacon_Decoder:
         return ret_payload
 
     def _parse_timestamp_field(self, timestamp_field):
-        DD = timestamp_field[0]
-        MM = timestamp_field[1]
-        YYYY = int.from_bytes(
-            timestamp_field[2:4], byteorder='big', signed=False)
-        hh = timestamp_field[4]
-        mm = timestamp_field[5]
-        ss = timestamp_field[6]
+        decoded_string = timestamp_field.decode('utf-8')
 
-        ret_timestamp = {"DD": DD, "MM": MM,
-                         "YYYY": YYYY, "hh": hh, "mm": mm, "ss": ss}
+        timestamp_dd = decoded_string[0:2]
+        timestamp_MM = decoded_string[2:4]
+        timestamp_yy = decoded_string[4:6]
+
+        timestamp_hh = decoded_string[6:8]
+        timestamp_mm = decoded_string[8:10]
+        timestamp_ss = decoded_string[10:12]
+
+        date = f"{timestamp_dd}/{timestamp_MM}/{timestamp_yy}"
+        time = f"{timestamp_hh}:{timestamp_mm}:{timestamp_ss}"
+
+        ret_timestamp = {"date": date, "time": time}
         return ret_timestamp
