@@ -57,12 +57,29 @@ class BeaconFrame(tk.LabelFrame):
         self.ay.set("0")
         self.az = tk.StringVar()
         self.az.set("0")
+        self.timestamp_date = tk.StringVar()
+        self.timestamp_date.set("0")
+        self.timestamp_time = tk.StringVar()
+        self.timestamp_time.set("0")
+
+        # Label for timestamp
+        self.timestamp_header_label = tk.Label(self, text="Timestamp data")
+        self.timestamp_header_label.pack(anchor=tk.NW)
+
+        # Create container for timestamp data
+        self.timestamp_data_container = tk.Frame(self)
+        self.timestamp_data_container.pack(anchor=tk.NW, pady=2)
+        self.timestamp_date_label = self._create_header_label(self.timestamp_data_container, "Date")
+        self.timestamp_time_label = self._create_header_label(self.timestamp_data_container, "Time")
+        self.timestamp_date_text = self._create_text_label(self.timestamp_data_container, self.timestamp_date)
+        self.timestamp_time_text = self._create_text_label(self.timestamp_data_container, self.timestamp_time)
+        self._arrange_timestamp_grid()
 
         # Label for EPS data
         self.eps_header_label = tk.Label(self, text="EPS data")
-        self.eps_header_label.pack(anchor=tk.NW)
+        self.eps_header_label.pack(anchor=tk.NW, pady=2)
 
-        # Create label for EPS data
+        # Create container for EPS data
         self.eps_data_container = tk.Frame(self)
         self.eps_data_container.pack(anchor=tk.NW, pady=2)
         self.temperature_label = self._create_header_label(self.eps_data_container, "Temp")
@@ -75,7 +92,7 @@ class BeaconFrame(tk.LabelFrame):
         self.adcs_header_label = tk.Label(self, text="ADCS data")
         self.adcs_header_label.pack(anchor=tk.NW, pady=2)
 
-        # Create label for ADCS data
+        # Create container for ADCS data
         self.adcs_data_container = tk.Frame(self)
         self.adcs_data_container.pack(anchor=tk.NW)
         self.gx_label = self._create_header_label(self.adcs_data_container, "GX")
@@ -102,6 +119,8 @@ class BeaconFrame(tk.LabelFrame):
             self.ax_label['bg'] = 'grey94'
             self.ay_label['bg'] = 'grey94'
             self.az_label['bg'] = 'grey94'
+            self.timestamp_date_label['bg'] = 'grey94'
+            self.timestamp_time_label['bg'] = 'grey94'
 
         self.temp.set(temp)
         self.gx.set(gx)
@@ -120,13 +139,15 @@ class BeaconFrame(tk.LabelFrame):
         self.ay_label['bg'] = 'yellow'
         self.az_label['bg'] = 'yellow'
         self.adc_label['bg'] = 'yellow'
+        self.timestamp_date_label['bg'] = 'yellow'
+        self.timestamp_time_label['bg'] = 'yellow'
         self.parent.after(1200, uncolor)
 
     def _create_header_label(self, parent, header_text):
         return tk.Label(parent, width=8, text=header_text, borderwidth=1, relief="groove")
 
     def _create_text_label(self, parent, text_container):
-        return tk.Label(parent, width=8, textvariable=text_container,
+        return tk.Label(parent, width=10, textvariable=text_container,
                         bg="white", borderwidth=1, relief="groove")
 
     def _arrange_eps_grid(self):
@@ -149,3 +170,10 @@ class BeaconFrame(tk.LabelFrame):
         self.ax_text.grid(row=0, column=1)
         self.ay_text.grid(row=0, column=3)
         self.az_text.grid(row=0, column=5)
+
+    def _arrange_timestamp_grid(self):
+        self.timestamp_date_label.grid(row=0, column=0)
+        self.timestamp_time_label.grid(row=0, column=2)
+
+        self.timestamp_date_text.grid(row=0, column=1)
+        self.timestamp_time_text.grid(row=0, column=3)
