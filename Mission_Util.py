@@ -300,9 +300,9 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
                 is_rm_exist = os.path.exists(r"C:\cygwin64\bin\rm.exe")
 
                 if is_cygwin_exist and is_gzip_exist and is_rm_exist:
+
                     subprocess.Popen(
-                        r"C:\cygwin64\bin\gzip.exe -d" +
-                        f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz",  # pylint: disable=anomalous-backslash-in-string
+                        fr"C:\cygwin64\bin\gzip.exe -d '{os.getcwd()}\dream2space\mission\{mission_name}'\out.gz",  # pylint: disable=anomalous-backslash-in-string
                         shell=True)
                     time.sleep(5)
 
@@ -320,19 +320,16 @@ def process_handle_downlink(payload_serial_port, mission_name, mission_datetime,
 
                         # Remove out file
                         subprocess.Popen(
-                            r"C:\cygwin64\bin\rm.exe" +
-                            f" {os.getcwd()}\dream2space\mission\{mission_name}\out",  # pylint: disable=anomalous-backslash-in-string
+                            fr"C:\cygwin64\bin\rm.exe '{os.getcwd()}\dream2space\mission\{mission_name}'\out",  # pylint: disable=anomalous-backslash-in-string
                             shell=True)
 
                     except FileNotFoundError:
                         print("File cannot be gzip decoded!")
                         # Remove out file
                         subprocess.Popen(
-                            r"C:\cygwin64\bin\rm.exe" +
-                            f" {os.getcwd()}\dream2space\mission\{mission_name}\out.gz",  # pylint: disable=anomalous-backslash-in-string
+                            fr"C:\cygwin64\bin\rm.exe '{os.getcwd()}\dream2space\mission\{mission_name}'\out.gz",  # pylint: disable=anomalous-backslash-in-string
                             shell=True)
-                        mission_status_recorder.update_unzip_base64_decode_status(
-                            image_count=curr_image_count, is_success=False)
+                        mission_status_recorder.update_unzip_base64_decode_status(image_count=curr_image_count, is_success=False)
 
                 # cygwin not exist
                 else:
