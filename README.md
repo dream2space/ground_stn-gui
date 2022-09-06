@@ -6,6 +6,8 @@ The Dream2space Cubesat is an educational cubesat assembled as part of a Final Y
 
 The hardware system design and software designed were done as part of the project, while the PCB and CAD design/ printing were done by folks from the iDP lab in NUS.
 
+The Dream2space Cubesat was also contracted and used by participants in the Defence Science and Technology Agency (DSTA) Brainhack SpaceCube workshop, as featured [here](https://www.straitstimes.com/singapore/digital-technology-gets-a-boost-in-interest-as-more-students-attend-annual-brainhack-event).
+
 ## Getting Started
 
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
