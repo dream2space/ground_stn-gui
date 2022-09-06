@@ -1,5 +1,9 @@
 # Dreams2space GUI Ground Station
 
+**Featured on the news** [here](https://www.straitstimes.com/singapore/digital-technology-gets-a-boost-in-interest-as-more-students-attend-annual-brainhack-event)!!
+
+## Getting Started
+
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
 
 <img src="images/gui-front.png" alt="Ground Station Start Page" width="60%"/>
