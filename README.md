@@ -4,6 +4,8 @@ The Dream2space Cubesat is an educational cubesat assembled as part of a Final Y
 
 <img src="docs/d2s.jpg" alt="D2s" width="50%"/>
 
+The hardware system design and software designed were done as part of the project, while the PCB and CAD design/ printing were done by folks from the iDP lab in NUS.
+
 ## Getting Started
 
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
