@@ -2,8 +2,6 @@
 
 The Dream2space Cubesat is an educational cubesat assembled as part of a Final Year Project done in my undergraduate days in the National University of Singapore.
 
-![D2s](docs/d2s.jpg)
-
 ## Getting Started
 
 The Dream2space GUI Ground Station allows you to interact with your Dream2space Cubesat.
